@@ -15,6 +15,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
 
     const {h} = ui;
 
+    // TODO replace with JSX component
     const myPreset = () => {
       return h(presetComponent, {});
     };
@@ -33,6 +34,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
       condition: () => true
     };
 
+    // TODO fix TS ignores
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const a = document.getElementById(this.player.config.targetId)!.querySelector('.kaltura-player-container');
