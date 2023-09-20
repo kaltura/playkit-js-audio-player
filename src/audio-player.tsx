@@ -1,5 +1,6 @@
 import {BasePlugin, KalturaPlayer, ui} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
+import {AudioSeekbar} from './components/audio-seekbar';
 
 class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
   constructor(name: string, player: KalturaPlayer, config: AudioPlayerConfig) {
@@ -21,10 +22,10 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     };
 
     const presetComponent = () => {
-      return h(
-        'h1',
-        {className: 'my-preset', style: 'position: relative; background-color: red; height: 160px; margin: 0'},
-        'This is a custom preset !'
+      return (
+        <div className="my-preset" style={{position: 'relative', backgroundColor: 'transparent', height: '160px', margin: 0}}>
+          <AudioSeekbar />
+        </div>
       );
     };
     presetComponent.displayName = 'MyPreset';

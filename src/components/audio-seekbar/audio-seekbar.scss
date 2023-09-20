@@ -1,0 +1,30 @@
+@import '~@playkit-js/playkit-js-ui';
+
+.audioSeekbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10px;
+  width: 100%;
+  margin: 6px 0;
+  .currentTime,
+  .duration {
+    flex-shrink: 0;
+    color: $tone-1-color;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .seekbarWrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0 8px;
+    padding: 3px 0;
+    flex-grow: 1;
+    > :global(.playkit-seek-bar) {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
