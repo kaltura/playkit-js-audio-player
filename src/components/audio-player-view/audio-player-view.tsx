@@ -1,5 +1,7 @@
 // import {useState, useEffect, useContext} from 'preact/hooks';
 // import * as styles from './audio-player-preset.scss';
+import {AudioSeekbar} from '../audio-seekbar';
+import {AudioPlayerControls} from '../audio-player-controls';
 
 //import {BasePlugin, KalturaPlayer, ui} from '@playkit-js/kaltura-player-js';
 
@@ -10,11 +12,12 @@
  * @param {string} props.poster Base image url.
  */
 
-const AudioPlayerView = () => {
+const AudioPlayerView = ({pluginConfig}: any) => {
   return (
-    <h1 className="my-preset" style="position: relative; background-color: red; height: 160px; margin: 0">
-      This is a custom preset
-    </h1>
+    <div className="my-preset" style="position: relative; background-color: red; height: 160px; margin: 0">
+      <AudioSeekbar />
+      <AudioPlayerControls pluginConfig={pluginConfig} />
+    </div>
   );
 };
 

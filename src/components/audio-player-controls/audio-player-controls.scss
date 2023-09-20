@@ -1,0 +1,16 @@
+.playbackContlolsWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 212px;
+  height: 36px;
+  margin: 0 auto;
+  :global(.playkit-control-button-container:not(:last-child)) {
+    margin-right: 8px;
+  }
+  :global(.playkit-volume-control-bar) {
+    bottom: -4px;
+    left: -40px;
+    transform: rotate(90deg);
+  }
+}

@@ -31,7 +31,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     // @ts-ignore
     this.player.ui._uiManager.buildCustomUI([
       {
-        template: () => <AudioPlayerView />,
+        template: () => <AudioPlayerView pluginConfig={this.config}/>,
         condition: () => true
       }
     ]);
