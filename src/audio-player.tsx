@@ -38,7 +38,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
 
     this.player.ui.addComponent({
       label: 'video-player-wrapper',
-      presets: ['MyPreset'],
+      presets: ['AudioPlayer'],
       area: 'VideoPlayerArea',
       get: () => {
         /* TODO */
