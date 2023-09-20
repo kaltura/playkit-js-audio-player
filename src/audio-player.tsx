@@ -1,6 +1,7 @@
 import {BasePlugin, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
 import {AudioPlayerView} from './components';
+import {AudioSeekbar} from './components/audio-seekbar';
 
 class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
   constructor(name: string, player: KalturaPlayer, config: AudioPlayerConfig) {
