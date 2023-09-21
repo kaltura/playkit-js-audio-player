@@ -40,7 +40,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
             {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              <AudioPlayerView poster={poster} />
+              <AudioPlayerView poster={poster} pluginConfig={this.config} />
             }
           </AudioPlayerUI>
         ),

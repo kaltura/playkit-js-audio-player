@@ -1,4 +1,5 @@
 import {AudioPlayerControls, AudioPlayerDetails, AudioSeekbar} from '..';
+import {AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 
 import {ui} from '@playkit-js/kaltura-player-js';
@@ -38,11 +39,12 @@ const mapStateToProps = (state: any) => {
 interface AudioPlayerViewProps {
   poster?: string;
   sizeClass?: string;
+  pluginConfig: AudioPlayerConfig;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster}: AudioPlayerViewProps) => {
+const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster, pluginConfig}: AudioPlayerViewProps) => {
   if (sizeClass === styles.extraSmall) {
     return (
       <div className={`${styles.audioPlayerView} ${sizeClass}`}>
@@ -54,13 +56,11 @@ const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster}: AudioPlay
         </div>
         <div className={styles.bottomControls}>
           <AudioSeekbar />
-          <AudioPlayerControls pluginConfig={{}} />
+          <AudioPlayerControls pluginConfig={pluginConfig} />
         </div>
       </div>
     );
   }
-
-  //console.log(sizeClass);
 
   return (
     <div className={`${styles.audioPlayerView} ${sizeClass}`}>
@@ -71,7 +71,7 @@ const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster}: AudioPlay
         </div>
         <div className={styles.bottomControls}>
           <AudioSeekbar />
-          <AudioPlayerControls pluginConfig={{}} />
+          <AudioPlayerControls pluginConfig={pluginConfig} />
         </div>
       </div>
     </div>
