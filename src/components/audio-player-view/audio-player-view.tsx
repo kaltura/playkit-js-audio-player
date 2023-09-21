@@ -45,12 +45,29 @@ interface AudioPlayerViewProps {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster}: AudioPlayerViewProps) => {
+  if (sizeClass === styles.extraSmall) {
+    return (
+      <div className={`${styles.audioPlayerView} ${sizeClass}`}>
+        <div className={styles.topControls}>
+          <div className={styles.leftControls}>{poster ? <img src={poster} /> : undefined}</div>
+        </div>
+        <div className={styles.bottomControls}>
+          <AudioSeekbar />
+          <AudioPlayerControls pluginConfig={{}} />
+        </div>
+      </div>
+    );
+  }
+
+  console.log(sizeClass);
   return (
-    <div className={`${styles.audioPlayerView} ${sizeClass}`}>
-      <div className={styles.leftControls}>{poster ? <img src={poster} /> : undefined}</div>
-      <div className={styles.rightControls}>
-        <AudioSeekbar />
-        <AudioPlayerControls pluginConfig={{}} />
+    <div className={styles.audioPlayerView}>
+      <div className={styles.topControls}>
+        <div className={styles.leftControls}>{poster ? <img src={poster} /> : undefined}</div>
+        <div className={styles.rightControls}>
+          <AudioSeekbar />
+          <AudioPlayerControls pluginConfig={{}} />
+        </div>
       </div>
     </div>
   );
