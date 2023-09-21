@@ -32,7 +32,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
       {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        template: () => <AudioPlayerView props={{}} />,
+        template: () => <AudioPlayerView pluginConfig={this.config} />,
         condition: () => true
       }
     ]);

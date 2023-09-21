@@ -5,6 +5,7 @@ const {connect} = ui.redux;
 
 import {AudioSeekbar} from '../audio-seekbar';
 import {AudioPlayerControls} from '../audio-player-controls';
+import {AudioPlayerConfig} from '../../types';
 
 const {PLAYER_SIZE} = ui.Components;
 
@@ -39,15 +40,16 @@ const mapStateToProps = (state: any) => {
 
 interface AudioPlayerViewProps {
   sizeClass?: string;
+  pluginConfig: AudioPlayerConfig;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const AudioPlayerView = connect(mapStateToProps)(({sizeClass}: AudioPlayerViewProps) => {
+const AudioPlayerView = connect(mapStateToProps)(({sizeClass, pluginConfig, live}: AudioPlayerViewProps) => {
   return (
     <div className={`${styles.audioPlayerView} ${sizeClass}`} style="position: relative; background-color: red">
       <AudioSeekbar />
-      <AudioPlayerControls pluginConfig={{}} />
+      <AudioPlayerControls pluginConfig={pluginConfig} />
     </div>
   );
 });
