@@ -47,9 +47,11 @@ interface AudioPlayerViewProps {
 const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster}: AudioPlayerViewProps) => {
   return (
     <div className={`${styles.audioPlayerView} ${sizeClass}`}>
-      <div>{poster ? <img src={poster} /> : undefined}</div>
-      <AudioSeekbar />
-      <AudioPlayerControls pluginConfig={{}} />
+      <div className={styles.leftControls}>{poster ? <img src={poster} /> : undefined}</div>
+      <div className={styles.rightControls}>
+        <AudioSeekbar />
+        <AudioPlayerControls pluginConfig={{}} />
+      </div>
     </div>
   );
 });
