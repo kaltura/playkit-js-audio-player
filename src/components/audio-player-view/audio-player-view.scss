@@ -1,0 +1,15 @@
+.audio-player-view {
+    &.medium {
+        height: 768px;
+    }
+
+    &.small {
+        height: 132px;
+    }
+
+    &.extra-small {
+        height: 132px;
+    }
+
+    margin: 0;
+}
