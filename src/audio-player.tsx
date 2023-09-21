@@ -1,6 +1,6 @@
 import {BasePlugin, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
-import {AudioPlayerView} from './components';
+import {AudioPlayerView, AudioPlayerUI} from './components';
 
 class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
   constructor(name: string, player: KalturaPlayer, config: AudioPlayerConfig) {
@@ -13,6 +13,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
 
   async loadMedia() {
     await this.player.ready;
+    const poster = this.player.sources.poster || '';
 
     // TODO fix TS ignores
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -28,11 +29,21 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this.player.ui._uiManager.buildCustomUI([
       {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        template: () => <AudioPlayerView props={{}} />,
+        template: () => (
+          <AudioPlayerUI>
+            {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              <AudioPlayerView poster={poster} />
+            }
+          </AudioPlayerUI>
+        ),
         condition: () => true
       }
     ]);

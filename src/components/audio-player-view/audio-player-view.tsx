@@ -38,20 +38,20 @@ const mapStateToProps = (state: any) => {
 };
 
 interface AudioPlayerViewProps {
+  poster?: string;
   sizeClass?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const AudioPlayerView = connect(mapStateToProps)(({sizeClass}: AudioPlayerViewProps) => {
+const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster}: AudioPlayerViewProps) => {
   return (
-    <div className={`${styles.audioPlayerView} ${sizeClass}`} style="position: relative; background-color: red">
+    <div className={`${styles.audioPlayerView} ${sizeClass}`}>
+      <div>{poster ? <img src={poster} /> : undefined}</div>
       <AudioSeekbar />
       <AudioPlayerControls pluginConfig={{}} />
     </div>
   );
 });
-
-AudioPlayerView.displayName = 'AudioPlayer';
 
 export {AudioPlayerView};

@@ -1,15 +1,24 @@
 .audio-player-view {
     &.medium {
         height: 280px;
+        padding: 16px;
     }
 
     &.small {
         height: 132px;
+        padding: 8px;
     }
 
     &.extra-small {
         height: 132px;
+        padding: 8px;
     }
 
+    background-color: #222;
     margin: 0;
+
+    img {
+        height: 100%;
+        aspect-ratio: 1 / 1;
+    }
 }
