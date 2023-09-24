@@ -12,6 +12,10 @@
             
             .right-controls {
                 width: 100%;
+
+                .header {
+                    gap: 8px;
+                }
             }
         }
         
@@ -33,6 +37,10 @@
                 display: flex;
                 gap: 8px;
                 padding: 8px;
+
+                .header {
+                    gap: 8px;
+                }
             }
         }
     }
@@ -52,6 +60,10 @@
             flex-direction: column;
             justify-content: space-between;
             width: 100%;
+
+            .header {
+                flex-direction: column;
+            }
 
             .title {
                 margin-bottom: 16px;
@@ -83,6 +95,10 @@
         color: white;
         
         .audio-icon {}
+
+        .header {
+            display: flex;
+        }
 
         .title {
             -webkit-box-orient: vertical;

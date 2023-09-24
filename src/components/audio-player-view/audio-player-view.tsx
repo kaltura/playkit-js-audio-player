@@ -54,8 +54,10 @@ const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster, title, des
           <div className={styles.leftControls}>{poster ? <img src={poster} /> : undefined}</div>
           <div className={styles.rightControls}>
             <div className={styles.audioPlayerDetails}>
-              <div className={styles.audioIcon}>[Icon]</div>
-              <div className={styles.title}>{title}</div>
+              <div className={styles.header}>
+                <div className={styles.audioIcon}>[Icon]</div>
+                <div className={styles.title}>{title}</div>
+              </div>
               <div className={styles.description}>{description}</div>
             </div>
           </div>
@@ -74,8 +76,10 @@ const AudioPlayerView = connect(mapStateToProps)(({sizeClass, poster, title, des
       <div className={styles.rightControls}>
         <div className={styles.topControls}>
           <div className={styles.audioPlayerDetails}>
-            <div className={styles.audioIcon}>[Icon]</div>
-            <div className={styles.title}>{title}</div>
+            <div className={styles.header}>
+              <div className={styles.audioIcon}>[Icon]</div>
+              <div className={styles.title}>{title}</div>
+            </div>
             <div className={styles.description}>{description || ''}</div>
           </div>
         </div>
