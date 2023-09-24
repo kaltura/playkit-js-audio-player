@@ -19,7 +19,7 @@
             padding: 0 8px;
         }
     }
-
+    
     &.small {
         display: flex;
         height: 132px;
@@ -36,22 +36,35 @@
             }
         }
     }
-
+    
     &.medium {
         display: flex;
         height: 280px;
         gap: 16px;
         padding: 16px;
-        
+             
         .left-controls {
             height: 248px;
         }
         
         .right-controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 100%;
+
+            .title {
+                margin-bottom: 16px;
+                -webkit-line-clamp: 3;
+                font-size: 32px;
+            }
+
+            .description {
+                margin-bottom: 8px;
+            }
         }
     }
-        
+    
     background-color: #222;
     margin: 0;
     
@@ -64,5 +77,28 @@
         height: 100%;
         aspect-ratio: 1 / 1;
         background-color: black;
+    }
+    
+    .audio-player-details {
+        color: white;
+        
+        .audio-icon {}
+
+        .title {
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            display: -webkit-box;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .description {
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 }

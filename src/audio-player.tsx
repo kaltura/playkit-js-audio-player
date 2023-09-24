@@ -13,7 +13,9 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
 
   async loadMedia() {
     await this.player.ready;
-    const poster = this.player.sources.poster || '';
+    const poster = this.player.sources.poster;
+    const title = this.player.sources.metadata?.name || '';
+    const description = this.player.sources.metadata?.description || '';
 
     // TODO fix TS ignores
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -40,7 +42,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
             {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              <AudioPlayerView poster={poster} pluginConfig={this.config} />
+              <AudioPlayerView description={description} title={title} poster={poster} pluginConfig={this.config} />
             }
           </AudioPlayerUI>
         ),
