@@ -2,6 +2,7 @@ import {h} from 'preact';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
+import {LoopButton} from '../loop-button';
 
 //@ts-ignore
 const {Rewind, Forward, PlaylistButton, PlayPause, Volume, LiveTag, SpeedMenu, withPlayer} = ui.Components;
@@ -32,7 +33,7 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
       {player.isLive() && <LiveTag />}
       <div className={styles.playbackControls}>
         {pluginConfig.showReplayButton ? (
-          <Rewind step={10} /> // placeholder
+          <LoopButton />
         ) : (
           <div className={styles.speedMenuWrapper}>
             <SpeedMenu pushRef={() => null} optionsRenderer={_renderSpeedOptons} />
