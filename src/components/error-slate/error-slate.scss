@@ -1,0 +1,8 @@
+.errorSlateWrapper {
+  :global(.playkit-error-overlay .playkit-overlay-contents) {
+    padding: 8px !important; // overwrite player overlay styles
+    :global(.playkit-error-text .playkit-headline) {
+      font-size: 18px;
+    }
+  }
+}

@@ -1,120 +1,121 @@
 .audio-player-view {
-    &.extra-small {
-        height: 132px;
-        display: flex;
-        flex-direction: column;
-        
-        .top-controls {
-            display: flex;
-            gap: 8px;
-            height: calc(100% - 58px);
-            padding: 8px;
-            
-            .right-controls {
-                width: 100%;
+  &.extra-small {
+    height: 132px;
+    display: flex;
+    flex-direction: column;
 
-                .header {
-                    gap: 8px;
-                }
-            }
-        }
-        
-        .bottom-controls {
-            padding: 0 8px;
-        }
-    }
-    
-    &.small {
-        display: flex;
-        height: 132px;
-        gap: 8px;
-        padding: 8px;
-        
-        .right-controls {
-            width: 100%;
-            
-            .top-controls {
-                display: flex;
-                gap: 8px;
-                padding: 8px;
+    .top-controls {
+      display: flex;
+      gap: 8px;
+      height: calc(100% - 58px);
+      padding: 8px;
 
-                .header {
-                    gap: 8px;
-                }
-            }
-        }
-    }
-    
-    &.medium {
-        display: flex;
-        height: 280px;
-        gap: 16px;
-        padding: 16px;
-             
-        .left-controls {
-            height: 248px;
-        }
-        
-        .right-controls {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 100%;
-
-            .header {
-                flex-direction: column;
-            }
-
-            .title {
-                margin-bottom: 16px;
-                -webkit-line-clamp: 3;
-                font-size: 32px;
-            }
-
-            .description {
-                margin-bottom: 8px;
-            }
-        }
-    }
-    
-    background-color: #222;
-    margin: 0;
-    
-    img {
+      .right-controls {
         width: 100%;
-        height: 100%;
-    }
-    
-    .left-controls {
-        height: 100%;
-        aspect-ratio: 1 / 1;
-        background-color: black;
-    }
-    
-    .audio-player-details {
-        color: white;
-        
-        .audio-icon {}
 
         .header {
-            display: flex;
+          gap: 8px;
         }
-
-        .title {
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            display: -webkit-box;
-            font-weight: bold;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .description {
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            display: -webkit-box;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+      }
     }
+
+    .bottom-controls {
+      padding: 0 8px;
+    }
+  }
+
+  &.small {
+    display: flex;
+    height: 132px;
+    gap: 8px;
+    padding: 8px;
+
+    .right-controls {
+      width: 100%;
+
+      .top-controls {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+
+        .header {
+          gap: 8px;
+        }
+      }
+    }
+  }
+
+  &.medium {
+    display: flex;
+    height: 280px;
+    gap: 16px;
+    padding: 16px;
+
+    .left-controls {
+      height: 248px;
+    }
+
+    .right-controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+
+      .header {
+        flex-direction: column;
+      }
+
+      .title {
+        margin-bottom: 16px;
+        -webkit-line-clamp: 3;
+        font-size: 32px;
+      }
+
+      .description {
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  background-color: #222;
+  margin: 0;
+
+  .poster {
+    width: 100%;
+    height: 100%;
+  }
+
+  .left-controls {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: black;
+  }
+
+  .audio-player-details {
+    color: white;
+
+    .audio-icon {
+    }
+
+    .header {
+      display: flex;
+    }
+
+    .title {
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      display: -webkit-box;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .description {
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
