@@ -63,12 +63,16 @@
 
       .header {
         flex-direction: column;
+
+        .audio-icon-container {
+          margin: 4px 0 28px 0;
+        }
       }
 
       .title {
-        margin-bottom: 16px;
         -webkit-line-clamp: 3;
         font-size: 32px;
+        margin-bottom: 16px;
       }
 
       .description {
@@ -94,11 +98,13 @@
   .audio-player-details {
     color: white;
 
-    .audio-icon {
-    }
-
     .header {
       display: flex;
+
+      .audio-icon-container {
+        margin: 4px 8px 0 0;
+        position: relative;
+      }
     }
 
     .title {

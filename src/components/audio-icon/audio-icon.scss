@@ -1,0 +1,64 @@
+.audio-icon {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+
+    &.active {
+        .box1 {
+            animation-name: wave1;
+        }
+
+        .box2 {
+            animation-name: wave2;
+        }
+
+        &.large {
+            .box1 {
+                animation-name: wave1-large;
+            }
+    
+            .box2 {
+                animation-name: wave2-large;
+            }
+        }
+    }
+
+    .box {
+        background: white;
+        height: 2px;
+        width: 2px;
+        border-radius: 2px;
+        margin-right: 2px;
+        animation-duration: 0.8s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-direction: alternate-reverse;  
+    }
+    
+    .box1 {
+        @extend .box;
+    }
+    
+    .box2 {
+        @extend .box;
+    }
+    
+    @keyframes wave1 {
+        from {height: 2px;}
+        to {height: 12px;}  
+    }
+    @keyframes wave2 {
+        from {height: 2px;}
+        to {height: 6px;} 
+    }
+    
+    @keyframes wave1-large {
+        from {height: 3px;}
+        to {height: 18px;}    
+    }
+    @keyframes wave2-large {
+        from {height: 3px;}
+        to {height: 10px;}
+    }
+}
