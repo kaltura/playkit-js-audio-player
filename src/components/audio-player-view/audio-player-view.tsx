@@ -1,5 +1,15 @@
 import {Fragment} from 'preact';
-import {AudioIcon, AudioPlayerControls, AudioSeekbar} from '..';
+import {useState, useEffect} from 'preact/hooks';
+import {
+  AudioIcon,
+  AudioPlayerControls,
+  AudioSeekbar,
+  ControlsPlaceholder,
+  SeekbarPlaceholder,
+  ThumbPlaceholder,
+  SmallDetailsPlaceholder,
+  LargeDetailsPlaceholder
+} from '..';
 import {AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
@@ -11,7 +21,7 @@ const {PLAYER_SIZE} = ui.Components;
 
 const mapStateToProps = (state: any) => {
   const {shell, engine} = state;
-  const {isPlaying} = engine;
+  const {isPlaying, hasError} = engine;
 
   let sizeClass = '';
   switch (shell.playerSize) {
@@ -37,7 +47,7 @@ const mapStateToProps = (state: any) => {
   return {
     sizeClass,
     isPlaying,
-    hasError: engine.hasError
+    hasError
   };
 };
 
@@ -49,14 +59,51 @@ interface AudioPlayerViewProps {
   isPlaying?: boolean;
   hasError?: boolean;
   pluginConfig: AudioPlayerConfig;
+  ready: Promise<any>;
 }
 
 const AudioPlayerView = connect(mapStateToProps)(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  ({sizeClass, isPlaying = false, poster, title, description, pluginConfig, hasError}: AudioPlayerViewProps) => {
-    const _renderErrorSlate = () => {
-      return <ErrorSlate />;
+  ({sizeClass, isPlaying = false, poster, title, description, pluginConfig, hasError, ready}: AudioPlayerViewProps) => {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      ready.then(() => {
+        setLoading(false);
+      });
+    }, [ready]);
+
+    const _renderPoster = () => {
+      if (loading) {
+        return <ThumbPlaceholder />;
+      }
+      return poster ? <img src={poster} className={styles.poster} /> : null;
+    };
+
+    const _renderAudioDetails = () => {
+      if (loading) {
+        return sizeClass === styles.extraSmall ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
+      }
+      return (
+        <Fragment>
+          <div className={styles.header}>
+            <div className={styles.audioIconContainer}>
+              <AudioIcon isLarge={false} isActive={isPlaying} />
+            </div>
+            <div className={styles.title}>{title}</div>
+          </div>
+          <div className={styles.description}>{description || ''}</div>
+        </Fragment>
+      );
+    };
+
+    const _renderSeekBar = () => {
+      return loading ? <SeekbarPlaceholder /> : <AudioSeekbar />;
+    };
+
+    const _renderPlayerControls = () => {
+      return loading ? <ControlsPlaceholder /> : <AudioPlayerControls pluginConfig={pluginConfig} />;
     };
 
     const _renderView = () => {
@@ -64,52 +111,35 @@ const AudioPlayerView = connect(mapStateToProps)(
         return (
           <Fragment>
             <div className={styles.topControls}>
-              <div className={styles.leftControls}>{poster ? <img src={poster} className={styles.poster} /> : undefined}</div>
+              <div className={styles.leftControls}>{_renderPoster()}</div>
               <div className={styles.rightControls}>
-                <div className={styles.audioPlayerDetails}>
-                  <div className={styles.header}>
-                    <div className={styles.audioIconContainer}>
-                      <AudioIcon isLarge={false} isActive={isPlaying} />
-                    </div>
-                    <div className={styles.title}>{title}</div>
-                  </div>
-                  <div className={styles.description}>{description}</div>
-                </div>
+                <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
               </div>
             </div>
             <div className={styles.bottomControls}>
-              <AudioSeekbar />
-              <AudioPlayerControls pluginConfig={pluginConfig} />
+              {_renderSeekBar()}
+              {_renderPlayerControls()}
             </div>
           </Fragment>
         );
       }
       return (
         <Fragment>
-          <div className={styles.leftControls}>{poster ? <img src={poster} className={styles.poster} /> : undefined}</div>
+          <div className={styles.leftControls}>{_renderPoster()}</div>
           <div className={styles.rightControls}>
             <div className={styles.topControls}>
-              <div className={styles.audioPlayerDetails}>
-                <div className={styles.header}>
-                  <div className={styles.audioIconContainer}>
-                    <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} />
-                  </div>
-                  <div className={styles.title}>{title}</div>
-                </div>
-
-                <div className={styles.description}>{description}</div>
-              </div>
+              <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
             </div>
             <div className={styles.bottomControls}>
-              <AudioSeekbar />
-              <AudioPlayerControls pluginConfig={pluginConfig} />
+              {_renderSeekBar()}
+              {_renderPlayerControls()}
             </div>
           </div>
         </Fragment>
       );
     };
 
-    return <div className={`${styles.audioPlayerView} ${sizeClass}`}>{hasError ? _renderErrorSlate() : _renderView()}</div>;
+    return <div className={`${styles.audioPlayerView} ${sizeClass}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
   }
 );
 
