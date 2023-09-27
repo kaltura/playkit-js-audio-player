@@ -89,7 +89,7 @@ const AudioPlayerView = connect(mapStateToProps)(
         <Fragment>
           <div className={styles.header}>
             <div className={styles.audioIconContainer}>
-              <AudioIcon isLarge={false} isActive={isPlaying} />
+              <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} />
             </div>
             <div className={styles.title}>{title}</div>
           </div>
