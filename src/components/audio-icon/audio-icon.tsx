@@ -6,8 +6,6 @@ interface AudioIconProps {
 }
 
 const AudioIcon = ({isLarge, isActive}: AudioIconProps) => {
-  console.log(isActive);
-
   return (
     <div className={`${styles.audioIcon} ${isLarge ? styles.large : ''} ${isActive ? styles.active : ''}`}>
       <div className={styles.box2} />
