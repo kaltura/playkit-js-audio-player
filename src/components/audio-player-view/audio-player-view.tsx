@@ -83,7 +83,7 @@ const AudioPlayerView = connect(mapStateToProps)(
 
     const _renderAudioDetails = () => {
       if (loading) {
-        return sizeClass === styles.extraSmall ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
+        return [styles.extraSmall, styles.small].includes(sizeClass) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
       }
       return (
         <Fragment>

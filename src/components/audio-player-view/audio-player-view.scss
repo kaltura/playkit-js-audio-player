@@ -11,7 +11,9 @@
       padding: 8px;
 
       .right-controls {
+        display: flex;
         width: 100%;
+        align-items: center;
 
         .header {
           gap: 8px;
@@ -88,12 +90,15 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background-color: black;
   }
 
   .left-controls {
     height: 100%;
     aspect-ratio: 1 / 1;
-    background-color: black;
+    border-radius: 8px;
+    flex-shrink: 0;
+    overflow: hidden;
   }
 
   .audio-player-details {
@@ -125,8 +130,4 @@
       text-overflow: ellipsis;
     }
   }
-}
-
-:global(.playkit-video-player) {
-  visibility: hidden;
 }

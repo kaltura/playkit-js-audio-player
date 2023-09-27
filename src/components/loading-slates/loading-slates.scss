@@ -4,6 +4,10 @@
   animation: frame-bounce 2s infinite ease-in-out;
 }
 
+.largeDetailsPlaceholder {
+  max-width: 100%;
+}
+
 @keyframes frame-bounce {
   0%,
   100% {
