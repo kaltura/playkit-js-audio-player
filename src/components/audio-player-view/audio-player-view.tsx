@@ -120,7 +120,9 @@ const AudioPlayerView = withText(translates)(
               <div className={styles.topControls}>
                 <div className={styles.leftControls}>{_renderPoster()}</div>
                 <div className={styles.rightControls}>
-                  <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
+                  <div className={styles.audioPlayerDetails} tabIndex={0}>
+                    {_renderAudioDetails()}
+                  </div>
                 </div>
               </div>
               <div className={styles.bottomControls}>
@@ -135,7 +137,9 @@ const AudioPlayerView = withText(translates)(
             <div className={styles.leftControls}>{_renderPoster()}</div>
             <div className={styles.rightControls}>
               <div className={styles.topControls}>
-                <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
+                <div className={styles.audioPlayerDetails} tabIndex={0}>
+                  {_renderAudioDetails()}
+                </div>
               </div>
               <div className={styles.bottomControls}>
                 {_renderSeekBar()}
