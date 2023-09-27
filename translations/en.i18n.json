@@ -2,7 +2,8 @@
   "en": {
     "audioPlayer": {
       "enableLoop": "Enable loop",
-      "disableLoop": "Disable loop"
+      "disableLoop": "Disable loop",
+      "mediaThumb": "Media thumbnail"
     }
   }
 }

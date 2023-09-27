@@ -16,6 +16,7 @@ import {ErrorSlate} from '../error-slate';
 
 import {ui} from '@playkit-js/kaltura-player-js';
 const {connect} = ui.redux;
+const {withText, Text} = ui.preacti18n;
 
 const {PLAYER_SIZE} = ui.Components;
 
@@ -60,87 +61,94 @@ interface AudioPlayerViewProps {
   hasError?: boolean;
   pluginConfig: AudioPlayerConfig;
   ready: Promise<any>;
+  mediaThumb?: string;
 }
 
-const AudioPlayerView = connect(mapStateToProps)(
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  ({sizeClass, isPlaying = false, poster, title, description, pluginConfig, hasError, ready}: AudioPlayerViewProps) => {
-    const [loading, setLoading] = useState(true);
+const translates = {
+  mediaThumb: <Text id="audioPlayer.mediaThumb">Media thumbnail</Text>
+};
 
-    useEffect(() => {
-      ready.then(() => {
-        setLoading(false);
-      });
-    }, [ready]);
+const AudioPlayerView = withText(translates)(
+  connect(mapStateToProps)(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ({sizeClass, isPlaying = false, poster, title, description, pluginConfig, hasError, ready, mediaThumb}: AudioPlayerViewProps) => {
+      const [loading, setLoading] = useState(true);
 
-    const _renderPoster = () => {
-      if (loading) {
-        return <ThumbPlaceholder />;
-      }
-      return poster ? <img src={poster} className={styles.poster} /> : null;
-    };
+      useEffect(() => {
+        ready.then(() => {
+          setLoading(false);
+        });
+      }, [ready]);
 
-    const _renderAudioDetails = () => {
-      if (loading) {
-        return [styles.extraSmall, styles.small].includes(sizeClass) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
-      }
-      return (
-        <Fragment>
-          <div className={styles.header}>
-            <div className={styles.audioIconContainer}>
-              <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} />
-            </div>
-            <div className={styles.title}>{title}</div>
-          </div>
-          <div className={styles.description}>{description || ''}</div>
-        </Fragment>
-      );
-    };
+      const _renderPoster = () => {
+        if (loading) {
+          return <ThumbPlaceholder />;
+        }
+        return poster ? <img src={poster} className={styles.poster} alt={mediaThumb} /> : null;
+      };
 
-    const _renderSeekBar = () => {
-      return loading ? <SeekbarPlaceholder /> : <AudioSeekbar />;
-    };
-
-    const _renderPlayerControls = () => {
-      return loading ? <ControlsPlaceholder /> : <AudioPlayerControls pluginConfig={pluginConfig} />;
-    };
-
-    const _renderView = () => {
-      if (sizeClass === styles.extraSmall) {
+      const _renderAudioDetails = () => {
+        if (loading) {
+          return [styles.extraSmall, styles.small].includes(sizeClass) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
+        }
         return (
           <Fragment>
-            <div className={styles.topControls}>
-              <div className={styles.leftControls}>{_renderPoster()}</div>
-              <div className={styles.rightControls}>
+            <div className={styles.header}>
+              <div className={styles.audioIconContainer}>
+                <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} />
+              </div>
+              <div className={styles.title}>{title}</div>
+            </div>
+            <div className={styles.description}>{description || ''}</div>
+          </Fragment>
+        );
+      };
+
+      const _renderSeekBar = () => {
+        return loading ? <SeekbarPlaceholder /> : <AudioSeekbar />;
+      };
+
+      const _renderPlayerControls = () => {
+        return loading ? <ControlsPlaceholder /> : <AudioPlayerControls pluginConfig={pluginConfig} />;
+      };
+
+      const _renderView = () => {
+        if (sizeClass === styles.extraSmall) {
+          return (
+            <Fragment>
+              <div className={styles.topControls}>
+                <div className={styles.leftControls}>{_renderPoster()}</div>
+                <div className={styles.rightControls}>
+                  <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
+                </div>
+              </div>
+              <div className={styles.bottomControls}>
+                {_renderSeekBar()}
+                {_renderPlayerControls()}
+              </div>
+            </Fragment>
+          );
+        }
+        return (
+          <Fragment>
+            <div className={styles.leftControls}>{_renderPoster()}</div>
+            <div className={styles.rightControls}>
+              <div className={styles.topControls}>
                 <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
               </div>
-            </div>
-            <div className={styles.bottomControls}>
-              {_renderSeekBar()}
-              {_renderPlayerControls()}
+              <div className={styles.bottomControls}>
+                {_renderSeekBar()}
+                {_renderPlayerControls()}
+              </div>
             </div>
           </Fragment>
         );
-      }
-      return (
-        <Fragment>
-          <div className={styles.leftControls}>{_renderPoster()}</div>
-          <div className={styles.rightControls}>
-            <div className={styles.topControls}>
-              <div className={styles.audioPlayerDetails}>{_renderAudioDetails()}</div>
-            </div>
-            <div className={styles.bottomControls}>
-              {_renderSeekBar()}
-              {_renderPlayerControls()}
-            </div>
-          </div>
-        </Fragment>
-      );
-    };
+      };
 
-    return <div className={`${styles.audioPlayerView} ${sizeClass}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
-  }
+      return <div className={`${styles.audioPlayerView} ${sizeClass}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
+    }
+  )
 );
 
 export {AudioPlayerView};

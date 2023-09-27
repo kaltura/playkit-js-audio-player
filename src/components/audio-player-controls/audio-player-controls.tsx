@@ -1,4 +1,4 @@
-import {h} from 'preact';
+import {useRef, useEffect} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
@@ -17,6 +17,11 @@ interface AudioPlayerControlsProps {
 
 const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
+  const ref = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    ref.current?.setAttribute('tabindex', '0');
+  }, []);
 
   const _renderSpeedOptons = (playbackRates: Array<number>) => {
     return playbackRates.reduce((acc: Array<{}>, speed) => {
@@ -36,12 +41,12 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
           <LoopButton />
         ) : (
           <div className={styles.speedMenuWrapper}>
-            <SpeedMenu pushRef={() => null} optionsRenderer={_renderSpeedOptons} />
+            <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptons} />
           </div>
         )}
-        {playlist ? <PlaylistButton type="prev" showPreview={false} /> : <Rewind step={10} />}
+        {playlist ? <PlaylistButton type="prev" showPreview={false} /> : <Rewind step={10} onToggle={() => {}} />}
         <PlayPause />
-        {playlist ? <PlaylistButton type="next" showPreview={false} /> : <Forward step={10} />}
+        {playlist ? <PlaylistButton type="next" showPreview={false} /> : <Forward step={10} onToggle={() => {}} />}
         <Volume horizontal />
       </div>
     </div>

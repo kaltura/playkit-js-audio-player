@@ -18,7 +18,7 @@
     margin: 0 auto;
     .speedMenuWrapper {
       display: flex;
-      height: 36px;
+      height: 32px;
       width: 32px;
       margin-right: 8px;
       :global(.playkit-smart-container-item) {
@@ -26,37 +26,41 @@
         justify-content: center;
         height: 100%;
         width: 100%;
+        margin: 0;
         label {
           display: none;
         }
-        :global(.playkit-dropdown-button) {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        :global(.playkit-dropdown) {
           width: 100%;
-          height: 100%;
-          padding: 0;
-          :global(.playkit-icon) {
-            display: none;
-          }
-          :global(.playkit-dropdown-menu) {
-            right: auto;
-            left: 0;
-            top: -32px;
+          :global(.playkit-dropdown-button) {
             display: flex;
-            flex-direction: row;
-            margin: 0;
-            padding: 4px;
-            :global(.playkit-dropdown-menu-item) {
-              min-height: 24px;
-              padding: 4px 8px;
-              margin: 0px;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-              &:not(:last-child) {
-                margin-right: 4px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            :global(.playkit-icon) {
+              display: none;
+            }
+            :global(.playkit-dropdown-menu) {
+              right: auto;
+              left: 0;
+              top: -32px;
+              display: flex;
+              flex-direction: row;
+              margin: 0;
+              padding: 4px;
+              :global(.playkit-dropdown-menu-item) {
+                min-height: 24px;
+                padding: 4px 8px;
+                margin: 0px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                &:not(:last-child) {
+                  margin-right: 4px;
+                }
               }
             }
           }
