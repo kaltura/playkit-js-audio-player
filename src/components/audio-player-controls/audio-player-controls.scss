@@ -1,6 +1,6 @@
 @import '~@playkit-js/playkit-js-ui';
 
-.playbackControlsWrapper {
+.playback-controls-wrapper {
   display: flex;
   flex-direction: row;
   height: 36px;
@@ -9,14 +9,14 @@
     margin-left: 0;
     margin-right: 8px;
   }
-  .playbackControls {
+  .playback-controls {
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 212px;
     height: 100%;
     margin: 0 auto;
-    .speedMenuWrapper {
+    .speed-menu-wrapper {
       display: flex;
       height: 32px;
       width: 32px;

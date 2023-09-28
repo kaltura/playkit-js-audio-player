@@ -1,13 +1,13 @@
 @import '~@playkit-js/playkit-js-ui';
 
-.audioSeekbar {
+.audio-seekbar {
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 10px;
   width: 100%;
   margin: 6px 0;
-  .currentTime,
+  .current-time,
   .duration {
     flex-shrink: 0;
     color: $tone-1-color;
@@ -16,7 +16,7 @@
     font-weight: 400;
     line-height: normal;
   }
-  .seekbarWrapper {
+  .seekbar-wrapper {
     width: 100%;
     height: 100%;
     margin: 0 8px;

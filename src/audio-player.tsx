@@ -20,10 +20,10 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     // TODO fix TS ignores
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const a = document.getElementById(this.player.config.targetId)!.querySelector('.kaltura-player-container');
+    const playerContainerElement = document.getElementById(this.player.config.targetId)!.querySelector('.kaltura-player-container');
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    a!.style.height = 'fit-content';
+    playerContainerElement!.style.height = 'fit-content';
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

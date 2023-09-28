@@ -23,7 +23,7 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
     ref.current?.setAttribute('tabindex', '0');
   }, []);
 
-  const _renderSpeedOptons = (playbackRates: Array<number>) => {
+  const _renderSpeedOptions = (playbackRates: Array<number>) => {
     return playbackRates.reduce((acc: Array<{}>, speed) => {
       const speedOption = {
         value: speed,
@@ -41,7 +41,7 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
           <LoopButton />
         ) : (
           <div className={styles.speedMenuWrapper}>
-            <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptons} />
+            <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
           </div>
         )}
         {playlist ? <PlaylistButton type="prev" showPreview={false} /> : <Rewind step={10} onToggle={() => {}} />}

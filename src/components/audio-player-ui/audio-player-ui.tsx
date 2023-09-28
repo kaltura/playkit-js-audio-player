@@ -1,5 +1,6 @@
+import {ComponentChildren} from 'preact';
 interface AudioPlayerProps {
-  children: any;
+  children: ComponentChildren;
 }
 
 const AudioPlayerUI = ({children}: AudioPlayerProps) => {
