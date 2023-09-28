@@ -28,7 +28,7 @@ const AUDIO_PLAYER_CLASSNAME = 'audio-player';
 
 const mapStateToProps = (state: any) => {
   const {shell, engine} = state;
-  const {isPlaying, hasError} = engine;
+  const {isPlaying, hasError, isPlaybackStarted} = engine;
 
   let sizeClass = '';
   switch (shell.playerSize) {
@@ -54,6 +54,7 @@ const mapStateToProps = (state: any) => {
   return {
     sizeClass,
     isPlaying,
+    isPlaybackStarted,
     hasError
   };
 };
@@ -75,6 +76,7 @@ interface AudioPlayerViewProps {
   description?: string;
   sizeClass?: string;
   isPlaying?: boolean;
+  isPlaybackStarted?: boolean;
   hasError?: boolean;
   pluginConfig: AudioPlayerConfig;
   ready: Promise<any>;
@@ -97,6 +99,7 @@ const AudioPlayerView = withText(translates)(
     ({
       sizeClass,
       isPlaying = false,
+      isPlaybackStarted = false,
       poster,
       title,
       description,
@@ -137,7 +140,7 @@ const AudioPlayerView = withText(translates)(
           <Fragment>
             <div className={styles.header}>
               <div className={styles.audioIconContainer}>
-                <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} />
+                {isPlaybackStarted ? <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} /> : undefined}
               </div>
               <div className={styles.title}>{title}</div>
             </div>
