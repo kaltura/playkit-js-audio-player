@@ -1,0 +1,19 @@
+@import '~@playkit-js/playkit-js-ui';
+
+.animated {
+  animation: frame-bounce 2s infinite ease-in-out;
+}
+
+.large-details-placeholder {
+  max-width: 100%;
+}
+
+@keyframes frame-bounce {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}

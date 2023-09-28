@@ -1,0 +1,15 @@
+.error-slate-wrapper {
+  :global(.playkit-error-overlay .playkit-overlay-contents) {
+    padding: 8px !important; // overwrite player overlay styles
+    :global(.playkit-headline) {
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+    :global(.playkit-link-options-container) {
+      max-width: 100%;
+    }
+    :global(.playkit-copy-url-row) {
+      margin-bottom: 8px;
+    }
+  }
+}
