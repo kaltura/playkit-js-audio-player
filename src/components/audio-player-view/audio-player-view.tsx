@@ -60,8 +60,10 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     addPlayerClass: () => dispatch(shell.actions.addPlayerClass(AUDIO_PLAYER_CLASSNAME)),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     removePlayerClass: () => dispatch(shell.actions.removePlayerClass(AUDIO_PLAYER_CLASSNAME))
   };

@@ -1,1 +1,1 @@
-export * from "./loop-button";
+export * from './loop-button';

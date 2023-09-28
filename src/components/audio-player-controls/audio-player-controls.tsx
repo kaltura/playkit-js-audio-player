@@ -4,6 +4,7 @@ import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {Rewind, Forward, PlaylistButton, PlayPause, Volume, LiveTag, SpeedMenu, withPlayer} = ui.Components;
 const {
@@ -24,7 +25,7 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
   }, []);
 
   const _renderSpeedOptions = (playbackRates: Array<number>) => {
-    return playbackRates.reduce((acc: Array<{}>, speed) => {
+    return playbackRates.reduce((acc: Array<object>, speed) => {
       const speedOption = {
         value: speed,
         label: `${speed}x`,
@@ -44,9 +45,27 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
             <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
           </div>
         )}
-        {playlist ? <PlaylistButton type="prev" showPreview={false} /> : <Rewind step={10} onToggle={() => {}} />}
+        {playlist ? (
+          <PlaylistButton type="prev" showPreview={false} />
+        ) : (
+          <Rewind
+            step={10}
+            onToggle={() => {
+              /**/
+            }}
+          />
+        )}
         <PlayPause />
-        {playlist ? <PlaylistButton type="next" showPreview={false} /> : <Forward step={10} onToggle={() => {}} />}
+        {playlist ? (
+          <PlaylistButton type="next" showPreview={false} />
+        ) : (
+          <Forward
+            step={10}
+            onToggle={() => {
+              /**/
+            }}
+          />
+        )}
         <Volume horizontal />
       </div>
     </div>

@@ -1,11 +1,16 @@
 import {h, Component} from 'preact';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import {core, ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-seekbar.scss';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {SeekBar, withPlayer, withEventDispatcher} = ui.Components;
 const {redux, reducers, utils, Event} = ui;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {toHHMMSS, bindActions} = utils;
 
@@ -36,6 +41,7 @@ const mapStateToProps = (state: any) => ({
 @withPlayer
 @withEventDispatcher(COMPONENT_NAME)
 @Event.withEventManager
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 @redux.connect(mapStateToProps, bindActions(reducers.seekbar.actions))
 class AudioSeekbar extends Component<ConnectProps | any> {

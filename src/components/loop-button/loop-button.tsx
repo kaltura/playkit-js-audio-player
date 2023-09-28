@@ -1,10 +1,12 @@
 import {h, Component} from 'preact';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import {core, ui} from '@playkit-js/kaltura-player-js';
 import {Button, ButtonSize, ButtonType} from '@playkit-js/common/dist/components/button';
 const {withText, Text} = ui.preacti18n;
 import * as styles from './loop-button.scss';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {withPlayer} = ui.Components;
 const {Event} = ui;
