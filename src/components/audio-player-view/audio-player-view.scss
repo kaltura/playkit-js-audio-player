@@ -110,8 +110,6 @@
   }
 
   .audio-player-details {
-    color: white;
-
     .header {
       display: flex;
 
@@ -124,7 +122,9 @@
     .title {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
+      color: #fff; // tone 1
       display: -webkit-box;
+      font-size: 14px;
       font-weight: bold;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -136,6 +136,7 @@
       display: -webkit-box;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: rgba(255, 255, 255, 0.8); // tone 1 opacity 0.8
     }
   }
 }
