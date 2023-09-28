@@ -15,10 +15,16 @@ import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 
 import {ui} from '@playkit-js/kaltura-player-js';
-const {connect} = ui.redux;
+const {
+  redux: {connect},
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  reducers: {shell}
+} = ui;
 const {withText, Text} = ui.preacti18n;
-
 const {PLAYER_SIZE} = ui.Components;
+
+const AUDIO_PLAYER_CLASSNAME = 'audio-player';
 
 const mapStateToProps = (state: any) => {
   const {shell, engine} = state;
@@ -52,6 +58,15 @@ const mapStateToProps = (state: any) => {
   };
 };
 
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    // @ts-ignore
+    addPlayerClass: () => dispatch(shell.actions.addPlayerClass(AUDIO_PLAYER_CLASSNAME)),
+    // @ts-ignore
+    removePlayerClass: () => dispatch(shell.actions.removePlayerClass(AUDIO_PLAYER_CLASSNAME))
+  };
+};
+
 interface AudioPlayerViewProps {
   poster?: string;
   title?: string;
@@ -62,6 +77,8 @@ interface AudioPlayerViewProps {
   pluginConfig: AudioPlayerConfig;
   ready: Promise<any>;
   mediaThumb?: string;
+  addPlayerClass?: () => void;
+  removePlayerClass?: () => void;
 }
 
 const translates = {
@@ -69,11 +86,33 @@ const translates = {
 };
 
 const AudioPlayerView = withText(translates)(
-  connect(mapStateToProps)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    ({sizeClass, isPlaying = false, poster, title, description, pluginConfig, hasError, ready, mediaThumb}: AudioPlayerViewProps) => {
+    ({
+      sizeClass,
+      isPlaying = false,
+      poster,
+      title,
+      description,
+      pluginConfig,
+      hasError,
+      ready,
+      mediaThumb,
+      addPlayerClass,
+      removePlayerClass
+    }: AudioPlayerViewProps) => {
       const [loading, setLoading] = useState(true);
+
+      useEffect(() => {
+        addPlayerClass!();
+        return () => {
+          removePlayerClass!();
+        };
+      }, []);
 
       useEffect(() => {
         ready.then(() => {

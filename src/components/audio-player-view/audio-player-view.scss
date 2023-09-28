@@ -131,3 +131,6 @@
     }
   }
 }
+:global(.audio-player .playkit-video-player) {
+  visibility: hidden;
+}
