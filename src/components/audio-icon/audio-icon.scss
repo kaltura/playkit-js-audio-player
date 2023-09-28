@@ -3,62 +3,103 @@
     display: flex;
     flex-direction: row;
     position: absolute;
-
+    height: 2px;
+    
     &.active {
         .box1 {
             animation-name: wave1;
         }
-
+        
         .box2 {
             animation-name: wave2;
         }
 
-        &.large {
-            .box1 {
-                animation-name: wave1-large;
-            }
-    
-            .box2 {
-                animation-name: wave2-large;
-            }
+        .box3 {
+            animation-name: wave3;
         }
+        
+        // &.large {
+        //     .box1 {
+        //         animation-name: wave1-large;
+        //     }
+            
+        //     .box2 {
+        //         animation-name: wave2-large;
+        //     }
+        // }
     }
-
+    
     .box {
         background: white;
         height: 2px;
         width: 2px;
         border-radius: 2px;
         margin-right: 2px;
-        animation-duration: 0.8s;
+        margin-left: 2px;
+        animation-duration: 2.4s;
         animation-iteration-count: infinite;
         animation-timing-function: ease-in-out;
         animation-direction: alternate-reverse;  
     }
     
-    .box1 {
+    .box1, .box2, .box3 {
         @extend .box;
     }
+        
+    // @keyframes wave1 {
+    //     from {height: 2px;}
+    //     to {height: 12px;}  
+    // }
+    // @keyframes wave2 {
+    //     from {height: 2px;}
+    //     to {height: 6px;} 
+    // }
     
-    .box2 {
-        @extend .box;
-    }
-    
+    // @keyframes wave1-large {
+    //     from {height: 3px;}
+    //     to {height: 18px;}    
+    // }
+    // @keyframes wave2-large {
+    //     from {height: 3px;}
+    //     to {height: 10px;}
+    // }
+
     @keyframes wave1 {
-        from {height: 2px;}
-        to {height: 12px;}  
-    }
-    @keyframes wave2 {
-        from {height: 2px;}
-        to {height: 6px;} 
-    }
-    
-    @keyframes wave1-large {
-        from {height: 3px;}
-        to {height: 18px;}    
-    }
-    @keyframes wave2-large {
-        from {height: 3px;}
-        to {height: 10px;}
-    }
+        0% {height: 100%;}
+        10% {height: 400%;}
+        20% {height: 100%;}
+        30% {height: 100%;}
+        40% {height: 400%;}
+        50% {height: 300%;}
+        60% {height: 600%;}
+        70% {height: 400%;}
+        80% {height: 600%;}
+        90% {height: 100%;} 
+      }
+      
+      @keyframes wave2 {
+         0% {height: 100%;}
+        10% {height: 300%;}
+        20% {height: 400%;}
+        30% {height: 100%;}
+        40% {height: 500%;}
+        50% {height: 200%;}
+        60% {height: 400%;}
+        70% {height: 600%;}
+        80% {height: 400%;}
+        90% {height: 200%;}
+      }
+      
+      @keyframes wave3 {
+        0% {height: 100%;}
+        10% {height: 200%;}
+        20% {height: 600%;}
+        30% {height: 100%;}
+        40% {height: 100%;}
+        50% {height: 400%;}
+        60% {height: 600%;}
+        70% {height: 200%;}
+        80% {height: 500%;}
+        90% {height: 300%;}
+      }
 }
