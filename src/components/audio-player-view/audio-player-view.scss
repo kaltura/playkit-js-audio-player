@@ -17,6 +17,10 @@
 
         .header {
           gap: 8px;
+
+          .audio-icon-container {
+            margin: 13px 12px 0 0;
+          }
         }
       }
     }
@@ -42,6 +46,10 @@
 
         .header {
           gap: 8px;
+
+          .audio-icon-container {
+            margin: 13px 12px 0 0;
+          }
         }
       }
     }
@@ -67,7 +75,7 @@
         flex-direction: column;
 
         .audio-icon-container {
-          margin: 4px 0 28px 0;
+          margin: 12px 0 8px 0;          
         }
       }
 
@@ -108,7 +116,7 @@
       display: flex;
 
       .audio-icon-container {
-        margin: 4px 8px 0 0;
+        margin: 16px 8px 0 0;
         position: relative;
       }
     }
