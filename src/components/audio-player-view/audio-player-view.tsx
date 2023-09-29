@@ -8,7 +8,8 @@ import {
   SeekbarPlaceholder,
   ThumbPlaceholder,
   SmallDetailsPlaceholder,
-  LargeDetailsPlaceholder
+  LargeDetailsPlaceholder,
+  ScrollingText
 } from '..';
 import {AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
@@ -22,6 +23,7 @@ const {
   reducers: {shell}
 } = ui;
 const {withText, Text} = ui.preacti18n;
+// @ts-ignore
 const {PLAYER_SIZE} = ui.Components;
 
 const AUDIO_PLAYER_CLASSNAME = 'audio-player';
@@ -102,7 +104,7 @@ const AudioPlayerView = withText(translates)(
       isPlaybackStarted = false,
       poster,
       title,
-      description,
+      description = '',
       pluginConfig,
       hasError,
       ready,
@@ -132,6 +134,11 @@ const AudioPlayerView = withText(translates)(
         return poster ? <img src={poster} className={styles.poster} alt={mediaThumb} /> : null;
       };
 
+      const getDescription = () => {
+        const parsed = new DOMParser().parseFromString(description, 'text/html');
+        return parsed.body.textContent || '';
+      };
+
       const _renderAudioDetails = () => {
         if (loading) {
           return [styles.extraSmall, styles.small].includes(sizeClass) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
@@ -144,7 +151,9 @@ const AudioPlayerView = withText(translates)(
               </div>
               <div className={styles.title}>{title}</div>
             </div>
-            <div className={styles.description}>{description || ''}</div>
+            <div className={styles.description}>
+              <ScrollingText active={true} content={getDescription()} />
+            </div>
           </Fragment>
         );
       };

@@ -1,0 +1,21 @@
+.scrollingTextContainer {
+  width: 300px; /* Adjust the width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  .scrollingText {
+    display: inline-block;
+    animation: scroll 10s linear infinite; /* Adjust the animation duration as needed */
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(calc(-100% + 300px)); /* Adjust 300px to match the container width */
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}
