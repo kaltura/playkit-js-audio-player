@@ -6,18 +6,16 @@
 
     .top-controls {
       display: flex;
-      gap: 8px;
+      justify-content: space-between;
       height: calc(100% - 58px);
       padding: 8px;
 
       .right-controls {
         display: flex;
-        width: 100%;
         align-items: center;
+        width: calc(100% - 64px);
 
         .header {
-          gap: 8px;
-
           .audio-icon-container {
             margin: 13px 12px 0 0;
           }
@@ -32,21 +30,18 @@
 
   &.small {
     display: flex;
+    justify-content: space-between;
     height: 132px;
-    gap: 8px;
     padding: 8px;
 
     .right-controls {
-      width: 100%;
+      width: calc(100% - 124px);
 
       .top-controls {
         display: flex;
-        gap: 8px;
         padding: 8px;
 
         .header {
-          gap: 8px;
-
           .audio-icon-container {
             margin: 13px 12px 0 0;
           }
@@ -110,6 +105,7 @@
   }
 
   .audio-player-details {
+    width: 100%;
     .header {
       display: flex;
 
@@ -120,19 +116,14 @@
     }
 
     .title {
-      -webkit-box-orient: vertical;
+      width: 100%;
       color: #fff; // tone 1
-      display: -webkit-box;
       font-size: 14px;
       font-weight: bold;
-      overflow: hidden;
     }
 
     .description {
-      -webkit-box-orient: vertical;
-      display: -webkit-box;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      width: 100%;
       color: rgba(255, 255, 255, 0.8); // tone 1 opa
     }
   }

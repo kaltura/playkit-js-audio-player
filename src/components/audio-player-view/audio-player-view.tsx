@@ -14,8 +14,8 @@ import {
 import {AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
-
 import {ui} from '@playkit-js/kaltura-player-js';
+
 const {
   redux: {connect},
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -149,10 +149,12 @@ const AudioPlayerView = withText(translates)(
               <div className={styles.audioIconContainer}>
                 {isPlaybackStarted ? <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} /> : undefined}
               </div>
-              <div className={styles.title}>{title}</div>
+              <div className={styles.title}>
+                <ScrollingText id={'title'} updateOnPlayerSizeChange content={title} />
+              </div>
             </div>
             <div className={styles.description}>
-              <ScrollingText active={true} content={getDescription()} />
+              <ScrollingText id={'description'} updateOnPlayerSizeChange content={getDescription()} />
             </div>
           </Fragment>
         );
