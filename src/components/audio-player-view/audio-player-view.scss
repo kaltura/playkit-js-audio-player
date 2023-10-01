@@ -14,12 +14,6 @@
         display: flex;
         align-items: center;
         width: calc(100% - 64px);
-
-        .header {
-          .audio-icon-container {
-            margin: 13px 12px 0 0;
-          }
-        }
       }
     }
 
@@ -40,12 +34,6 @@
       .top-controls {
         display: flex;
         padding: 8px;
-
-        .header {
-          .audio-icon-container {
-            margin: 13px 12px 0 0;
-          }
-        }
       }
     }
   }
@@ -64,25 +52,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 100%;
-
-      .header {
-        flex-direction: column;
-
-        .audio-icon-container {
-          margin: 12px 0 8px 0;
-        }
-      }
-
-      .title {
-        -webkit-line-clamp: 3;
-        font-size: 32px;
-        margin-bottom: 16px;
-      }
-
-      .description {
-        margin-bottom: 8px;
-      }
+      width: calc(100% - 264px);
     }
   }
 
@@ -102,30 +72,6 @@
     border-radius: 8px;
     flex-shrink: 0;
     overflow: hidden;
-  }
-
-  .audio-player-details {
-    width: 100%;
-    .header {
-      display: flex;
-
-      .audio-icon-container {
-        margin: 16px 8px 0 0;
-        position: relative;
-      }
-    }
-
-    .title {
-      width: 100%;
-      color: #fff; // tone 1
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .description {
-      width: 100%;
-      color: rgba(255, 255, 255, 0.8); // tone 1 opa
-    }
   }
 }
 :global(.audio-player .playkit-video-player) {

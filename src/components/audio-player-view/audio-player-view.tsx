@@ -1,7 +1,6 @@
 import {Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
 import {
-  AudioIcon,
   AudioPlayerControls,
   AudioSeekbar,
   ControlsPlaceholder,
@@ -9,9 +8,9 @@ import {
   ThumbPlaceholder,
   SmallDetailsPlaceholder,
   LargeDetailsPlaceholder,
-  ScrollingText
+  AudioDetails
 } from '..';
-import {AudioPlayerConfig} from '../../types';
+import {AudioPlayerConfig, AudioPlayerSizes} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {ui} from '@playkit-js/kaltura-player-js';
@@ -30,22 +29,25 @@ const AUDIO_PLAYER_CLASSNAME = 'audio-player';
 
 const mapStateToProps = (state: any) => {
   const {shell, engine} = state;
-  const {isPlaying, hasError, isPlaybackStarted} = engine;
+  const {hasError} = engine;
 
-  let sizeClass = '';
+  let size = '';
   switch (shell.playerSize) {
     case PLAYER_SIZE.EXTRA_LARGE:
     case PLAYER_SIZE.LARGE:
     case PLAYER_SIZE.MEDIUM: {
-      sizeClass = styles.medium;
+      size = AudioPlayerSizes.Medium;
+      // sizeClass = styles.medium;
       break;
     }
     case PLAYER_SIZE.SMALL: {
-      sizeClass = styles.small;
+      size = AudioPlayerSizes.Small;
+      // sizeClass = styles.small;
       break;
     }
     case PLAYER_SIZE.EXTRA_SMALL: {
-      sizeClass = styles.extraSmall;
+      size = AudioPlayerSizes.XSmall;
+      // sizeClass = styles.extraSmall;
       break;
     }
     default: {
@@ -54,9 +56,7 @@ const mapStateToProps = (state: any) => {
   }
 
   return {
-    sizeClass,
-    isPlaying,
-    isPlaybackStarted,
+    size,
     hasError
   };
 };
@@ -76,7 +76,7 @@ interface AudioPlayerViewProps {
   poster?: string;
   title?: string;
   description?: string;
-  sizeClass?: string;
+  size?: AudioPlayerSizes;
   isPlaying?: boolean;
   isPlaybackStarted?: boolean;
   hasError?: boolean;
@@ -98,20 +98,7 @@ const AudioPlayerView = withText(translates)(
   )(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    ({
-      sizeClass,
-      isPlaying = false,
-      isPlaybackStarted = false,
-      poster,
-      title,
-      description = '',
-      pluginConfig,
-      hasError,
-      ready,
-      mediaThumb,
-      addPlayerClass,
-      removePlayerClass
-    }: AudioPlayerViewProps) => {
+    ({size, poster, title, description = '', pluginConfig, hasError, ready, mediaThumb, addPlayerClass, removePlayerClass}: AudioPlayerViewProps) => {
       const [loading, setLoading] = useState(true);
 
       useEffect(() => {
@@ -134,30 +121,11 @@ const AudioPlayerView = withText(translates)(
         return poster ? <img src={poster} className={styles.poster} alt={mediaThumb} /> : null;
       };
 
-      const getDescription = () => {
-        const parsed = new DOMParser().parseFromString(description, 'text/html');
-        return parsed.body.textContent || '';
-      };
-
       const _renderAudioDetails = () => {
         if (loading) {
-          return [styles.extraSmall, styles.small].includes(sizeClass) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
+          return [AudioPlayerSizes.XSmall, AudioPlayerSizes.Small].includes(size!) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
         }
-        return (
-          <Fragment>
-            <div className={styles.header}>
-              <div className={styles.audioIconContainer}>
-                {isPlaybackStarted ? <AudioIcon isLarge={sizeClass === styles.medium} isActive={isPlaying} /> : undefined}
-              </div>
-              <div className={styles.title}>
-                <ScrollingText id={'title'} updateOnPlayerSizeChange content={title} />
-              </div>
-            </div>
-            <div className={styles.description}>
-              <ScrollingText id={'description'} updateOnPlayerSizeChange content={getDescription()} />
-            </div>
-          </Fragment>
-        );
+        return <AudioDetails title={title} description={description} size={size!} />;
       };
 
       const _renderSeekBar = () => {
@@ -169,16 +137,12 @@ const AudioPlayerView = withText(translates)(
       };
 
       const _renderView = () => {
-        if (sizeClass === styles.extraSmall) {
+        if (size === AudioPlayerSizes.XSmall) {
           return (
             <Fragment>
               <div className={styles.topControls}>
                 <div className={styles.leftControls}>{_renderPoster()}</div>
-                <div className={styles.rightControls}>
-                  <div className={styles.audioPlayerDetails} tabIndex={0}>
-                    {_renderAudioDetails()}
-                  </div>
-                </div>
+                <div className={styles.rightControls}>{_renderAudioDetails()}</div>
               </div>
               <div className={styles.bottomControls}>
                 {_renderSeekBar()}
@@ -191,11 +155,7 @@ const AudioPlayerView = withText(translates)(
           <Fragment>
             <div className={styles.leftControls}>{_renderPoster()}</div>
             <div className={styles.rightControls}>
-              <div className={styles.topControls}>
-                <div className={styles.audioPlayerDetails} tabIndex={0}>
-                  {_renderAudioDetails()}
-                </div>
-              </div>
+              <div className={styles.topControls}>{_renderAudioDetails()}</div>
               <div className={styles.bottomControls}>
                 {_renderSeekBar()}
                 {_renderPlayerControls()}
@@ -205,7 +165,7 @@ const AudioPlayerView = withText(translates)(
         );
       };
 
-      return <div className={`${styles.audioPlayerView} ${sizeClass}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
+      return <div className={`${styles.audioPlayerView} ${styles[size!]}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
     }
   )
 );

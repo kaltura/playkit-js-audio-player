@@ -6,21 +6,21 @@ const {
   redux: {connect}
 } = ui;
 
-export enum ScrollModes {
-  Vertical,
-  Horizontal
+export enum ScrollingTextModes {
+  Vertical = 'vertical',
+  Horizontal = 'horizontal'
 }
 
 interface ScrollingTextProps {
   id: string;
-  activeOnHover?: boolean;
   content: string;
   scrollSpeed: number;
   updateOnPlayerSizeChange?: boolean;
   playerClientWidth: number;
   inActive?: boolean;
   onHoverChange?: (hovered: boolean) => void;
-  mode: ScrollModes;
+  mode: ScrollingTextModes;
+  maxHeight?: number;
 }
 
 const mapStateToProps = ({shell}: any, {updateOnPlayerSizeChange}: ScrollingTextProps) => {
@@ -31,12 +31,15 @@ const mapStateToProps = ({shell}: any, {updateOnPlayerSizeChange}: ScrollingText
   };
 };
 
-const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playerClientWidth, onHoverChange, activeOnHover}: ScrollingTextProps) => {
+const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playerClientWidth, onHoverChange, maxHeight}: ScrollingTextProps) => {
   const textContainerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const [textContainerSize, setTextContainerSize] = useState(0);
   const [textSize, setTextSize] = useState(0);
+  const [textContainerHeight, setTextContainerHeight] = useState(maxHeight ?? 'auto');
+
+  const isHorisontal = mode === ScrollingTextModes.Horizontal;
 
   useEffect(() => {
     handleResize();
@@ -51,9 +54,10 @@ const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playe
   useEffect(() => {
     const active = textSize > textContainerSize;
     setActive(active);
+    if (!isHorisontal && textContainerSize > textSize) {
+      setTextContainerHeight(textSize);
+    }
   }, [textContainerSize, textSize]);
-
-  const isHorisontal = mode === ScrollModes.Horizontal;
 
   const handleResize = () => {
     const textContainerRect = textContainerRef.current?.getBoundingClientRect();
@@ -94,11 +98,19 @@ const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playe
   };
 
   const scrollingTextStyles: Record<string, string> = {};
-  if (!inActive && active) {
+  if (active) {
     scrollingTextStyles.animation = `scrolling-text-${id} linear ${(textSize / 100) * scrollSpeed}s .5s infinite`;
+    scrollingTextStyles.animationPlayState = inActive ? 'paused' : 'running';
   }
   return (
-    <div className={styles.scrollingTextContainer} ref={textContainerRef} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+    <div
+      style={{
+        height: textContainerHeight
+      }}
+      className={[styles.scrollingTextContainer, styles[mode]].join(' ')}
+      ref={textContainerRef}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}>
       {generateAnimation()}
       <div style={scrollingTextStyles} className={styles.scrollingText} ref={textRef}>
         {content}
@@ -112,7 +124,7 @@ ScrollingTextComponent.defaultProps = {
   inActive: false,
   activeOnHover: false,
   updateOnPlayerSizeChange: false,
-  mode: ScrollModes.Horizontal
+  mode: ScrollingTextModes.Horizontal
 };
 
 // @ts-ignore

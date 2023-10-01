@@ -1,7 +1,10 @@
 .scrollingTextContainer {
   width: 100%;
-  white-space: nowrap;
+  height: 100%;
   overflow: hidden;
+  &.horizontal {
+    white-space: nowrap;
+  }
   .scrollingText {
     display: inline-block;
   }
