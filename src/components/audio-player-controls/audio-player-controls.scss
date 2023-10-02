@@ -76,8 +76,11 @@
     }
     :global(.playkit-control-button-container) {
       display: inline-block;
+      &:last-child {
+        margin-left: 4px;
+      }
       &:not(:last-child) {
-        margin-right: 8px;
+        margin-right: 12px;
       }
     }
     :global(.playkit-volume-control-bar) {

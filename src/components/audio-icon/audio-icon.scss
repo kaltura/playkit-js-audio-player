@@ -1,9 +1,19 @@
 .audio-icon {
-    align-items: center;
+    align-items: end;
     display: flex;
     flex-direction: row;
     position: absolute;
     height: 2px;
+
+    &.large {
+        .box1, .box2, .box3 {
+            height: 3px;
+            width: 3px;
+            border-radius: 1.5px;
+            margin-right: 1.5px;
+            margin-left: 1.5px;
+        }
+    }
     
     &.active {
         .box1 {
@@ -17,25 +27,15 @@
         .box3 {
             animation-name: wave3;
         }
-        
-        // &.large {
-        //     .box1 {
-        //         animation-name: wave1-large;
-        //     }
-            
-        //     .box2 {
-        //         animation-name: wave2-large;
-        //     }
-        // }
     }
     
     .box {
         background: white;
         height: 2px;
         width: 2px;
-        border-radius: 2px;
-        margin-right: 2px;
-        margin-left: 2px;
+        border-radius: 1px;
+        margin-right: 1px;
+        margin-left: 1px;
         animation-duration: 2.4s;
         animation-iteration-count: infinite;
         animation-timing-function: ease-in-out;
@@ -45,24 +45,6 @@
     .box1, .box2, .box3 {
         @extend .box;
     }
-        
-    // @keyframes wave1 {
-    //     from {height: 2px;}
-    //     to {height: 12px;}  
-    // }
-    // @keyframes wave2 {
-    //     from {height: 2px;}
-    //     to {height: 6px;} 
-    // }
-    
-    // @keyframes wave1-large {
-    //     from {height: 3px;}
-    //     to {height: 18px;}    
-    // }
-    // @keyframes wave2-large {
-    //     from {height: 3px;}
-    //     to {height: 10px;}
-    // }
 
     @keyframes wave1 {
         0% {height: 100%;}

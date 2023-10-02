@@ -38,7 +38,7 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
     <div className={styles.playbackControlsWrapper}>
       {player.isLive() && <LiveTag />}
       <div className={styles.playbackControls}>
-        {pluginConfig.showReplayButton ? (
+        {pluginConfig.showReplayButton || player.isLive() ? (
           <LoopButton />
         ) : (
           <div className={styles.speedMenuWrapper}>
