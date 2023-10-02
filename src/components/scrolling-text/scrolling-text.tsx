@@ -142,5 +142,6 @@ ScrollingTextComponent.defaultProps = {
   fadeEffect: true
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const ScrollingText = connect<any, any>(mapStateToProps)(ScrollingTextComponent) as any;

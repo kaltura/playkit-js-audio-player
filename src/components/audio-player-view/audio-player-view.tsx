@@ -22,6 +22,7 @@ const {
   reducers: {shell}
 } = ui;
 const {withText, Text} = ui.preacti18n;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const {PLAYER_SIZE} = ui.Components;
 

@@ -1,4 +1,6 @@
 import {useState} from 'preact/hooks';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import {ui, core} from '@playkit-js/kaltura-player-js';
 import {AudioIcon, ScrollingText, ScrollingTextModes, BufferingIcon} from '..';
@@ -77,5 +79,6 @@ export const AudioDetailsComponent = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const AudioDetails = connect<any, any>(mapStateToProps)(AudioDetailsComponent) as any;
