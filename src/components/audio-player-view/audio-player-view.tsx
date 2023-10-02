@@ -34,12 +34,12 @@ const mapStateToProps = (state: any) => {
   let size = '';
   switch (shell.playerSize) {
     case PLAYER_SIZE.EXTRA_LARGE:
-    case PLAYER_SIZE.LARGE:
-    case PLAYER_SIZE.MEDIUM: {
+    case PLAYER_SIZE.LARGE: {
       size = AudioPlayerSizes.Medium;
       break;
     }
-    case PLAYER_SIZE.SMALL: {
+    case PLAYER_SIZE.SMALL:
+    case PLAYER_SIZE.MEDIUM: {
       size = AudioPlayerSizes.Small;
       break;
     }
