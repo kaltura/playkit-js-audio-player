@@ -6,6 +6,8 @@ const {
   redux: {connect}
 } = ui;
 
+const EDGE_SHIFT = 10;
+
 export enum ScrollingTextModes {
   Vertical = 'vertical',
   Horizontal = 'horizontal'
@@ -21,6 +23,7 @@ interface ScrollingTextProps {
   onHoverChange?: (hovered: boolean) => void;
   mode: ScrollingTextModes;
   maxHeight?: number;
+  fadeEffect?: boolean;
 }
 
 const mapStateToProps = ({shell}: any, {updateOnPlayerSizeChange}: ScrollingTextProps) => {
@@ -31,7 +34,17 @@ const mapStateToProps = ({shell}: any, {updateOnPlayerSizeChange}: ScrollingText
   };
 };
 
-const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playerClientWidth, onHoverChange, maxHeight}: ScrollingTextProps) => {
+const ScrollingTextComponent = ({
+  id,
+  inActive,
+  mode,
+  content,
+  scrollSpeed,
+  playerClientWidth,
+  onHoverChange,
+  maxHeight,
+  fadeEffect
+}: ScrollingTextProps) => {
   const textContainerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
@@ -90,7 +103,7 @@ const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playe
       <style>
         {`@keyframes scrolling-text-${id} {
             0% {transform: ${direction}(0);}
-            50% {transform: ${direction}(calc(-100% + ${textContainerSize}px));}
+            50% {transform: ${direction}(calc(-100% + ${textContainerSize - EDGE_SHIFT}px));}
             100% {transform: ${direction}(0);}
           }`}
       </style>
@@ -115,6 +128,7 @@ const ScrollingTextComponent = ({id, inActive, mode, content, scrollSpeed, playe
       <div style={scrollingTextStyles} className={styles.scrollingText} ref={textRef}>
         {content}
       </div>
+      {active && fadeEffect && <div className={[styles.fadeBlock, styles[mode]].join(' ')} />}
     </div>
   );
 };
@@ -124,7 +138,8 @@ ScrollingTextComponent.defaultProps = {
   inActive: false,
   activeOnHover: false,
   updateOnPlayerSizeChange: false,
-  mode: ScrollingTextModes.Horizontal
+  mode: ScrollingTextModes.Horizontal,
+  fadeEffect: true
 };
 
 // @ts-ignore
