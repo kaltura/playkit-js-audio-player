@@ -1,8 +1,9 @@
 .audio-player-view {
+  position: relative;
   background-color: #222;
   margin: 0;
   min-width: 228px;
-  
+
   &.extra-small {
     height: 132px;
     display: flex;
@@ -48,11 +49,27 @@
     gap: 16px;
     padding: 16px;
 
+    .background-image {
+      z-index: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      filter: blur(24px);
+      -webkit-filter: blur(24px);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
     .left-controls {
+      z-index: 1;
       height: 248px;
     }
 
     .right-controls {
+      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

@@ -151,6 +151,7 @@ const AudioPlayerView = withText(translates)(
         }
         return (
           <Fragment>
+            {size === AudioPlayerSizes.Medium ? <div style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} /> : null}
             <div className={styles.leftControls}>{_renderPoster()}</div>
             <div className={styles.rightControls}>
               <div className={styles.topControls}>{_renderAudioDetails()}</div>

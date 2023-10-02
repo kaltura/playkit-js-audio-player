@@ -66,6 +66,7 @@ export const AudioDetailsComponent = ({
             inActive={isBuffering || !(titleHovered || isPlaying) || descriptionHovered}
             mode={mediumSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
             maxHeight={mediumSize ? 118 : undefined}
+            fadeEffect={!mediumSize}
           />
         </div>
       </div>
