@@ -37,17 +37,15 @@ const mapStateToProps = (state: any) => {
     case PLAYER_SIZE.LARGE:
     case PLAYER_SIZE.MEDIUM: {
       size = AudioPlayerSizes.Medium;
-      // sizeClass = styles.medium;
       break;
     }
     case PLAYER_SIZE.SMALL: {
       size = AudioPlayerSizes.Small;
-      // sizeClass = styles.small;
       break;
     }
-    case PLAYER_SIZE.EXTRA_SMALL: {
+    case PLAYER_SIZE.EXTRA_SMALL:
+    case PLAYER_SIZE.TINY: {
       size = AudioPlayerSizes.XSmall;
-      // sizeClass = styles.extraSmall;
       break;
     }
     default: {
