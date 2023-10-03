@@ -44,9 +44,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     return true;
   }
 
-  reset() {
-    this._prepareUI();
-  }
+  reset() {}
 }
 
 export {AudioPlayer};

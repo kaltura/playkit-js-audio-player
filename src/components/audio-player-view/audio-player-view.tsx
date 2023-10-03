@@ -107,20 +107,27 @@ const AudioPlayerView = Event.withEventManager(
 
         useEffect(() => {
           addPlayerClass!();
-          eventManager.listenOnce(player, core.EventType.CHANGE_SOURCE_ENDED, () => {
-            const poster = player.sources.poster;
-            const title = player.sources.metadata?.name || '';
-            const description = player.sources.metadata?.description || '';
-            setMediaMetadata({
-              poster,
-              title,
-              description
-            });
-          });
+          eventManager.listen(player, core.EventType.CHANGE_SOURCE_ENDED, _handleMediaMetadata);
+          eventManager.listen(player, core.EventType.PLAYER_RESET, _handleMediaMetadataReset);
           return () => {
             removePlayerClass!();
           };
         }, []);
+
+        const _handleMediaMetadataReset = () => {
+          setMediaMetadata(null);
+        };
+
+        const _handleMediaMetadata = () => {
+          const poster = player.sources.poster;
+          const title = player.sources.metadata?.name || '';
+          const description = player.sources.metadata?.description || '';
+          setMediaMetadata({
+            poster,
+            title,
+            description
+          });
+        };
 
         const _renderPoster = () => {
           if (isLoading) {
