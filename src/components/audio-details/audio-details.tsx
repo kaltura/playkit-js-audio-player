@@ -47,9 +47,6 @@ export const AudioDetailsComponent = ({
   const mediumSize = size === AudioPlayerSizes.Medium;
 
   const renderIcon = () => {
-    if (!isPlaybackStarted) {
-      return null;
-    }
     if (isBuffering) {
       return <BufferingIcon isLarge={mediumSize} />;
     }
@@ -59,7 +56,7 @@ export const AudioDetailsComponent = ({
   return (
     <div className={`${styles.audioPlayerDetails} ${styles[size!]}`} tabIndex={0}>
       <div className={styles.header}>
-        <div className={styles.audioIconContainer}>{renderIcon()}</div>
+        {isPlaybackStarted && <div className={styles.audioIconContainer}>{renderIcon()}</div>}
         <div className={styles.title} onMouseOver={() => setTitleHovered(true)} onMouseLeave={() => setTitleHovered(false)}>
           <ScrollingText
             id={'title'}
