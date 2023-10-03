@@ -44,13 +44,13 @@ export const AudioDetailsComponent = ({
     return parsed.body.textContent || '';
   };
 
-  const mediumSize = size === AudioPlayerSizes.Medium;
+  const largeSize = size === AudioPlayerSizes.Large;
 
   const renderIcon = () => {
     if (isBuffering) {
-      return <BufferingIcon isLarge={mediumSize} />;
+      return <BufferingIcon isLarge={largeSize} />;
     }
-    return <AudioIcon isLarge={mediumSize} isActive={isPlaying} />;
+    return <AudioIcon isLarge={largeSize} isActive={isPlaying} />;
   };
 
   return (
@@ -63,8 +63,8 @@ export const AudioDetailsComponent = ({
             updateOnPlayerSizeChange
             content={title}
             inActive={isBuffering || !(titleHovered || isPlaying) || descriptionHovered}
-            mode={mediumSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
-            maxHeight={mediumSize ? 118 : undefined}
+            mode={largeSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
+            maxHeight={largeSize ? 118 : undefined}
           />
         </div>
       </div>

@@ -4,7 +4,7 @@
   margin: 0;
   min-width: 228px;
 
-  &.extra-small {
+  &.small {
     height: 132px;
     display: flex;
     flex-direction: column;
@@ -27,13 +27,16 @@
     }
   }
 
-  &.small {
+  &.medium {
     display: flex;
     justify-content: space-between;
     height: 132px;
     padding: 8px;
 
     .right-controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       width: calc(100% - 124px);
 
       .top-controls {
@@ -43,7 +46,7 @@
     }
   }
 
-  &.medium {
+  &.large {
     display: flex;
     height: 280px;
     gap: 16px;
