@@ -1,5 +1,8 @@
 import {Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {ui, core} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
   AudioSeekbar,
@@ -10,16 +13,16 @@ import {
   LargeDetailsPlaceholder,
   AudioDetails
 } from '..';
-import {AudioPlayerConfig, AudioPlayerSizes} from '../../types';
+import {AudioPlayerConfig, AudioPlayerSizes, MediaMetadata} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
-import {ui} from '@playkit-js/kaltura-player-js';
 
 const {
   redux: {connect},
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  reducers: {shell}
+  reducers: {shell},
+  Event
 } = ui;
 const {withText, Text} = ui.preacti18n;
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -72,15 +75,13 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 interface AudioPlayerViewProps {
-  poster?: string;
-  title?: string;
-  description?: string;
   size?: AudioPlayerSizes;
   isPlaying?: boolean;
   isPlaybackStarted?: boolean;
   hasError?: boolean;
   pluginConfig: AudioPlayerConfig;
-  ready: Promise<any>;
+  player: any;
+  eventManager: any;
   mediaThumb?: string;
   addPlayerClass?: () => void;
   removePlayerClass?: () => void;
@@ -90,88 +91,96 @@ const translates = {
   mediaThumb: <Text id="audioPlayer.mediaThumb">Media thumbnail</Text>
 };
 
-const AudioPlayerView = withText(translates)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    ({size, poster, title, description = '', pluginConfig, hasError, ready, mediaThumb, addPlayerClass, removePlayerClass}: AudioPlayerViewProps) => {
-      const [loading, setLoading] = useState(true);
-      const [imageHasError, setImageHasError] = useState(false);
+const AudioPlayerView = Event.withEventManager(
+  withText(translates)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      ({size, pluginConfig, hasError, mediaThumb, addPlayerClass, removePlayerClass, player, eventManager}: AudioPlayerViewProps) => {
+        const [mediaMetadata, setMediaMetadata] = useState<MediaMetadata | null>(null);
+        const [imageHasError, setImageHasError] = useState(false);
+        const isLoading = !mediaMetadata;
+        const {poster, title, description} = mediaMetadata || {};
 
-      useEffect(() => {
-        addPlayerClass!();
-        return () => {
-          removePlayerClass!();
+        useEffect(() => {
+          addPlayerClass!();
+          eventManager.listenOnce(player, core.EventType.CHANGE_SOURCE_ENDED, () => {
+            const poster = player.sources.poster;
+            const title = player.sources.metadata?.name || '';
+            const description = player.sources.metadata?.description || '';
+            setMediaMetadata({
+              poster,
+              title,
+              description
+            });
+          });
+          return () => {
+            removePlayerClass!();
+          };
+        }, []);
+
+        const _renderPoster = () => {
+          if (isLoading) {
+            return <ThumbPlaceholder animate={true} />;
+          }
+          if (!poster || imageHasError) {
+            return <ThumbPlaceholder animate={false} />;
+          }
+
+          return <img src={poster} className={styles.poster} alt={mediaThumb} onError={() => setImageHasError(true)} />;
         };
-      }, []);
 
-      useEffect(() => {
-        ready.then(() => {
-          setLoading(false);
-        });
-      }, [ready]);
+        const _renderAudioDetails = () => {
+          if (isLoading) {
+            return [AudioPlayerSizes.XSmall, AudioPlayerSizes.Small].includes(size!) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
+          }
+          return <AudioDetails title={title} description={description} size={size!} />;
+        };
 
-      const _renderPoster = () => {
-        if (loading) {
-          return <ThumbPlaceholder animate={true} />;
-        }
-        if (!poster || imageHasError) {
-          return <ThumbPlaceholder animate={false} />;
-        }
+        const _renderSeekBar = () => {
+          return isLoading ? <SeekbarPlaceholder /> : <AudioSeekbar eventManager={eventManager} />;
+        };
 
-        return <img src={poster} className={styles.poster} alt={mediaThumb} onError={() => setImageHasError(true)} />;
-      };
+        const _renderPlayerControls = () => {
+          return isLoading ? <ControlsPlaceholder /> : <AudioPlayerControls pluginConfig={pluginConfig} player={player} />;
+        };
 
-      const _renderAudioDetails = () => {
-        if (loading) {
-          return [AudioPlayerSizes.XSmall, AudioPlayerSizes.Small].includes(size!) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
-        }
-        return <AudioDetails title={title} description={description} size={size!} />;
-      };
-
-      const _renderSeekBar = () => {
-        return loading ? <SeekbarPlaceholder /> : <AudioSeekbar />;
-      };
-
-      const _renderPlayerControls = () => {
-        return loading ? <ControlsPlaceholder /> : <AudioPlayerControls pluginConfig={pluginConfig} />;
-      };
-
-      const _renderView = () => {
-        if (size === AudioPlayerSizes.XSmall) {
+        const _renderView = () => {
+          if (size === AudioPlayerSizes.XSmall) {
+            return (
+              <Fragment>
+                <div className={styles.topControls}>
+                  <div className={styles.leftControls}>{_renderPoster()}</div>
+                  <div className={styles.rightControls}>{_renderAudioDetails()}</div>
+                </div>
+                <div className={styles.bottomControls}>
+                  {_renderSeekBar()}
+                  {_renderPlayerControls()}
+                </div>
+              </Fragment>
+            );
+          }
           return (
             <Fragment>
-              <div className={styles.topControls}>
-                <div className={styles.leftControls}>{_renderPoster()}</div>
-                <div className={styles.rightControls}>{_renderAudioDetails()}</div>
-              </div>
-              <div className={styles.bottomControls}>
-                {_renderSeekBar()}
-                {_renderPlayerControls()}
+              {size === AudioPlayerSizes.Medium ? <div style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} /> : null}
+              <div className={styles.leftControls}>{_renderPoster()}</div>
+              <div className={styles.rightControls}>
+                <div className={styles.topControls}>{_renderAudioDetails()}</div>
+                <div className={styles.bottomControls}>
+                  {_renderSeekBar()}
+                  {_renderPlayerControls()}
+                </div>
               </div>
             </Fragment>
           );
-        }
-        return (
-          <Fragment>
-            {size === AudioPlayerSizes.Medium ? <div style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} /> : null}
-            <div className={styles.leftControls}>{_renderPoster()}</div>
-            <div className={styles.rightControls}>
-              <div className={styles.topControls}>{_renderAudioDetails()}</div>
-              <div className={styles.bottomControls}>
-                {_renderSeekBar()}
-                {_renderPlayerControls()}
-              </div>
-            </div>
-          </Fragment>
-        );
-      };
+        };
 
-      return <div className={`${styles.audioPlayerView} ${styles[size!]}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
-    }
+        return <div className={`${styles.audioPlayerView} ${styles[size!]}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
+      }
+    )
   )
 );
 
