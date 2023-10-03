@@ -6,7 +6,7 @@ import {LoopButton} from '../loop-button';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-const {Rewind, Forward, PlaylistButton, PlayPause, Volume, LiveTag, SpeedMenu, withPlayer} = ui.Components;
+const {Rewind, Forward, PlaylistButton, PlayPause, Volume, LiveTag, SpeedMenu} = ui.Components;
 const {
   redux: {useSelector}
 } = ui;
@@ -16,7 +16,7 @@ interface AudioPlayerControlsProps {
   player: any;
 }
 
-const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerControlsProps) => {
+const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
 
@@ -70,6 +70,6 @@ const AudioPlayerControls = withPlayer(({pluginConfig, player}: AudioPlayerContr
       </div>
     </div>
   );
-});
+};
 
 export {AudioPlayerControls};

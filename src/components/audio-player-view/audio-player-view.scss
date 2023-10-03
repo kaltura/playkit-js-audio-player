@@ -91,6 +91,11 @@
     flex-shrink: 0;
     overflow: hidden;
   }
+
+  .bottom-controls {
+    display: flex;
+    flex-direction: column;
+  }
 }
 :global(.audio-player .playkit-video-player) {
   visibility: hidden;
