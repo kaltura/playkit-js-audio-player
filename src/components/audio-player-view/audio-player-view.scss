@@ -56,8 +56,8 @@
       left: 0;
       height: 100%;
       width: 100%;
-      filter: blur(24px);
-      -webkit-filter: blur(24px);
+      filter: blur(24px) brightness(70%);
+      -webkit-filter: blur(24px) brightness(70%);
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
