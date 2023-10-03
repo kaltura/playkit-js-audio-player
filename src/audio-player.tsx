@@ -12,6 +12,9 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     playerContainerElement!.style.height = 'fit-content';
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    playerContainerElement!.style.backgroundColor = 'transparent';
     this._prepareUI();
   }
 
