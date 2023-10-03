@@ -48,6 +48,7 @@ const ScrollingTextComponent = ({
   const textContainerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+  const [fadeOnStart, setFadeOnStart] = useState(false);
   const [textContainerSize, setTextContainerSize] = useState(0);
   const [textSize, setTextSize] = useState(0);
   const [textContainerHeight, setTextContainerHeight] = useState(maxHeight ?? 'auto');
@@ -97,6 +98,12 @@ const ScrollingTextComponent = ({
     }
   };
 
+  const handleAnimationStart = () => {
+    if (active && fadeEffect) {
+      setFadeOnStart(true);
+    }
+  };
+
   const generateAnimation = () => {
     const direction = isHorisontal ? 'translateX' : 'translateY';
     return (
@@ -112,15 +119,23 @@ const ScrollingTextComponent = ({
 
   const scrollingTextStyles: Record<string, string> = {};
   if (active) {
-    scrollingTextStyles.animation = `scrolling-text-${id} linear ${(textSize / 100) * scrollSpeed}s .5s infinite`;
-    scrollingTextStyles.animationPlayState = inActive ? 'paused' : 'running';
+    scrollingTextStyles.animation = `scrolling-text-${id} linear ${(textSize / 100) * scrollSpeed}s .5s ${inActive ? 'paused' : 'running'} infinite`;
+  }
+  const textContainerClassNames = [styles.scrollingTextContainer, styles[mode]];
+  if (active && fadeEffect) {
+    if (fadeOnStart) {
+      textContainerClassNames.push(styles.fadeBothSides);
+    } else {
+      textContainerClassNames.push(styles.fadeOnEnd);
+    }
   }
   return (
     <div
       style={{
         height: textContainerHeight
       }}
-      className={[styles.scrollingTextContainer, styles[mode]].join(' ')}
+      onAnimationStart={handleAnimationStart}
+      className={textContainerClassNames.join(' ')}
       ref={textContainerRef}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}>
@@ -128,7 +143,6 @@ const ScrollingTextComponent = ({
       <div style={scrollingTextStyles} className={styles.scrollingText} ref={textRef}>
         {content}
       </div>
-      {active && fadeEffect && <div className={[styles.fadeBlock, styles[mode]].join(' ')} />}
     </div>
   );
 };
