@@ -49,8 +49,8 @@ export const SeekbarPlaceholder = () => (
   </svg>
 );
 
-export const ThumbPlaceholder = () => (
-  <svg width="100%" height="100%" viewBox="0 0 116 117" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.animated}>
+export const ThumbPlaceholder = ({animate}: {animate: boolean}) => (
+  <svg width="100%" height="100%" viewBox="0 0 116 117" fill="none" xmlns="http://www.w3.org/2000/svg" className={animate ? styles.animated : ''}>
     <rect opacity="0.3" y="0.740723" width="116" height="116" rx="4" fill="white" />
   </svg>
 );
