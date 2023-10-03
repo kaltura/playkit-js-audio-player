@@ -99,6 +99,7 @@ const AudioPlayerView = withText(translates)(
     // @ts-ignore
     ({size, poster, title, description = '', pluginConfig, hasError, ready, mediaThumb, addPlayerClass, removePlayerClass}: AudioPlayerViewProps) => {
       const [loading, setLoading] = useState(true);
+      const [imageHasError, setImageHasError] = useState(false);
 
       useEffect(() => {
         addPlayerClass!();
@@ -115,9 +116,13 @@ const AudioPlayerView = withText(translates)(
 
       const _renderPoster = () => {
         if (loading) {
-          return <ThumbPlaceholder />;
+          return <ThumbPlaceholder animate={true} />;
         }
-        return poster ? <img src={poster} className={styles.poster} alt={mediaThumb} /> : null;
+        if (!poster || imageHasError) {
+          return <ThumbPlaceholder animate={false} />;
+        }
+
+        return <img src={poster} className={styles.poster} alt={mediaThumb} onError={() => setImageHasError(true)} />;
       };
 
       const _renderAudioDetails = () => {
