@@ -44,31 +44,27 @@ export const AudioDetailsComponent = ({
     return parsed.body.textContent || '';
   };
 
-  const mediumSize = size === AudioPlayerSizes.Medium;
+  const largeSize = size === AudioPlayerSizes.Large;
 
   const renderIcon = () => {
-    if (!isPlaybackStarted) {
-      return null;
-    }
     if (isBuffering) {
-      return <BufferingIcon isLarge={mediumSize} />;
+      return <BufferingIcon isLarge={largeSize} />;
     }
-    return <AudioIcon isLarge={mediumSize} isActive={isPlaying} />;
+    return <AudioIcon isLarge={largeSize} isActive={isPlaying} />;
   };
 
   return (
     <div className={`${styles.audioPlayerDetails} ${styles[size!]}`} tabIndex={0}>
       <div className={styles.header}>
-        <div className={styles.audioIconContainer}>{renderIcon()}</div>
+        {isPlaybackStarted && <div className={styles.audioIconContainer}>{renderIcon()}</div>}
         <div className={styles.title} onMouseOver={() => setTitleHovered(true)} onMouseLeave={() => setTitleHovered(false)}>
           <ScrollingText
             id={'title'}
             updateOnPlayerSizeChange
             content={title}
             inActive={isBuffering || !(titleHovered || isPlaying) || descriptionHovered}
-            mode={mediumSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
-            maxHeight={mediumSize ? 118 : undefined}
-            fadeEffect={!mediumSize}
+            mode={largeSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
+            maxHeight={largeSize ? 118 : undefined}
           />
         </div>
       </div>

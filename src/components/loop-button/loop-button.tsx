@@ -61,12 +61,13 @@ class LoopButton extends Component<LoopButtonProps & any, LoopButtonState> {
         <Button
           onClick={this._handleClick}
           icon="replay"
-          type={loopEnabled ? ButtonType.primary : ButtonType.borderless}
+          type={loopEnabled ? ButtonType.primary : ButtonType.translucent}
           size={ButtonSize.medium}
           tooltip={{
             label: loopEnabled ? this.props.disableLoop : this.props.enableLoop
           }}
           ariaLabel={loopEnabled ? this.props.disableLoop : this.props.enableLoop}
+          className={[styles.loopButton, !loopEnabled ? styles.inactive : ''].join(' ')}
         />
       </div>
     );

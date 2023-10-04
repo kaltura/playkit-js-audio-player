@@ -1,3 +1,17 @@
 .loop-button-wrapper {
-  margin-right: 8px;
+  margin-right: 12px;
+  .loop-button {
+    border-radius: 0;
+    &.inactive {
+      background-color: transparent;
+    }
+    svg {
+      transform: scale(1.5);
+    }
+    &:hover {
+      svg g {
+        opacity: 1;
+      }
+    }
+  }
 }

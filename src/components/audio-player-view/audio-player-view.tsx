@@ -39,17 +39,17 @@ const mapStateToProps = (state: any) => {
   switch (shell.playerSize) {
     case PLAYER_SIZE.EXTRA_LARGE:
     case PLAYER_SIZE.LARGE: {
-      size = AudioPlayerSizes.Medium;
+      size = AudioPlayerSizes.Large;
       break;
     }
     case PLAYER_SIZE.SMALL:
     case PLAYER_SIZE.MEDIUM: {
-      size = AudioPlayerSizes.Small;
+      size = AudioPlayerSizes.Medium;
       break;
     }
     case PLAYER_SIZE.EXTRA_SMALL:
     case PLAYER_SIZE.TINY: {
-      size = AudioPlayerSizes.XSmall;
+      size = AudioPlayerSizes.Small;
       break;
     }
     default: {
@@ -142,7 +142,7 @@ const AudioPlayerView = Event.withEventManager(
 
         const _renderAudioDetails = () => {
           if (isLoading) {
-            return [AudioPlayerSizes.XSmall, AudioPlayerSizes.Small].includes(size!) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
+            return [AudioPlayerSizes.Small, AudioPlayerSizes.Medium].includes(size!) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
           }
           return <AudioDetails title={title} description={description} size={size!} />;
         };
@@ -156,7 +156,7 @@ const AudioPlayerView = Event.withEventManager(
         };
 
         const _renderView = () => {
-          if (size === AudioPlayerSizes.XSmall) {
+          if (size === AudioPlayerSizes.Small) {
             return (
               <Fragment>
                 <div className={styles.topControls}>
@@ -172,7 +172,7 @@ const AudioPlayerView = Event.withEventManager(
           }
           return (
             <Fragment>
-              {size === AudioPlayerSizes.Medium ? <div style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} /> : null}
+              {size === AudioPlayerSizes.Large ? <div style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} /> : null}
               <div className={styles.leftControls}>{_renderPoster()}</div>
               <div className={styles.rightControls}>
                 <div className={styles.topControls}>{_renderAudioDetails()}</div>
