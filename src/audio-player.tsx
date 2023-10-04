@@ -47,7 +47,9 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     return true;
   }
 
-  reset() {}
+  reset() {
+    /**/
+  }
 }
 
 export {AudioPlayer};
