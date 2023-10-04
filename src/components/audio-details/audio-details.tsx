@@ -57,7 +57,10 @@ export const AudioDetailsComponent = ({
     <div className={`${styles.audioPlayerDetails} ${styles[size!]}`} tabIndex={0}>
       <div className={styles.header}>
         {isPlaybackStarted && <div className={styles.audioIconContainer}>{renderIcon()}</div>}
-        <div className={styles.title} onMouseOver={() => setTitleHovered(true)} onMouseLeave={() => setTitleHovered(false)}>
+        <div
+          className={[styles.title, isPlaybackStarted ? styles.playbackStarted : ''].join(' ')}
+          onMouseOver={() => setTitleHovered(true)}
+          onMouseLeave={() => setTitleHovered(false)}>
           <ScrollingText
             id={'title'}
             updateOnPlayerSizeChange

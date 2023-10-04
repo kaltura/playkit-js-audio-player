@@ -6,7 +6,11 @@
         margin: 13px 16px 0 0;
       }
       .title {
-        width: calc(100% - 16px);
+        &.playback-started {
+          width: calc(100% - 16px);
+        }
+        width: 100%;
+        margin-bottom: 4px;
       }
     }
   }
@@ -17,7 +21,11 @@
         margin: 13px 16px 0 0;
       }
       .title {
-        width: calc(100% - 16px);
+        &.playback-started {
+          width: calc(100% - 16px);
+        }
+        width: 100%;
+        margin-bottom: 4px;
       }
     }
   }
