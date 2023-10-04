@@ -1,7 +1,9 @@
 .loop-button-wrapper {
   margin-right: 12px;
   .loop-button {
-    border-radius: 0;
+    &:focus {
+      border-radius: 0;
+    }
     &.inactive {
       background-color: transparent;
     }
