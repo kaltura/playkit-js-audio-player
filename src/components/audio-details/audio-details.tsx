@@ -54,7 +54,7 @@ export const AudioDetailsComponent = ({
   };
 
   return (
-  <div className={`${styles.audioPlayerDetails} ${styles[size!]}`}>
+    <div className={`${styles.audioPlayerDetails} ${styles[size!]}`}>
       <div className={styles.header}>
         {isPlaybackStarted && <div className={styles.audioIconContainer}>{renderIcon()}</div>}
         <div
