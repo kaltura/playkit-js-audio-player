@@ -1,6 +1,8 @@
 @import '~@playkit-js/playkit-js-ui';
 
 .audio-seekbar {
+  --seekbar-default-color-rgb: 255, 255, 255;
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,6 +27,11 @@
     > :global(.playkit-seek-bar) {
       width: 100%;
       padding: 0;
+
+      :global(.playkit-progress-bar) {
+        // TODO replace with tone 1
+        background-color: rgba(var(--playkit-player-background-color-rgb, var(--seekbar-default-color-rgb)), 0.3); 
+      }
     }
   }
 }

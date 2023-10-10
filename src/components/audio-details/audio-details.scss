@@ -1,4 +1,6 @@
 .audio-player-details {
+  --description-default-color-rgb: 255, 255, 255;
+
   width: 100%;
   &.small {
     .header {
@@ -56,13 +58,15 @@
 
   .title {
     width: 100%;
-    color: #fff; // tone 1
+    // TODO replace with tone 1
+    color: var(--playkit-player-background-color); 
     font-size: 14px;
     font-weight: bold;
   }
 
   .description {
     width: 100%;
-    color: rgba(255, 255, 255, 0.8); // tone 1 opa
+    // TODO replace with tone 1
+    color: rgba(var(--playkit-player-background-color-rgb, var(--description-default-color-rgb)), 0.8); 
   }
 }
