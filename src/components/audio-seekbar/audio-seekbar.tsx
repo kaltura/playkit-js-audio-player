@@ -85,7 +85,7 @@ class AudioSeekbar extends Component<ConnectProps | any> {
             notifyChange={this.props.notifyChange}
           />
         </div>
-        <div className={styles.duration}>{toHHMMSS(this.props.duration)}</div>
+        {!this.props.player.isLive() && <div className={styles.duration}>{toHHMMSS(this.props.duration)}</div>}
       </div>
     );
   }
