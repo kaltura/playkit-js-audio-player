@@ -63,6 +63,9 @@ class AudioSeekbar extends Component<ConnectProps | any> {
     this.props.player.currentTime = time;
   };
   render() {
+    if (this.props.player.isLive() && !this.props.player.isDvr()) {
+      return null;
+    }
     return (
       <div className={styles.audioSeekbar}>
         <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>
