@@ -5,6 +5,31 @@
   flex-direction: row;
   height: 36px;
   width: 100%;
+
+  button {
+    filter: invert(1) var(--playkit-audio-player-controls-filter);
+  }
+  
+  :global(#speedActive) {
+    color: var(--playkit-tone-1-color);
+  }
+  
+  :global(.playkit-select-menu-item) {
+    color: var(--playkit-tone-1-color);
+  }
+
+  :global(.playkit-dropdown-menu .playkit-dropdown-menu-item) {
+    color: var(--playkit-tone-1-color);
+  }
+  
+  :global(.playkit-dropdown-menu .playkit-dropdown-menu:hover) {
+    color: var(--playkit-tone-1-color);
+  }
+  
+  :global(.playkit-dropdown-menu .playkit-dropdown-menu:focus) {
+    color: var(--playkit-tone-1-color);
+  }
+  
   :global(.playkit-live-tag) {
     margin-left: 0;
     margin-right: 8px;

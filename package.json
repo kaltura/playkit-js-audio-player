@@ -53,6 +53,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@playkit-js/common": "^1.4.1"
+    "@playkit-js/common": "^1.4.1",
+    "hex-to-css-filter": "^5.4.0"
   }
 }
