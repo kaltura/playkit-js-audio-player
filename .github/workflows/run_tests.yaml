@@ -8,9 +8,9 @@ on:
       - "*"
 
 jobs:
-  # tests:
-    # uses: kaltura/playkit-js-common/.github/workflows/cypress.yml@master
-    # secrets: inherit
+  tests:
+    uses: kaltura/playkit-js-common/.github/workflows/cypress.yml@master
+    secrets: inherit
 
   notification:
     if: always()
