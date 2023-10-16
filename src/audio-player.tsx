@@ -81,7 +81,6 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
       }
 
       this.eventManager.listenOnce(this.player, core.EventType.CHANGE_SOURCE_ENDED, () => {
-        // const invertedHexColor = invertHex(color);
         const colorHexAsFilter = hexToCSSFilter(color, {acceptanceLossPercentage: 1}).filter;
         const colorHexAsRGB = this.getColorAsRGB(color);
 
