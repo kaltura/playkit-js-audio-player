@@ -1,6 +1,6 @@
 {
   "name": "playkit-js-audio-player",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/playkit-audio-player.js",
   "scripts": {
@@ -62,6 +62,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@playkit-js/common": "^1.4.1"
+    "@playkit-js/common": "^1.4.1",
+    "hex-to-css-filter": "^5.4.0"
   }
 }
