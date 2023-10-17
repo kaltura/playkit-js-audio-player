@@ -18,6 +18,8 @@ interface AudioPlayerControlsProps {
 
 const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
+  const playbackStarted = useSelector((state: any) => state.engine.isPlaybackStarted);
+  const playbackEnded = useSelector((state: any) => state.engine.isPlaybackEnded);
   const ref = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -34,9 +36,16 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
       return [...acc, speedOption];
     }, []);
   };
+
+  const _renderLiveTag = () => {
+    if (player.isLive() && playbackStarted && !playbackEnded) {
+      return <LiveTag />;
+    }
+    return null;
+  };
   return (
     <div className={styles.playbackControlsWrapper}>
-      {player.isLive() && <LiveTag />}
+      {_renderLiveTag()}
       <div className={styles.playbackControls}>
         {pluginConfig.showReplayButton || player.isLive() ? (
           <LoopButton />
