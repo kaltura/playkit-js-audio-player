@@ -3,6 +3,7 @@ import * as styles from './buffering-icon.scss';
 export const BufferingIcon = ({isLarge}: {isLarge?: boolean}) => {
   return (
     <svg
+      data-testid="audio-player-buffering-icon"
       width="24"
       height="24"
       viewBox="0 0 24 24"

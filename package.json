@@ -20,7 +20,7 @@
     "cy:run:firefox": "cypress run --browser firefox --config video=false",
     "cy:run:edge": "cypress run --browser edge --config video=false",
     "cy:run:safari": "cypress run --browser webkit --config video=false",
-    "test:prepare": "yarn run build && yes | cp -i ./dist/playkit-downloads.js ./dist/playkit-downloads.js.map ./cypress/public",
+    "test:prepare": "yarn run build && yes | cp -i ./dist/playkit-audio-player.js ./dist/playkit-audio-player.js.map ./cypress/public",
     "test:watch": "yarn run test:prepare && yarn run cy:open",
     "test": "yarn run test:prepare && yarn run cy:run"
   },

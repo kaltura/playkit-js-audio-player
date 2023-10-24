@@ -12,10 +12,10 @@ const PLAYER_CONFIG = {
       disable: true
     },
     uiManagers: {},
-    download: {}
+    audioPlayer: {}
   },
   playback: {
-    autoplay: true,
+    autoplay: false,
     muted: true
   }
 };

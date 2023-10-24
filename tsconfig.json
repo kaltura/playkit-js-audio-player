@@ -18,5 +18,5 @@
       },
       "lib": ["es2015", "dom"],
     },
-    "include": ["src/**/*.tsx", "src/**/*.ts", "node_modules/@playkit-js/kaltura-player-js/types.d.ts"]
+    "include": ["src/**/*.tsx", "src/**/*.ts", "node_modules/@playkit-js/kaltura-player-js/types.d.ts", "cypress/e2e/*.ts"]
 }

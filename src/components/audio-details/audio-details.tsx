@@ -58,6 +58,7 @@ export const AudioDetailsComponent = ({
       <div className={styles.header}>
         {isPlaybackStarted && <div className={styles.audioIconContainer}>{renderIcon()}</div>}
         <div
+          data-testid="audio-player-title-container"
           className={[styles.title, isPlaybackStarted ? styles.playbackStarted : ''].join(' ')}
           onMouseOver={() => setTitleHovered(true)}
           onMouseLeave={() => setTitleHovered(false)}>
@@ -71,7 +72,11 @@ export const AudioDetailsComponent = ({
           />
         </div>
       </div>
-      <div className={styles.description} onMouseOver={() => setDescriptionHovered(true)} onMouseLeave={() => setDescriptionHovered(false)}>
+      <div
+        data-testid="audio-player-description-container"
+        className={styles.description}
+        onMouseOver={() => setDescriptionHovered(true)}
+        onMouseLeave={() => setDescriptionHovered(false)}>
         <ScrollingText id={'description'} updateOnPlayerSizeChange content={getDescription()} inActive={!descriptionHovered} />
       </div>
     </div>

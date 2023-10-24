@@ -28,10 +28,6 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
     this.prepareUI();
   }
 
-  private invertHex(hex: string) {
-    return (Number(`0x1${hex}`) ^ 0xffffff).toString(16).substr(1).toUpperCase();
-  }
-
   /**
    * Return a hex color as an array of Red, Green and Blue values
    * @param {string} color  - 3 or 6 digit hex color value

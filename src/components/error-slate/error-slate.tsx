@@ -7,7 +7,7 @@ const {ErrorOverlay} = ui.Components;
 
 export const ErrorSlate = () => {
   return (
-    <div className={styles.errorSlateWrapper}>
+    <div data-testid="audio-player-error-slate" className={styles.errorSlateWrapper}>
       <ErrorOverlay />
     </div>
   );
