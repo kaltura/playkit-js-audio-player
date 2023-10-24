@@ -75,7 +75,9 @@ Finally, add the bundle as a script tag in your page, and initialize the player
      targetId: 'player-placeholder',
      plugins: {
        audioPlayer: {
-        showReplayButton: true // false by default. if true, the loop button will be visible instead of the speed menu button
+        // showReplayButton is set to false by default.
+        // If set to true, the loop button will be shown instead of the speed menu button
+        showReplayButton: true
        }
      }
      ...
