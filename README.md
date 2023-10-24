@@ -69,8 +69,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 <!--PlayKit info plugin-->
 <div id="player-placeholder" style="height:360px; width:640px">
   <script type="text/javascript">
-    var playerContainer = document.querySelector("#player-placeholder");
-    var config = {
+    const config = {
      ...
      targetId: 'player-placeholder',
      plugins: {
