@@ -1,5 +1,5 @@
 {
-  "name": "playkit-js-audio-player",
+  "name": "@playkit-js/audio-player",
   "version": "1.0.1",
   "description": "",
   "main": "dist/playkit-audio-player.js",
