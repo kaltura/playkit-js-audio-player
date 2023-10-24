@@ -1,0 +1,9 @@
+{
+  "es": {
+    "audioPlayer": {
+      "enableLoop": "Habilitar bucle",
+      "disableLoop": "Deshabilitar bucle",
+      "mediaThumb": "Miniatura del archivo multimedia"
+    }
+  }
+}

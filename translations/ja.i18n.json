@@ -1,0 +1,9 @@
+{
+  "ja": {
+    "audioPlayer": {
+      "enableLoop": "ループを有効にする",
+      "disableLoop": "ループを無効にする",
+      "mediaThumb": "メディアのサムネイル"
+    }
+  }
+}

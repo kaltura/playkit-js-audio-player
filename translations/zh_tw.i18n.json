@@ -1,0 +1,9 @@
+{
+  "zh_tw": {
+    "audioPlayer": {
+      "enableLoop": "啟用循環播放",
+      "disableLoop": "停用循環播放",
+      "mediaThumb": "媒體縮圖"
+    }
+  }
+}

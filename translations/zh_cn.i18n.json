@@ -1,0 +1,9 @@
+{
+  "zh_cn": {
+    "audioPlayer": {
+      "enableLoop": "启动循环播放",
+      "disableLoop": "停止循环播放",
+      "mediaThumb": "媒体缩略图"
+    }
+  }
+}
