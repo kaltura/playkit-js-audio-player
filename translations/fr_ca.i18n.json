@@ -1,0 +1,9 @@
+{
+  "fr_ca": {
+    "audioPlayer": {
+      "enableLoop": "Activer la boucle",
+      "disableLoop": "Désactiver la boucle",
+      "mediaThumb": "Miniature"
+    }
+  }
+}

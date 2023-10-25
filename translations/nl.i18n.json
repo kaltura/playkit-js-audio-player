@@ -1,0 +1,9 @@
+{
+  "nl": {
+    "audioPlayer": {
+      "enableLoop": "Loop inschakelen",
+      "disableLoop": "Loop uitschakelen",
+      "mediaThumb": "Miniatuur media"
+    }
+  }
+}

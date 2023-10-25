@@ -1,0 +1,9 @@
+{
+  "ko": {
+    "audioPlayer": {
+      "enableLoop": "루프 활성화",
+      "disableLoop": "루프 비활성화",
+      "mediaThumb": "미디어 미리 보기"
+    }
+  }
+}

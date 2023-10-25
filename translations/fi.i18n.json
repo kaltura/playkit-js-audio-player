@@ -1,0 +1,9 @@
+{
+  "fi": {
+    "audioPlayer": {
+      "enableLoop": "Ota silmukka käyttöön",
+      "disableLoop": "Poista silmukka käytöstä",
+      "mediaThumb": "Median pikkukuva"
+    }
+  }
+}

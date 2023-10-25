@@ -1,0 +1,9 @@
+{
+  "de": {
+    "audioPlayer": {
+      "enableLoop": "Schleife einschalten",
+      "disableLoop": "Schleife ausschalten",
+      "mediaThumb": "Medien-Thumbnail"
+    }
+  }
+}

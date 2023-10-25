@@ -1,0 +1,9 @@
+{
+  "it": {
+    "audioPlayer": {
+      "enableLoop": "Abilita riproduzione continua",
+      "disableLoop": "Disabilita riproduzione continua",
+      "mediaThumb": "Miniatura file multimediale"
+    }
+  }
+}

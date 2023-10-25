@@ -1,0 +1,9 @@
+{
+  "pt_br": {
+    "audioPlayer": {
+      "enableLoop": "Habilitar repetição",
+      "disableLoop": "Desabilitar repetição",
+      "mediaThumb": "Miniatura de mídia"
+    }
+  }
+}
