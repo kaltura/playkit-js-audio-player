@@ -50,12 +50,14 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
         {pluginConfig.showReplayButton || player.isLive() ? (
           <LoopButton />
         ) : (
-          <div className={styles.speedMenuWrapper}>
+          <div data-testid="audio-player-speed-menu" className={styles.speedMenuWrapper}>
             <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
           </div>
         )}
         {playlist ? (
-          <PlaylistButton type="prev" showPreview={false} />
+          <div data-testid="audio-player-prev-button">
+            <PlaylistButton type="prev" showPreview={false} />
+          </div>
         ) : (
           <Rewind
             step={10}
@@ -64,9 +66,13 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
             }}
           />
         )}
-        <PlayPause />
+        <div data-testid="audio-player-play-button">
+          <PlayPause />
+        </div>
         {playlist ? (
-          <PlaylistButton type="next" showPreview={false} />
+          <div data-testid="audio-player-next-button">
+            <PlaylistButton type="next" showPreview={false} />
+          </div>
         ) : (
           <Forward
             step={10}

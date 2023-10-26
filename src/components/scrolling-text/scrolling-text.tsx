@@ -140,7 +140,7 @@ const ScrollingTextComponent = ({
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}>
       {generateAnimation()}
-      <div style={scrollingTextStyles} className={styles.scrollingText} ref={textRef}>
+      <div data-testid="scrolling-text" style={scrollingTextStyles} className={styles.scrollingText} ref={textRef}>
         {content}
       </div>
     </div>

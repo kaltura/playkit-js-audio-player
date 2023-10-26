@@ -57,7 +57,7 @@ class LoopButton extends Component<LoopButtonProps & any, LoopButtonState> {
   render() {
     const {loopEnabled} = this.state;
     return (
-      <div className={styles.loopButtonWrapper}>
+      <div data-testid="audio-player-loop-button" className={styles.loopButtonWrapper}>
         <Button
           onClick={this._handleClick}
           icon="replay"

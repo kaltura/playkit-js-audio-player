@@ -137,7 +137,15 @@ const AudioPlayerView = Event.withEventManager(
             return <ThumbPlaceholder animate={false} />;
           }
 
-          return <img src={poster} className={styles.poster} alt={mediaThumb} onError={() => setImageHasError(true)} />;
+          return (
+            <img
+              data-testid="audio-player-thumbnail"
+              src={poster}
+              className={styles.poster}
+              alt={mediaThumb}
+              onError={() => setImageHasError(true)}
+            />
+          );
         };
 
         const _renderAudioDetails = () => {
@@ -172,7 +180,9 @@ const AudioPlayerView = Event.withEventManager(
           }
           return (
             <Fragment>
-              {size === AudioPlayerSizes.Large ? <div style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} /> : null}
+              {size === AudioPlayerSizes.Large && poster ? (
+                <div data-testid="audio-player-background-image" style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} />
+              ) : null}
               <div className={styles.leftControls}>{_renderPoster()}</div>
               <div className={styles.rightControls}>
                 <div className={styles.topControls}>{_renderAudioDetails()}</div>
@@ -185,7 +195,11 @@ const AudioPlayerView = Event.withEventManager(
           );
         };
 
-        return <div className={`${styles.audioPlayerView} ${styles[size!]}`}>{hasError ? <ErrorSlate /> : _renderView()}</div>;
+        return (
+          <div data-testid="audio-player-view" className={`${styles.audioPlayerView} ${styles[size!]}`}>
+            {hasError ? <ErrorSlate /> : _renderView()}
+          </div>
+        );
       }
     )
   )

@@ -1,0 +1,36 @@
+[
+  {
+    "partnerId": 1091,
+    "ks": "NTRmMTYzMDA1NTk0YzE2ZjIxMDk5NTlhNmQ2N2Q4OWU5ZWNhYTNiMnwxMDkxOzEwOTE7MTY5ODEzOTMxNzswOzE2OTgwNTI5MTcuMTg2OTswO3ZpZXc6Kix3aWRnZXQ6MTs7",
+    "userId": 0,
+    "objectType": "KalturaStartWidgetSessionResponse"
+  },
+  {
+    "id": "0_id05u6ul",
+    "name": "playlist",
+    "description": "",
+    "thumbnailUrl": "",
+    "objectType": "KalturaPlaylist"
+  },
+  [
+    {
+      "mediaType": 1,
+      "dataUrl": "./media/video.mp4",
+      "flavorParamsIds": "0,2,3,4,5,7",
+      "plays": 0,
+      "views": 0,
+      "duration": 153,
+      "msDuration": 153000,
+      "id": "0_kdalp8lc",
+      "name": "Entry",
+      "tags": "",
+      "status": 2,
+      "type": 1,
+      "createdAt": 1533567156,
+      "downloadUrl": "",
+      "thumbnailUrl": "./media/poster.png",
+      "referenceId": "MissionImpossible",
+      "objectType": "KalturaMediaEntry"
+    }
+  ]
+]
