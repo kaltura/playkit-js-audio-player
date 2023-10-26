@@ -72,10 +72,8 @@ describe('audio player plugin', () => {
       return new Promise(resolve => {
         loadPlayer().then(() => {
           setMedia({id: '12345', metadata: {name: 'a', description: 'b'}, progressive: [{mimetype: 'video/mp4', url: 'aaaaaaaaa'}]});
-          setTimeout(() => {
-            cy.get('[data-testid="audio-player-error-slate"]').should('be.visible');
-            resolve(true);
-          }, 1000);
+          cy.get('[data-testid="audio-player-error-slate"]').should('be.visible');
+          resolve(true);
         });
       });
     });
