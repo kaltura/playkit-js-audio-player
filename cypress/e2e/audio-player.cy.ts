@@ -301,6 +301,25 @@ describe('audio player plugin', () => {
           });
         });
       });
+
+      describe('volume control', () => {
+        it('should render volume control component', () => {
+          return loadPlayer().then(() => {
+            setMedia();
+            cy.get('[data-testid="audio-player-volume-control"]').should('be.visible');
+          });
+        });
+      });
+
+      describe('revind - forward buttons', () => {
+        it('should render revind / forward buttons', () => {
+          return loadPlayer().then(() => {
+            setMedia();
+            cy.get('[data-testid="audio-player-forward-button"]').should('be.visible');
+            cy.get('[data-testid="audio-player-revind-button"]').should('be.visible');
+          });
+        });
+      });
     });
   });
 });
