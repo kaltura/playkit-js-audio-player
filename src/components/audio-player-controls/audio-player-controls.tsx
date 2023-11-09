@@ -54,35 +54,39 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
     <div className={styles.playbackControlsWrapper}>
       <LiveTagComponent />
       <div className={styles.playbackControls}>
-        {_renderLoopOrSpeedMenuButton()}
-        {playlist ? (
-          <div data-testid="audio-player-prev-button">
-            <PlaylistButton type="prev" showPreview={false} />
-          </div>
-        ) : (
-          <Rewind
-            step={10}
-            onToggle={() => {
-              /**/
-            }}
-          />
-        )}
-        <div data-testid="audio-player-play-button">
+        <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
+        <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-prev-button' : 'audio-player-revind-button'}>
+          {playlist ? (
+            <div>
+              <PlaylistButton type="prev" showPreview={false} />
+            </div>
+          ) : (
+            <Rewind
+              step={10}
+              onToggle={() => {
+                /**/
+              }}
+            />
+          )}
+        </div>
+        <div className={styles.buttonContainer} data-testid="audio-player-play-button">
           <PlayPause />
         </div>
-        {playlist ? (
-          <div data-testid="audio-player-next-button">
+        <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-next-button' : 'audio-player-forward-button'}>
+          {playlist ? (
             <PlaylistButton type="next" showPreview={false} />
-          </div>
-        ) : (
-          <Forward
-            step={10}
-            onToggle={() => {
-              /**/
-            }}
-          />
-        )}
-        <Volume horizontal />
+          ) : (
+            <Forward
+              step={10}
+              onToggle={() => {
+                /**/
+              }}
+            />
+          )}
+        </div>
+        <div className={styles.buttonContainer} data-testid="audio-player-volume-control">
+          <Volume horizontal />
+        </div>
       </div>
     </div>
   );
