@@ -9,11 +9,11 @@
   button {
     filter: invert(1) var(--playkit-audio-player-controls-filter);
   }
-  
+
   :global(#speedActive) {
     color: $tone-1-color;
   }
-  
+
   :global(.playkit-select-menu-item) {
     color: $tone-1-color;
   }
@@ -21,15 +21,15 @@
   :global(.playkit-dropdown-menu .playkit-dropdown-menu-item) {
     color: $tone-1-color;
   }
-  
+
   :global(.playkit-dropdown-menu .playkit-dropdown-menu:hover) {
     color: $tone-1-color;
   }
-  
+
   :global(.playkit-dropdown-menu .playkit-dropdown-menu:focus) {
     color: $tone-1-color;
   }
-  
+
   :global(.playkit-live-tag) {
     margin-left: 0;
     margin-right: 8px;
@@ -41,6 +41,19 @@
     width: 212px;
     height: 100%;
     margin: 0 auto;
+    .buttonContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      flex: 0 0 36px;
+      &:not(:last-of-type) {
+        margin-right: 8px;
+      }
+      &:empty {
+        display: none;
+      }
+    }
     .speed-menu-wrapper {
       display: flex;
       height: 32px;
@@ -101,15 +114,9 @@
     }
     :global(.playkit-control-button-container) {
       display: inline-block;
-      &:last-child {
-        margin-left: 4px;
-      }
-      &:not(:last-child) {
-        margin-right: 12px;
-      }
     }
     :global(.playkit-volume-control-bar) {
-      bottom: -4px;
+      bottom: -7px;
       left: -40px;
       width: 32px;
       transform: rotate(90deg);

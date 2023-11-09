@@ -3,6 +3,7 @@ import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
+import {LiveTagComponent} from '../live-tag';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -18,8 +19,6 @@ interface AudioPlayerControlsProps {
 
 const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
-  const playbackStarted = useSelector((state: any) => state.engine.isPlaybackStarted);
-  const playbackEnded = useSelector((state: any) => state.engine.isPlaybackEnded);
   const ref = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -37,51 +36,57 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
     }, []);
   };
 
-  const _renderLiveTag = () => {
-    if (player.isLive() && playbackStarted && !playbackEnded) {
-      return <LiveTag />;
+  const _renderLoopOrSpeedMenuButton = () => {
+    if (player.isLive()) {
+      return null;
     }
-    return null;
+    if (pluginConfig.showReplayButton) {
+      return <LoopButton />;
+    }
+    return (
+      <div data-testid="audio-player-speed-menu" className={styles.speedMenuWrapper}>
+        <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
+      </div>
+    );
   };
+
   return (
     <div className={styles.playbackControlsWrapper}>
-      {_renderLiveTag()}
+      <LiveTagComponent />
       <div className={styles.playbackControls}>
-        {pluginConfig.showReplayButton || player.isLive() ? (
-          <LoopButton />
-        ) : (
-          <div data-testid="audio-player-speed-menu" className={styles.speedMenuWrapper}>
-            <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
-          </div>
-        )}
-        {playlist ? (
-          <div data-testid="audio-player-prev-button">
-            <PlaylistButton type="prev" showPreview={false} />
-          </div>
-        ) : (
-          <Rewind
-            step={10}
-            onToggle={() => {
-              /**/
-            }}
-          />
-        )}
-        <div data-testid="audio-player-play-button">
+        <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
+        <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-prev-button' : 'audio-player-rewind-button'}>
+          {playlist ? (
+            <div>
+              <PlaylistButton type="prev" showPreview={false} />
+            </div>
+          ) : (
+            <Rewind
+              step={10}
+              onToggle={() => {
+                /**/
+              }}
+            />
+          )}
+        </div>
+        <div className={styles.buttonContainer} data-testid="audio-player-play-button">
           <PlayPause />
         </div>
-        {playlist ? (
-          <div data-testid="audio-player-next-button">
+        <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-next-button' : 'audio-player-forward-button'}>
+          {playlist ? (
             <PlaylistButton type="next" showPreview={false} />
-          </div>
-        ) : (
-          <Forward
-            step={10}
-            onToggle={() => {
-              /**/
-            }}
-          />
-        )}
-        <Volume horizontal />
+          ) : (
+            <Forward
+              step={10}
+              onToggle={() => {
+                /**/
+              }}
+            />
+          )}
+        </div>
+        <div className={styles.buttonContainer} data-testid="audio-player-volume-control">
+          <Volume horizontal />
+        </div>
       </div>
     </div>
   );

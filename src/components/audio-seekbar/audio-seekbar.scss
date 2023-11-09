@@ -18,10 +18,16 @@
     font-weight: 400;
     line-height: normal;
   }
+  .current-time {
+    margin-right: 8px;
+  }
+  .duration {
+    margin-left: 8px;
+  }
   .seekbar-wrapper {
     width: 100%;
     height: 100%;
-    margin: 0 8px;
+    margin: 0;
     padding: 3px 0;
     flex-grow: 1;
     > :global(.playkit-seek-bar) {
