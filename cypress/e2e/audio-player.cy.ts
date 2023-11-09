@@ -311,12 +311,12 @@ describe('audio player plugin', () => {
         });
       });
 
-      describe('revind - forward buttons', () => {
-        it('should render revind / forward buttons', () => {
+      describe('rewind - forward buttons', () => {
+        it('should render rewind / forward buttons', () => {
           return loadPlayer().then(() => {
             setMedia();
             cy.get('[data-testid="audio-player-forward-button"]').should('be.visible');
-            cy.get('[data-testid="audio-player-revind-button"]').should('be.visible');
+            cy.get('[data-testid="audio-player-rewind-button"]').should('be.visible');
           });
         });
       });

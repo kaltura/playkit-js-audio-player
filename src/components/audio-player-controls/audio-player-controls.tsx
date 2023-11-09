@@ -55,7 +55,7 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
       <LiveTagComponent />
       <div className={styles.playbackControls}>
         <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
-        <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-prev-button' : 'audio-player-revind-button'}>
+        <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-prev-button' : 'audio-player-rewind-button'}>
           {playlist ? (
             <div>
               <PlaylistButton type="prev" showPreview={false} />
