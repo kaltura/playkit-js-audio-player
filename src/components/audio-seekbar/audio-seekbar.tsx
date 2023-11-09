@@ -66,9 +66,10 @@ class AudioSeekbar extends Component<ConnectProps | any> {
     if (this.props.player.isLive() && !this.props.player.isDvr()) {
       return null;
     }
+    const showTime = !this.props.player.isLive();
     return (
       <div className={styles.audioSeekbar}>
-        <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>
+        {showTime && <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>}
         <div className={styles.seekbarWrapper}>
           <SeekBar
             changeCurrentTime={this._handleChangeCurrentTime}
@@ -85,7 +86,7 @@ class AudioSeekbar extends Component<ConnectProps | any> {
             notifyChange={this.props.notifyChange}
           />
         </div>
-        {!this.props.player.isLive() && <div className={styles.duration}>{toHHMMSS(this.props.duration)}</div>}
+        {showTime && <div className={styles.duration}>{toHHMMSS(this.props.duration)}</div>}
       </div>
     );
   }
