@@ -7,7 +7,7 @@ import {LiveTagComponent} from '../live-tag';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-const {Rewind, Forward, PlaylistButton, PlayPause, Volume, LiveTag, SpeedMenu} = ui.Components;
+const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Components;
 const {
   redux: {useSelector}
 } = ui;
