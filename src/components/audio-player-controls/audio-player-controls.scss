@@ -50,6 +50,9 @@
       &:not(:last-of-type) {
         margin-right: 8px;
       }
+      &:empty {
+        display: none;
+      }
     }
     .speed-menu-wrapper {
       display: flex;
