@@ -43,17 +43,26 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
     }
     return null;
   };
+
+  const _renderLoopOrSpeedMenuButton = () => {
+    if (player.isLive()) {
+      return null;
+    }
+    if (pluginConfig.showReplayButton) {
+      return <LoopButton />;
+    }
+    return (
+      <div data-testid="audio-player-speed-menu" className={styles.speedMenuWrapper}>
+        <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
+      </div>
+    );
+  };
+
   return (
     <div className={styles.playbackControlsWrapper}>
       {_renderLiveTag()}
       <div className={styles.playbackControls}>
-        {pluginConfig.showReplayButton || player.isLive() ? (
-          <LoopButton />
-        ) : (
-          <div data-testid="audio-player-speed-menu" className={styles.speedMenuWrapper}>
-            <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
-          </div>
-        )}
+        {_renderLoopOrSpeedMenuButton()}
         {playlist ? (
           <div data-testid="audio-player-prev-button">
             <PlaylistButton type="prev" showPreview={false} />
