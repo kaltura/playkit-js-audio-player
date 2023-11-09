@@ -3,6 +3,7 @@ import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
+import {LiveTagComponent} from '../live-tag';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -18,8 +19,6 @@ interface AudioPlayerControlsProps {
 
 const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
-  const playbackStarted = useSelector((state: any) => state.engine.isPlaybackStarted);
-  const playbackEnded = useSelector((state: any) => state.engine.isPlaybackEnded);
   const ref = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -35,13 +34,6 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
       };
       return [...acc, speedOption];
     }, []);
-  };
-
-  const _renderLiveTag = () => {
-    if (player.isLive() && playbackStarted && !playbackEnded) {
-      return <LiveTag />;
-    }
-    return null;
   };
 
   const _renderLoopOrSpeedMenuButton = () => {
@@ -60,7 +52,7 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
 
   return (
     <div className={styles.playbackControlsWrapper}>
-      {_renderLiveTag()}
+      <LiveTagComponent />
       <div className={styles.playbackControls}>
         {_renderLoopOrSpeedMenuButton()}
         {playlist ? (
