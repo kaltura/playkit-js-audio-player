@@ -107,3 +107,4 @@ playkit-js-audio-player is supported on:
 ## License
 
 playkit-js-audio-player is released under [GNU Affero General Public License](LICENSE)
+
