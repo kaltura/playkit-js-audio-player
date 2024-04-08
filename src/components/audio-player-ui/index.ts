@@ -1,1 +1,1 @@
-export {AudioPlayerUI} from './audio-player-ui';
+export {miniAudioUI} from './audio-player-ui';

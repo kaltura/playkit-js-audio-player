@@ -1,5 +1,7 @@
-import {registerPlugin} from '@playkit-js/kaltura-player-js';
+// import {registerPlugin} from '@playkit-js/kaltura-player-js';
 import {AudioPlayer} from './audio-player';
+import {miniAudioUI} from './components/audio-player-ui';
+import { bulbulUI } from "./experiment/bulbul-preset";
 
 declare let __VERSION__: string;
 declare let __NAME__: string;
@@ -14,4 +16,19 @@ const pluginName = 'audioPlayer';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-registerPlugin(pluginName, AudioPlayer);
+// registerPlugin(pluginName, AudioPlayer);
+
+
+// @ts-ignore
+window.__kalturaplayerdata = {
+  ui: {
+    customPreset: [
+      {
+        template: () => miniAudioUI({player:{}, config:{}}),
+        // template: (pr: any) => bulbulUI(pr),
+        condition: () => true
+      }
+    ]
+  }
+}
+

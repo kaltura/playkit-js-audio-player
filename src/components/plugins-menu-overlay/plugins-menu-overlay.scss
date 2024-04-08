@@ -1,0 +1,110 @@
+:global(.playkit-mini-audio-player-overlay) {
+  background: rgba(0, 128, 0, 50%);
+  border-radius: 8px;
+
+  .plugins-menu-overlay {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+
+    .content {
+      backdrop-filter: blur(16px);
+      background-color: rgba(0, 0, 0, .4);
+      width: 100%;
+      height: 100%;
+      color: #f5f5f5;
+      display: flex;
+      box-shadow: inset 0 0 20px 0 #414141;
+      justify-content: center;
+      align-items: center;
+      border-radius: inherit;
+      font-size: 18px;
+
+      .menu {
+        margin: 10px;
+        width: 240px;
+
+        //.menu-item {
+        //  display: flex;
+        //  padding: 8px 0;
+        //  align-items: center;
+        //
+        //  .plugin-icon {
+        //    width: 24px;
+        //    height: 24px;
+        //    margin-right: 4px;
+        //  }
+        //
+        //  .arrow-icon {
+        //    width: 16px;
+        //    height: 16px;
+        //    margin-left: auto;
+        //    transform: rotate(268deg);
+        //  }
+        //}
+      }
+    }
+  }
+}
+
+:global(.playkit-player.playkit-size-md .playkit-overlay .playkit-overlay-contents) {
+  padding: 0;
+}
+
+:global(.playkit-player.playkit-size-sm .playkit-overlay .playkit-overlay-contents) {
+  padding: 0;
+}
+
+:global(.playkit-player.playkit-size-xs .playkit-overlay .playkit-overlay-contents) {
+  padding: 0;
+}
+
+:global(.playkit-player.playkit-size-ty .playkit-overlay .playkit-overlay-contents) {
+  padding: 0;
+}
+
+:global(.playkit-player.playkit-size-md .playkit-overlay .playkit-close-overlay) {
+  top: 14px;
+  right: 14px;
+}
+
+:global(.playkit-player.playkit-size-sm .playkit-overlay .playkit-close-overlay) {
+  top: 14px;
+  right: 14px;
+}
+
+:global(.playkit-player.playkit-size-xs .playkit-overlay .playkit-close-overlay) {
+  top: 10px;
+  right: 10px;
+}
+
+:global(.playkit-player.playkit-size-ty .playkit-overlay .playkit-close-overlay) {
+  top: 8px;
+  right: 8px;
+}
+
+:global(.download-overlay__download-overlay___IThlq .download-overlay__header___Z6u7x) {
+  margin-top: 14px;
+  font-weight: initial;
+  font-size: 25px;
+}
+
+:global(.download-overlay__download-overlay___IThlq .download-overlay__header___Z6u7x.download-overlay__small___GW05I) {
+  margin-top: 14px;
+  font-weight: initial;
+}
+
+:global(.download-overlay__download-overlay___IThlq .download-overlay__close-button-container___nLul9 ) {
+  top: 13px;
+  right: 15px;
+}
+
+:global(.download-overlay__download-overlay___IThlq .download-overlay__close-button-container___nLul9.download-overlay__small___GW05I) {
+  top: 10px;
+  right: 7px;
+}
+
+:global(.download-overlay__download-overlay___IThlq .download-overlay__file-info-list___riTfL) {
+  margin-top: 13px;
+}

@@ -1,15 +1,19 @@
-import {useRef, useEffect} from 'preact/hooks';
+import {useRef, useEffect, useState} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
 import {LiveTagComponent} from '../live-tag';
+import {MorePluginsButtonWrapper} from '../more-plugins-button';
+import {PluginsMenuOverlay} from '../plugins-menu-overlay';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Components;
 const {
-  redux: {useSelector}
+  redux: {useSelector},
+  //@ts-ignore
+  createPortal
 } = ui;
 
 interface AudioPlayerControlsProps {
@@ -20,6 +24,9 @@ interface AudioPlayerControlsProps {
 const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
+  const [showModal, setShowModal] = useState(false);
+
+  // setTimeout(() => setShowModal(true), 1000);
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
@@ -49,6 +56,9 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
       </div>
     );
   };
+
+  const targetId: HTMLDivElement | Document = (document.getElementById(player.config.targetId) as HTMLDivElement) || document;
+  // const portalSelector = `.overlay-portal`;
 
   return (
     <div className={styles.playbackControlsWrapper}>
@@ -87,7 +97,11 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
         <div className={styles.buttonContainer} data-testid="audio-player-volume-control">
           <Volume horizontal />
         </div>
+        <div className={styles.buttonContainer}>
+          <MorePluginsButtonWrapper onClick={() => setShowModal(true)} />
+        </div>
       </div>
+      <>{showModal && <PluginsMenuOverlay poster={player.sources.poster} config={player.config} onClose={() => setShowModal(false)} player={player}/>}</>
     </div>
   );
 };

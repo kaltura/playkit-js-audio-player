@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const packageData = require('./package.json');
+const CSS_MODULE_PREFIX = 'playkit';
 
 const plugins = [
   new webpack.DefinePlugin({
@@ -34,12 +35,15 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          {
+            loader: 'style-loader',
+            options: {attributes: {id: `${packageData.name}`}}
+          },
           {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[name]__[local]___[hash:base64:5]',
+                localIdentName: `${CSS_MODULE_PREFIX}-ap-[local]`,
                 namedExport: true
               }
             }
@@ -51,11 +55,11 @@ module.exports = {
             }
           }
         ]
-      }
+      },
     ]
   },
   devServer: {
-    static: `${__dirname}/src`
+    static: `${__dirname}/demo`
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],

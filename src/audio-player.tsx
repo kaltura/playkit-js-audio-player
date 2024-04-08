@@ -2,9 +2,10 @@
 // @ts-ignore
 import {BasePlugin, KalturaPlayer, core} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
-import {AudioPlayerView, AudioPlayerUI} from './components';
+// import {AudioPlayerView, AudioPlayerUI} from './components';
 
 import {hexToCSSFilter} from 'hex-to-css-filter';
+import {miniAudioUI} from "./components/audio-player-ui";
 
 const TONE_1_COLOR_VARIABLE = '--playkit-tone-1-color';
 const TONE_1_COLOR_RGB_VARIABLE = '--playkit-tone-1-color-rgb';
@@ -54,15 +55,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
       {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        template: () => (
-          <AudioPlayerUI>
-            {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              <AudioPlayerView pluginConfig={this.config} player={this.player} />
-            }
-          </AudioPlayerUI>
-        ),
+        template: () => miniAudioUI({player: this.player, config: this.config}),
         condition: () => true
       }
     ]);
