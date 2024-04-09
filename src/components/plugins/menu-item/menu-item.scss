@@ -1,8 +1,13 @@
 .menu-item {
   display: flex;
-  padding: 8px 0;
+  padding: 8px;
   align-items: center;
   cursor: pointer;
+  border-radius: 2px;
+
+  &:hover {
+    background: rgb(255 255 255 / 10%);
+  }
 
   .plugin-icon {
     width: 24px;
