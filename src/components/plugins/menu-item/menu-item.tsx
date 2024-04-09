@@ -1,22 +1,13 @@
-// import {Component} from 'react';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './menu-item.scss';
-// const DOWNLOAD =
-//   ;
-
-// import {VNode} from 'preact';
-// import {Localizer, Text} from 'preact-i18n';
 
 //@ts-ignore
-const {Icon, IconType, Tooltip, Overlay} = ui.Components;
-//@ts-ignore
-const {createPortal} = ui;
+const {Icon, IconType} = ui.Components;
 
 interface MenuItemProps {
   onClick: (player: any) => void;
   pluginName: string;
   svgUrl: string;
-  // moreIconTxt?: string;
 }
 
 const MenuItem = ({pluginName, svgUrl, onClick}: MenuItemProps) => {

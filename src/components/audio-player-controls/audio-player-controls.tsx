@@ -4,8 +4,7 @@ import * as styles from './audio-player-controls.scss';
 import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
 import {LiveTagComponent} from '../live-tag';
-import {MorePluginsButtonWrapper} from '../more-plugins-button';
-import {PluginsMenuOverlay} from '../plugins-menu-overlay';
+import {MorePluginsButtonWrapper} from '../plugins';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -19,14 +18,15 @@ const {
 interface AudioPlayerControlsProps {
   pluginConfig: AudioPlayerConfig;
   player: any;
+  onPluginsControlClick: () => void;
 }
 
-const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
+const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
-  const [showModal, setShowModal] = useState(false);
 
-  // setTimeout(() => setShowModal(true), 1000);
+
+
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
@@ -98,10 +98,9 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
           <Volume horizontal />
         </div>
         <div className={styles.buttonContainer}>
-          <MorePluginsButtonWrapper onClick={() => setShowModal(true)} />
+          <MorePluginsButtonWrapper onClick={onPluginsControlClick} />
         </div>
       </div>
-      <>{showModal && <PluginsMenuOverlay poster={player.sources.poster} config={player.config} onClose={() => setShowModal(false)} player={player}/>}</>
     </div>
   );
 };

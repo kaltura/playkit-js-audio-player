@@ -6,11 +6,11 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Kaltura Player Demo Page" />
     <title>Audio Player Plugin</title>
-<!--    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>-->
     <script src="http://localhost:8086/kaltura-ovp-player.js"></script>
-        <script src="http://localhost:8083/playkit-downloads.js"></script>
+    <script src="http://localhost:8081/playkit-downloads.js"></script>
+    <!--    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>-->
     <script src="https://unpkg.com/@playkit-js/ui-managers@canary/dist/playkit-ui-managers.js" type="text/javascript"></script>
-<!--    <script src="https://unpkg.com/@playkit-js/playkit-js-downloads@canary/dist/playkit-downloads.js" type="text/javascript"></script>-->
+    <!--    <script src="https://unpkg.com/@playkit-js/playkit-js-downloads@canary/dist/playkit-downloads.js" type="text/javascript"></script>-->
     <script src="./playkit-audio-player.js"></script>
   </head>
   <body>
@@ -20,7 +20,6 @@
       const config = {
         logLevel: 'DEBUG',
         targetId: 'player-placeholder',
-        // provider: {},
         provider: {
           // partnerId: 1091,
           // env: {
@@ -28,21 +27,17 @@
           //   serviceUrl: 'https://qa-apache-php7.dev.kaltura.com/api_v3'
           // }
 
-        "env": {
-        "serviceUrl": "https://cdnapisec.kaltura.com/api_v3",
-          "cdnUrl": "https://cfvod.kaltura.com",
-          "statsServiceUrl": "https://stats.kaltura.com",
-          "liveStatsServiceUrl": "https://livestats.kaltura.com",
-          "analyticsServiceUrl": "https://analytics.kaltura.com",
-          "apiFeatures": {
-          "entryRedirect": "1"
-        }
-      },
-        "partnerId": 3076893,
-        // "ks": "djJ8MzA3Njg5M3wk0iamfilyvkraxBddhgnyiuZJhLB6ydhWvtbSfLvo_ddbH7vybFQ3kTL8aZBOzlx--vwEtWGQdyHOQtmwrd_j4PQFfWgzkQruHfta2al-dFgenNX9VK9XLnxpQqvFT1x4dMc-Jj3icvIdgM-UJmpT",
-        // "uiConfId": 54440002,
-        "logLevel": "ERROR"
-
+          env: {
+            serviceUrl: 'https://cdnapisec.kaltura.com/api_v3',
+            cdnUrl: 'https://cfvod.kaltura.com',
+            statsServiceUrl: 'https://stats.kaltura.com',
+            liveStatsServiceUrl: 'https://livestats.kaltura.com',
+            analyticsServiceUrl: 'https://analytics.kaltura.com',
+            apiFeatures: {
+              entryRedirect: '1'
+            }
+          },
+          partnerId: 3076893
         },
         playback: {
           // autoplay: true
@@ -55,25 +50,25 @@
                 enableLoop: 'Enable loop',
                 disableLoop: 'Disable loop',
                 mediaThumb: 'Media thumbnail',
-                "pluginIcon": "Plugins"
+                pluginIcon: 'Plugins'
               },
-              "download": {
-                "download": "Download",
-                "downloads": "Downloads",
-                "download_has_started": "Download has started",
-                "download_has_failed": "Download has failed",
-                "attachments": "Attachments",
-                "download_button_label": "Click to download the video",
-                "select_quality_label": "Select quality",
-                "hide_label": "Hide",
-                "source_label": "Source",
-                "more_captions_label": "More captions",
-                "less_captions_label": "Less captions",
-                "attachments_label": "Attachments"
+              download: {
+                download: 'Download',
+                downloads: 'Downloads',
+                download_has_started: 'Download has started',
+                download_has_failed: 'Download has failed',
+                attachments: 'Attachments',
+                download_button_label: 'Click to download the video',
+                select_quality_label: 'Select quality',
+                hide_label: 'Hide',
+                source_label: 'Source',
+                more_captions_label: 'More captions',
+                less_captions_label: 'Less captions',
+                attachments_label: 'Attachments'
               }
             }
-          },
-            },
+          }
+        },
         plugins: {
           audioPlayer: {
             showReplayButton: true
@@ -84,8 +79,7 @@
       };
 
       const player = KalturaPlayer.setup(config);
-
-      // player.loadMedia({entryId: '0_wifqaipd'});
+      // player.loadMedia({ entryId: '0_wifqaipd' });
       player.loadMedia({entryId: '1_rhur4p1n'});
     </script>
   </body>

@@ -45,20 +45,6 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
   }
 
   private prepareUI() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.player.ui._uiManager.destroy();
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.player.ui._uiManager.buildCustomUI([
-      {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        template: () => miniAudioUI({player: this.player, config: this.config}),
-        condition: () => true
-      }
-    ]);
 
     if (!this.colorVariablesSet) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

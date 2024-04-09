@@ -16,6 +16,7 @@ import {
 import {AudioPlayerConfig, AudioPlayerSizes, MediaMetadata} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
+import {PluginsMenuOverlay} from '../plugins';
 
 // @ts-ignore
 const {withPlayer} = ui.Components;
@@ -108,6 +109,8 @@ const AudioPlayerView = Event.withEventManager(
           const [imageHasError, setImageHasError] = useState(false);
           const isLoading = !mediaMetadata;
           const {poster, title, description} = mediaMetadata || {};
+          const [showPluginsMenuOverlay, seShowPluginsMenuOverlay] = useState(false);
+          const [wasPlaying, setWasPlaying] = useState(false);
 
           useEffect(() => {
             addPlayerClass!();
@@ -152,6 +155,19 @@ const AudioPlayerView = Event.withEventManager(
             );
           };
 
+          const openOverlay = () => {
+            if (!player.paused) {
+              player.pause();
+              setWasPlaying(true);
+            }
+            seShowPluginsMenuOverlay(true);
+          };
+          const closeOverlay = () => {
+            if (wasPlaying) player.play();
+            setWasPlaying(false);
+            seShowPluginsMenuOverlay(false);
+          };
+
           const _renderAudioDetails = () => {
             if (isLoading) {
               return [AudioPlayerSizes.Small, AudioPlayerSizes.Medium].includes(size!) ? <SmallDetailsPlaceholder /> : <LargeDetailsPlaceholder />;
@@ -164,7 +180,11 @@ const AudioPlayerView = Event.withEventManager(
           };
 
           const _renderPlayerControls = () => {
-            return isLoading ? <ControlsPlaceholder /> : <AudioPlayerControls pluginConfig={pluginConfig} player={player} />;
+            return isLoading ? (
+              <ControlsPlaceholder />
+            ) : (
+              <AudioPlayerControls pluginConfig={pluginConfig} player={player} onPluginsControlClick={openOverlay} />
+            );
           };
 
           const _renderView = () => {
@@ -204,6 +224,14 @@ const AudioPlayerView = Event.withEventManager(
           return (
             <div data-testid="audio-player-view" className={`${styles.miniAudioPlayerView} ${styles[size!]}`}>
               {hasError ? <ErrorSlate /> : _renderView()}
+              {showPluginsMenuOverlay && (
+                <PluginsMenuOverlay
+                  poster={player.sources.poster}
+                  playerContainerId={player.config.targetId}
+                  onClose={closeOverlay}
+                  player={player}
+                />
+              )}
             </div>
           );
         }
