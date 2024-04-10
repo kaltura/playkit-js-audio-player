@@ -10,7 +10,7 @@ import {miniAudioUI} from "./components/audio-player-ui";
 const TONE_1_COLOR_VARIABLE = '--playkit-tone-1-color';
 const TONE_1_COLOR_RGB_VARIABLE = '--playkit-tone-1-color-rgb';
 const CONTROLS_FILTER_COLOR_VARIABLE = '--playkit-audio-player-controls-filter';
-
+// @ts-ignore
 class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
   private colorVariablesSet = false;
 
@@ -55,6 +55,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
         return;
       }
 
+      // @ts-ignore
       this.eventManager.listenOnce(this.player, core.EventType.CHANGE_SOURCE_ENDED, () => {
         const colorHexAsFilter = hexToCSSFilter(color, {acceptanceLossPercentage: 1}).filter;
         const colorHexAsRGB = this.getColorAsRGB(color);

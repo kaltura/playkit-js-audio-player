@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 interface AudioPlayerViewProps {
-  size?: AudioPlayerSizes;
+  size: AudioPlayerSizes;
   isPlaying?: boolean;
   isPlaybackStarted?: boolean;
   hasError?: boolean;
@@ -225,11 +225,13 @@ const AudioPlayerView = Event.withEventManager(
             <div data-testid="audio-player-view" className={`${styles.miniAudioPlayerView} ${styles[size!]}`}>
               {hasError ? <ErrorSlate /> : _renderView()}
               {showPluginsMenuOverlay && (
+                // @ts-ignore
                 <PluginsMenuOverlay
                   poster={player.sources.poster}
                   playerContainerId={player.config.targetId}
                   onClose={closeOverlay}
                   player={player}
+                  size={size}
                 />
               )}
             </div>

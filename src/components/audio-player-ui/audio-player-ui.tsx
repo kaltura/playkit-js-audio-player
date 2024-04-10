@@ -49,7 +49,6 @@ class MiniAudioUI extends Component<AudioPlayerProps, any> {
       <div className={style.playbackGuiWrapper}>
         <PlayerArea name={'PresetArea'}>
           <div className={style.playerGui} id="player-gui">
-            {/*<VideoArea />*/}
             <OverlayPortal />
             <AudioPlayerView pluginConfig={this.props.config} player={this.props.player} />
             <GuiArea>
