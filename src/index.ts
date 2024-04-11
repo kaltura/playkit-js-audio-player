@@ -19,8 +19,6 @@ registerPlugin(pluginName, AudioPlayer);
 window.__kalturaplayerdata = {
   ui: {
     customPreset: [
-      // @ts-ignore
-      ...window.__kalturaplayerdata.ui.customPreset,
       {
         template: () => miniAudioUI({player: {}, config: {}}),
         condition: () => true
