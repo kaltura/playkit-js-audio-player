@@ -1,9 +1,15 @@
+:root {
+  --ma-player-border-radius: 8px;
+}
+
+$ma-player-border-radius: var(--ma-player-border-radius);
+
 .mini-audio-player-view {
   position: relative;
   background-color: var(--playkit-paper-color);
   margin: 0;
   min-width: 228px;
-  border-radius: 8px;
+  border-radius: $ma-player-border-radius;
   justify-content: space-evenly;
 
   &.small {

@@ -1,7 +1,8 @@
 @import '~@playkit-js/playkit-js-ui';
+@import '../../audio-player-view/audio-player-view';
 
 :global(.playkit-mini-audio-player-overlay) {
-  border-radius: 8px;
+  border-radius: $ma-player-border-radius;
 
   .plugins-menu-overlay {
     background-size: cover;
@@ -16,7 +17,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: inherit;
       font-size: 18px;
 
       &.medium-small {
@@ -43,6 +43,7 @@
 :global(.playkit-player.playkit-size-ty) {
   :global(.playkit-overlay .playkit-overlay-contents) {
     padding: 0;
+    border-radius: $ma-player-border-radius;
   }
 }
 
