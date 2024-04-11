@@ -12,21 +12,19 @@ export {AudioPlayer as Plugin};
 export {VERSION, NAME};
 
 const pluginName = 'audioPlayer';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 registerPlugin(pluginName, AudioPlayer);
 
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 window.__kalturaplayerdata = {
   ui: {
     customPreset: [
+      // @ts-ignore
+      ...window.__kalturaplayerdata.ui.customPreset,
       {
-        template: () => miniAudioUI({player:{}, config:{}}),
+        template: () => miniAudioUI({player: {}, config: {}}),
         condition: () => true
       }
     ]
   }
-}
-
+};

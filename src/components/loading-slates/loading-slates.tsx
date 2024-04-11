@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import * as styles from './loading-slates.scss';
 
 export const ControlsPlaceholder = () => (

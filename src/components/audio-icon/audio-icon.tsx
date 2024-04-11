@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import * as styles from './audio-icon.scss';
 
 interface AudioIconProps {

@@ -1,7 +1,5 @@
-import {Fragment} from 'preact';
+import {h,Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import {ui, core} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
@@ -13,7 +11,7 @@ import {
   LargeDetailsPlaceholder,
   AudioDetails
 } from '..';
-import {AudioPlayerConfig, AudioPlayerSizes, MediaMetadata} from '../../types';
+import { AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {PluginsMenuOverlay} from '../plugins';
@@ -23,14 +21,10 @@ const {withPlayer} = ui.Components;
 
 const {
   redux: {connect},
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   reducers: {shell},
   Event
 } = ui;
 const {withText, Text} = ui.preacti18n;
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 const {PLAYER_SIZE} = ui.Components;
 
 const AUDIO_PLAYER_CLASSNAME = 'audio-player';
@@ -102,8 +96,6 @@ const AudioPlayerView = Event.withEventManager(
         mapStateToProps,
         mapDispatchToProps
       )(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         ({size, pluginConfig, hasError, mediaThumb, addPlayerClass, removePlayerClass, player, eventManager}: AudioPlayerViewProps) => {
           const [mediaMetadata, setMediaMetadata] = useState<MediaMetadata | null>(null);
           const [imageHasError, setImageHasError] = useState(false);
@@ -203,7 +195,6 @@ const AudioPlayerView = Event.withEventManager(
               );
             }
             return (
-              // <PlayerArea name={'GuiArea'}>
               <Fragment>
                 {size === AudioPlayerSizes.Large && poster ? (
                   <div data-testid="audio-player-background-image" style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} />
@@ -217,7 +208,6 @@ const AudioPlayerView = Event.withEventManager(
                   </div>
                 </div>
               </Fragment>
-              // </PlayerArea>
             );
           };
 
@@ -225,7 +215,6 @@ const AudioPlayerView = Event.withEventManager(
             <div data-testid="audio-player-view" className={`${styles.miniAudioPlayerView} ${styles[size!]}`}>
               {hasError ? <ErrorSlate /> : _renderView()}
               {showPluginsMenuOverlay && (
-                // @ts-ignore
                 <PluginsMenuOverlay
                   poster={player.sources.poster}
                   playerContainerId={player.config.targetId}

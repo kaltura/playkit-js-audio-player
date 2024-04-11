@@ -1,18 +1,14 @@
-import {useRef, useEffect, useState} from 'preact/hooks';
+import { h, VNode } from "preact";
+import {useRef, useEffect} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
-import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
 import {LiveTagComponent} from '../live-tag';
 import {MorePluginsButtonWrapper} from '../plugins';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
+import { AudioPlayerConfig } from "../../types";
 const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Components;
 const {
-  redux: {useSelector},
-  //@ts-ignore
-  createPortal
+  redux: {useSelector}
 } = ui;
 
 interface AudioPlayerControlsProps {
@@ -43,7 +39,7 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: Audi
     }, []);
   };
 
-  const _renderLoopOrSpeedMenuButton = () => {
+  const _renderLoopOrSpeedMenuButton = (): VNode<any> | null => {
     if (player.isLive()) {
       return null;
     }
@@ -58,8 +54,6 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: Audi
   };
 
   const targetId: HTMLDivElement | Document = (document.getElementById(player.config.targetId) as HTMLDivElement) || document;
-  // const portalSelector = `.overlay-portal`;
-
   return (
     <div className={styles.playbackControlsWrapper}>
       <LiveTagComponent />

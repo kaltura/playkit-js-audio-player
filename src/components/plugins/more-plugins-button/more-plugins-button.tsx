@@ -1,9 +1,11 @@
+import { h, VNode } from "preact";
 import {useRef} from 'preact/hooks';
 import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './more-plugins-button.scss';
+import { Components } from "@playkit-js/playkit-js-ui";
 
-const {Icon, Tooltip} = ui.Components;
+const {Tooltip, Icon} = Components;
 const {withText, Text} = ui.preacti18n;
 const ICON_PATH =
   // eslint-disable-next-line max-len
@@ -14,10 +16,11 @@ interface MorePluginsButtonProps {
   moreIconTxt?: string;
 }
 
-const MorePluginsButton = ({onClick, moreIconTxt}: MorePluginsButtonProps) => {
+const MorePluginsButton = ({onClick, moreIconTxt}: MorePluginsButtonProps): VNode<any> => {
   const moreButtonRef = useRef<HTMLButtonElement>(null);
   return (
     <Tooltip label={moreIconTxt!}>
+      {/* @ts-ignore - error TS2786: 'A11yWrapper' cannot be used as a JSX component.*/}
       <A11yWrapper onClick={onClick}>
         <button ref={moreButtonRef} className={`${ui.style.upperBarIcon} ${styles.morePluginsIcon}`} tabIndex={0} aria-label={moreIconTxt}>
           <Icon id={`${'pluginName-123'}-upper-bar-manager`} path={ICON_PATH} viewBox={'0 0 32 32'} />

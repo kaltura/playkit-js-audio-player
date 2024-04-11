@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import {useState, useEffect, useRef} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './scrolling-text.scss';

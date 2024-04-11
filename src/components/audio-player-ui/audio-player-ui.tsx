@@ -1,4 +1,3 @@
-
 interface AudioPlayerProps {
   config: any;
   player: any;
@@ -7,11 +6,10 @@ interface AudioPlayerProps {
 
 import {ui} from '@playkit-js/kaltura-player-js';
 
-//@ts-ignore
 const {PlayerArea, withPlayerPreset, withKeyboardEvent, OverlayPortal,VideoArea, GuiArea} = ui.Components;
 const {style} = ui;
 
-import {Fragment, h, Component, VNode} from 'preact';
+import {h, Component, VNode} from 'preact';
 import { AudioPlayerView } from "../audio-player-view";
 
 const PRESET_NAME = 'MiniAudioUI';

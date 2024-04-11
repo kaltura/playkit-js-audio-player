@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import * as styles from './buffering-icon.scss';
 
 export const BufferingIcon = ({isLarge}: {isLarge?: boolean}) => {
