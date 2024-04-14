@@ -10,13 +10,13 @@ interface MenuItemProps {
   svgUrl: string;
 }
 
-const MenuItem = ({pluginName, svgUrl, onClick}: MenuItemProps) => {
+const MenuItem = ({pluginName, icon, onClick}: MenuItemProps) => {
   return (
     // @ts-ignore - error TS2786: 'A11yWrapper' cannot be used as a JSX component.
     <A11yWrapper onClick={onClick}>
       <div className={styles.menuItem} tabIndex={0} aria-label={pluginName}>
         <span className={styles.pluginIcon}>
-          <Icon id={`min-audio-player-download`} path={svgUrl} viewBox={`0 0 32 32`} />
+          <Icon id={`min-audio-player-${pluginName}`} path={icon.svgUrl} viewBox={icon.viewBox} />
         </span>
         <div>{pluginName}</div>
         <span className={styles.arrowIcon}>

@@ -26,10 +26,10 @@ const PluginsMenuOverlay = ({poster, playerContainerId, onClose, player, size}: 
       <div style={size === AudioPlayerSizes.Large ? {backgroundImage: `url(${poster})`} : ''} className={styles.pluginsMenuOverlay}>
         <div className={`${styles.pluginsMenuOverlayUpperLayer} ${size === AudioPlayerSizes.Large ? styles.large : styles.mediumSmall}`}>
           <div className={styles.menu}>
-            {PluginsMetaData.map(({pluginName, action, svgUrl}) => (
+            {PluginsMetaData.map(({pluginName, action, icon}) => (
               <MenuItem
                 pluginName={pluginName}
-                svgUrl={svgUrl}
+                icon={icon}
                 onClick={() => {
                   onClose();
                   action(player);
