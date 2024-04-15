@@ -5,36 +5,20 @@
   border-radius: $ma-player-border-radius;
 
   .plugins-menu-overlay {
-    background-size: cover;
-    background-position: center;
     width: 100%;
     height: 100%;
+    color: $tone-1-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
 
-    .plugins-menu-overlay-upper-layer {
-      width: 100%;
-      height: 100%;
-      color: $tone-1-color;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-
-      &.medium-small {
-        background-color: $paper-color;
-      }
-
-      &.large {
-        backdrop-filter: blur(16px);
-        background-color: rgba(0, 0, 0, 0.4);
-        box-shadow: inset 0 0 20px 0 #414141;
-      }
-
-      .menu {
-        margin: 10px;
-        width: 240px;
-      }
+    .menu {
+      margin: 10px;
+      width: 240px;
     }
   }
+  //}
 }
 
 :global(.playkit-player.playkit-size-md),
@@ -44,6 +28,7 @@
   :global(.playkit-overlay .playkit-overlay-contents) {
     padding: 0;
     border-radius: $ma-player-border-radius;
+    background-color: initial;
   }
 }
 
@@ -102,11 +87,7 @@
 .large {
   + :global(.playkit-gui-area) {
     :global(.download-overlay__download-overlay___IThlq) {
-      backdrop-filter: blur(16px);
-      background-color: rgba(0, 0, 0, 0.4);
-      box-shadow: inset 0 0 20px 0 #414141;
-      background-size: cover;
-      background-position: center;
+      background-color: initial;
     }
   }
 }

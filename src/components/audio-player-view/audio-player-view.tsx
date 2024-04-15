@@ -1,4 +1,4 @@
-import {h,Fragment} from 'preact';
+import {h, Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
 import {ui, core} from '@playkit-js/kaltura-player-js';
 import {
@@ -11,7 +11,7 @@ import {
   LargeDetailsPlaceholder,
   AudioDetails
 } from '..';
-import { AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
+import {AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {PluginsMenuOverlay} from '../plugins';
@@ -30,8 +30,8 @@ const {PLAYER_SIZE} = ui.Components;
 const AUDIO_PLAYER_CLASSNAME = 'audio-player';
 
 const mapStateToProps = (state: any) => {
-  const {shell, engine} = state;
-  const {hasError} = engine;
+  const {shell, engine, overlay} = state;
+  const {hasError, isPlaying} = engine;
 
   let size = '';
   switch (shell.playerSize) {
@@ -57,7 +57,9 @@ const mapStateToProps = (state: any) => {
 
   return {
     size,
-    hasError
+    hasError,
+    isPlaying,
+    overlayOpen: overlay.isOpen
   };
 };
 
@@ -96,7 +98,18 @@ const AudioPlayerView = Event.withEventManager(
         mapStateToProps,
         mapDispatchToProps
       )(
-        ({size, pluginConfig, hasError, mediaThumb, addPlayerClass, removePlayerClass, player, eventManager}: AudioPlayerViewProps) => {
+        ({
+          size,
+          overlayOpen,
+          isPlaying,
+          pluginConfig,
+          hasError,
+          mediaThumb,
+          addPlayerClass,
+          removePlayerClass,
+          player,
+          eventManager
+        }: AudioPlayerViewProps) => {
           const [mediaMetadata, setMediaMetadata] = useState<MediaMetadata | null>(null);
           const [imageHasError, setImageHasError] = useState(false);
           const isLoading = !mediaMetadata;
@@ -147,16 +160,22 @@ const AudioPlayerView = Event.withEventManager(
             );
           };
 
-          const openOverlay = () => {
-            if (!player.paused) {
-              player.pause();
-              setWasPlaying(true);
+          useEffect(() => {
+            if (overlayOpen) {
+              if (isPlaying) {
+                player.pause();
+                setWasPlaying(true);
+              }
+            } else {
+              if (wasPlaying) player.play();
+              setWasPlaying(false);
             }
+          }, [isPlaying, overlayOpen]);
+
+          const openOverlay = () => {
             seShowPluginsMenuOverlay(true);
           };
           const closeOverlay = () => {
-            if (wasPlaying) player.play();
-            setWasPlaying(false);
             seShowPluginsMenuOverlay(false);
           };
 
@@ -181,7 +200,7 @@ const AudioPlayerView = Event.withEventManager(
 
           const _renderView = () => {
             if (size === AudioPlayerSizes.Small) {
-              return (
+              return !overlayOpen && (
                 <Fragment>
                   <div className={styles.topControls}>
                     <div className={styles.leftControls}>{_renderPoster()}</div>
@@ -199,14 +218,18 @@ const AudioPlayerView = Event.withEventManager(
                 {size === AudioPlayerSizes.Large && poster ? (
                   <div data-testid="audio-player-background-image" style={{backgroundImage: `url(${poster})`}} className={styles.backgroundImage} />
                 ) : null}
-                <div className={styles.leftControls}>{_renderPoster()}</div>
-                <div className={styles.rightControls}>
-                  <div className={styles.topControls}>{_renderAudioDetails()}</div>
-                  <div className={styles.bottomControls}>
-                    {_renderSeekBar()}
-                    {_renderPlayerControls()}
-                  </div>
-                </div>
+                {!overlayOpen && (
+                  <>
+                    <div className={styles.leftControls}>{_renderPoster()}</div>
+                    <div className={styles.rightControls}>
+                      <div className={styles.topControls}>{_renderAudioDetails()}</div>
+                      <div className={styles.bottomControls}>
+                        {_renderSeekBar()}
+                        {_renderPlayerControls()}
+                      </div>
+                    </div>
+                  </>
+                )}
               </Fragment>
             );
           };
