@@ -17,6 +17,12 @@ registerPlugin(pluginName, AudioPlayer);
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 window.__kalturaplayerdata = {
+  plugins: {
+    share: {
+      enableTimeOffset: false,
+      enableClipping: false
+    }
+  },
   ui: {
     customPreset: [
       {

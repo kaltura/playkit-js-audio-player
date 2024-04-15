@@ -100,3 +100,13 @@
     }
   }
 }
+
+:global(.playkit-player.playkit-size-md),
+:global(.playkit-player.playkit-size-sm),
+:global(.playkit-player.playkit-size-xs),
+:global(.playkit-player.playkit-size-ty) {
+  :global(.playkit-overlay .playkit-title) {
+    margin-bottom: -15px;
+    margin-top: 15px;
+  }
+}
