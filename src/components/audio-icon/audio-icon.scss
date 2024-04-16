@@ -1,3 +1,5 @@
+@import '~@playkit-js/playkit-js-ui';
+
 .audio-icon {
     align-items: end;
     display: flex;
@@ -14,12 +16,12 @@
             margin-left: 1.5px;
         }
     }
-    
+
     &.active {
         .box1 {
             animation-name: wave1;
         }
-        
+
         .box2 {
             animation-name: wave2;
         }
@@ -28,9 +30,9 @@
             animation-name: wave3;
         }
     }
-    
+
     .box {
-        background: white;
+        background: $tone-1-color;
         height: 2px;
         width: 2px;
         border-radius: 1px;
@@ -40,7 +42,7 @@
         animation-timing-function: ease-in-out;
         animation-direction: alternate-reverse;
     }
-    
+
     .box1, .box2, .box3 {
         @extend .box;
     }
@@ -55,9 +57,9 @@
         60% {height: 600%;}
         70% {height: 400%;}
         80% {height: 600%;}
-        90% {height: 100%;} 
+        90% {height: 100%;}
       }
-      
+
       @keyframes wave2 {
          0% {height: 100%;}
         10% {height: 300%;}
@@ -70,7 +72,7 @@
         80% {height: 400%;}
         90% {height: 200%;}
       }
-      
+
       @keyframes wave3 {
         0% {height: 100%;}
         10% {height: 200%;}
