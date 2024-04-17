@@ -7,7 +7,6 @@ const {Icon, IconType} = ui.Components;
 interface MenuItemProps {
   onClick: (player: any) => void;
   pluginName: string;
-  svgUrl: string;
   icon: {svgUrl: string, viewBox: string};
 }
 

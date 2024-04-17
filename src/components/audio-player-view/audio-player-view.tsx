@@ -81,6 +81,7 @@ interface AudioPlayerViewProps {
   hasError?: boolean;
   pluginConfig: AudioPlayerConfig;
   player: any;
+  overlayOpen: boolean;
   eventManager: any;
   mediaThumb?: string;
   addPlayerClass?: () => void;
