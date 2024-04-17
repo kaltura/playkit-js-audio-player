@@ -7,7 +7,7 @@
     "serve": "webpack serve --open --mode development",
     "watch": "webpack --mode development --watch",
     "build:prod": "webpack --mode production",
-    "build": "yarn run build:prod && yarn run build:types",
+    "build": "yarn run build:prod",
     "build:types": "tsc --build tsconfig-lib.json && mkdir -p lib && api-extractor run --local",
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn run type-check --watch",
