@@ -8,6 +8,7 @@ interface MenuItemProps {
   onClick: (player: any) => void;
   pluginName: string;
   svgUrl: string;
+  icon: {svgUrl: string, viewBox: string};
 }
 
 const MenuItem = ({pluginName, icon, onClick}: MenuItemProps) => {
