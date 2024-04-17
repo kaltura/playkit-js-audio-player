@@ -1434,17 +1434,17 @@
     classnames "^2.3.2"
     linkify-it "^4.0.1"
 
-"@playkit-js/kaltura-player-js@3.17.13":
-  version "3.17.13"
-  resolved "https://registry.yarnpkg.com/@playkit-js/kaltura-player-js/-/kaltura-player-js-3.17.13.tgz#b90fcefe554038e3c10b9054e320d39b28d96114"
-  integrity sha512-KigJIlzeX7h5ljM6vOjWEB5msZCYM1eA0OscKD46lB4u4od0VOX4uwdzXPGLtqAdJcjPvMqTP/CbP98ZBzkppw==
+"@playkit-js/kaltura-player-js@3.17.14-canary.0-39f029b":
+  version "3.17.14-canary.0-39f029b"
+  resolved "https://registry.yarnpkg.com/@playkit-js/kaltura-player-js/-/kaltura-player-js-3.17.14-canary.0-39f029b.tgz#aba9b474c47ff7ac11504da912e6ad4e21d88f8a"
+  integrity sha512-d3lQ/E8lSaFEUv0jt3klRY2LQLOq2lbspvGatO5T+k9hV/e8fpBzN6GLDKu48cT0Nv8vuU4zuoP42Nmr7XkQNQ==
   dependencies:
     "@playkit-js/playkit-js" "0.84.8"
     "@playkit-js/playkit-js-dash" "1.37.0"
     "@playkit-js/playkit-js-hls" "1.32.11"
     "@playkit-js/playkit-js-providers" "2.40.5"
-    "@playkit-js/playkit-js-ui" "0.78.4"
-    hls.js "1.4.11"
+    "@playkit-js/playkit-js-ui" "0.79.0-canary.0-da9bbc3"
+    hls.js "^1.5.8"
     shaka-player "4.7.0"
 
 "@playkit-js/playkit-js-dash@1.37.0":
@@ -1462,10 +1462,10 @@
   resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-providers/-/playkit-js-providers-2.40.5.tgz#7a336856778a315539f9ecf0343f9269c4ba29ab"
   integrity sha512-7Wny9y9KajDkk4y2FHEf7729TCXCeAfuseJGrQ8vLvteAYQ3A6U50ukkzB0nw7aoH/ZGqOldM0llZ7drnkHr9g==
 
-"@playkit-js/playkit-js-ui@0.78.4":
-  version "0.78.4"
-  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-ui/-/playkit-js-ui-0.78.4.tgz#9b7683f38a9e039097d948baeb0a802eced65440"
-  integrity sha512-TwFIejrLHeKURcmZwpB2pMjefRzpt+Uef5JAyB2dXBQlBkAKKHtnmQS+xyinlVnoea4SIOeP6jGVFwAvhKBhzw==
+"@playkit-js/playkit-js-ui@0.79.0-canary.0-da9bbc3":
+  version "0.79.0-canary.0-da9bbc3"
+  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-ui/-/playkit-js-ui-0.79.0-canary.0-da9bbc3.tgz#951dce702d2ea65d14839b82284475af7a732853"
+  integrity sha512-lXDNpCaTK9gc7poueGe7lBMKAKXAO6Jnu4N/zByH+wqN2yTGy5KNsfnGJkRg29GqH8YxaVUk0Zj0eCuYGVGstg==
   dependencies:
     preact "10.4.6"
     preact-i18n "2.0.0-preactx.2"
@@ -4482,10 +4482,10 @@ hex-to-css-filter@^5.4.0:
   dependencies:
     tslib "^2.3.0"
 
-hls.js@1.4.11:
-  version "1.4.11"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.4.11.tgz#6ca2d7ab56f2725f27bb5f2e3c7982c6ec287118"
-  integrity sha512-rhPSUMACcIBbcUnwWnIcRgGXqJJt0xBRxvhzl99XpGHtnnLKjbczmmBmUuQueAQcbL3SdN7D5peAObR18VrhvQ==
+hls.js@^1.5.8:
+  version "1.5.8"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.8.tgz#73c3d2984a56f103e6900bf7a5e65b288dba846e"
+  integrity sha512-hJYMPfLhWO7/7+n4f9pn6bOheCGx0WgvVz7k3ouq3Pp1bja48NN+HeCQu3XCGYzqWQF/wo7Sk6dJAyWVJD8ECA==
 
 hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
