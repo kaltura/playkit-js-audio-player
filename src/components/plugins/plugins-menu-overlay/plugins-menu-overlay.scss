@@ -59,6 +59,7 @@
     margin-top: 14px;
     font-weight: initial;
     font-size: 25px;
+    color: $tone-1-color;
   }
 }
 
@@ -81,6 +82,10 @@
 
   :global(.download-overlay__file-info-list___riTfL) {
     margin-top: 13px;
+
+    :global(.expandable-container__expandable-label___wzDbd) {
+      color: $tone-1-color;
+    }
   }
 }
 
@@ -108,5 +113,6 @@
   :global(.playkit-overlay .playkit-title) {
     margin-bottom: -15px;
     margin-top: 15px;
+    color: $tone-1-color;
   }
 }
