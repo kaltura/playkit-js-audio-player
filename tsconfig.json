@@ -5,7 +5,7 @@
         "name": "typescript-plugin-css-modules",
         "options": {
           "customMatcher": "\\.(css|scss)$",
-          "classnameTransform":"camelCase"
+          "classnameTransform": "camelCase"
         }
       }
     ],
@@ -24,6 +24,7 @@
     "jsx": "preserve",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
+    "types": ["node", "cypress"],
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
@@ -32,5 +33,5 @@
     "outDir": "./lib/",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*",  "cypress/e2e/*.ts"]
+  "include": ["src/**/*", "cypress/e2e/*.ts"]
 }
