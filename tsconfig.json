@@ -29,7 +29,7 @@
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
     },
-    "lib": ["es2015", "dom"],
+    "lib": ["dom", "ESNext"],
     "outDir": "./lib/",
     "allowSyntheticDefaultImports": true
   },
