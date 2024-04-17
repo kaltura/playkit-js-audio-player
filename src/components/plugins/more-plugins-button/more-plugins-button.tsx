@@ -23,7 +23,7 @@ const MorePluginsButton = ({onClick, moreIconTxt}: MorePluginsButtonProps): VNod
       {/* @ts-ignore - error TS2786: 'A11yWrapper' cannot be used as a JSX component.*/}
       <A11yWrapper onClick={onClick}>
         <button ref={moreButtonRef} className={`${ui.style.upperBarIcon} ${styles.morePluginsIcon}`} tabIndex={0} aria-label={moreIconTxt}>
-          <Icon id={`${'pluginName-123'}-upper-bar-manager`} path={ICON_PATH} viewBox={'0 0 32 32'} />
+          <Icon id={`${'more-plugins'}-mini-audio-player`} path={ICON_PATH} viewBox={'0 0 32 32'} />
         </button>
       </A11yWrapper>
     </Tooltip>
