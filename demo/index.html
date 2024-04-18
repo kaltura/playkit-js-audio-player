@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Kaltura Player Demo Page" />
-    <title>Audio Player Plugin</title>
+    <title>Mini Audio Player Plugin</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script src="http://localhost:8086/kaltura-ovp-player.js"></script>
-    <script src="http://localhost:8081/playkit-downloads.js"></script>
-    <!--    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>-->
-    <script src="https://unpkg.com/@playkit-js/ui-managers@canary/dist/playkit-ui-managers.js" type="text/javascript"></script>
-    <!--    <script src="https://unpkg.com/@playkit-js/playkit-js-downloads@canary/dist/playkit-downloads.js" type="text/javascript"></script>-->
+    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>
+    <script src="https://unpkg.com/@playkit-js/playkit-js-downloads@canary/dist/playkit-downloads.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/@playkit-js/share@canary/dist/playkit-share.js" type="text/javascript"></script>
+    <!--    <script src="http://localhost:8085/playkit-share.js" type="text/javascript"></script>-->
+    <!--    <script src="http://localhost:8086/kaltura-ovp-player.js"></script>-->
+    <!--    <script src="http://localhost:8081/playkit-downloads.js"></script>-->
     <script src="./playkit-audio-player.js"></script>
   </head>
   <body>
@@ -22,12 +23,6 @@
         logLevel: 'DEBUG',
         targetId: 'player-placeholder',
         provider: {
-          // partnerId: 1091,
-          // env: {
-          //   cdnUrl: 'https://qa-apache-php7.dev.kaltura.com/',
-          //   serviceUrl: 'https://qa-apache-php7.dev.kaltura.com/api_v3'
-          // }
-
           env: {
             serviceUrl: 'https://cdnapisec.kaltura.com/api_v3',
             cdnUrl: 'https://cfvod.kaltura.com',
@@ -43,8 +38,9 @@
         playback: {
           // autoplay: true
         },
-        // translations - for local environment
+
         ui: {
+          // translations - for local environment
           translations: {
             en: {
               audioPlayer: {
@@ -66,21 +62,44 @@
                 more_captions_label: 'More captions',
                 less_captions_label: 'Less captions',
                 attachments_label: 'Attachments'
+              },
+              controls: {
+                share: 'Share'
+              },
+              share: {
+                title: 'Share',
+                embed_options: 'Embed Options',
+                start_video_at: 'Start at',
+                email: 'Share on Email',
+                embed: 'Get embed code',
+                full_video: 'Full-length video',
+                clip_video: 'Share clip',
+                'share-on-facebook': 'Share on Facebook',
+                'share-on-linkedin': 'Share on Linkedin',
+                'share-on-twitter': 'Share on X'
               }
             }
           }
+          // Light Theme
+          // userTheme: {
+          //   colors: {
+          //     tone1: '#1a1a1a',
+          //     paperSurface: '#ccc8c8',
+          //     primary: '#171717',
+          //   }
+          // }
         },
         plugins: {
           audioPlayer: {
             showReplayButton: true
           },
           uiManagers: {},
-          download: {}
+          download: {},
+          share: {}
         }
       };
 
       const player = KalturaPlayer.setup(config);
-      // player.loadMedia({ entryId: '0_wifqaipd' });
       player.loadMedia({entryId: '1_rhur4p1n'});
     </script>
   </body>
