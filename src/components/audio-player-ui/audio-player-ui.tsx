@@ -3,14 +3,13 @@ interface AudioPlayerProps {
   player: any;
 }
 
-
 import {ui} from '@playkit-js/kaltura-player-js';
 
-const {PlayerArea, withPlayerPreset, withKeyboardEvent, OverlayPortal,VideoArea, GuiArea} = ui.Components;
+const {PlayerArea, withPlayerPreset, withKeyboardEvent, OverlayPortal, VideoArea, GuiArea} = ui.Components;
 const {style} = ui;
 
 import {h, Component, VNode} from 'preact';
-import { AudioPlayerView } from "../audio-player-view";
+import {AudioPlayerView} from '../audio-player-view';
 
 const PRESET_NAME = 'MiniAudioUI';
 
@@ -49,7 +48,7 @@ class MiniAudioUI extends Component<AudioPlayerProps, any> {
           <div className={style.playerGui} id="player-gui">
             <OverlayPortal />
             <AudioPlayerView pluginConfig={this.props.config} player={this.props.player} />
-            <GuiArea/>
+            <GuiArea />
           </div>
         </PlayerArea>
       </div>

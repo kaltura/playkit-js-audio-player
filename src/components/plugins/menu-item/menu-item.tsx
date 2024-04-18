@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import {h} from 'preact';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './menu-item.scss';
 import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
@@ -7,7 +7,7 @@ const {Icon, IconType} = ui.Components;
 interface MenuItemProps {
   onClick: (player: any) => void;
   pluginName: string;
-  icon: {svgUrl: string, viewBox: string};
+  icon: {svgUrl: string; viewBox: string};
 }
 
 const MenuItem = ({pluginName, icon, onClick}: MenuItemProps) => {

@@ -201,17 +201,19 @@ const AudioPlayerView = Event.withEventManager(
 
           const _renderView = () => {
             if (size === AudioPlayerSizes.Small) {
-              return !overlayOpen && (
-                <Fragment>
-                  <div className={styles.topControls}>
-                    <div className={styles.leftControls}>{_renderPoster()}</div>
-                    <div className={styles.rightControls}>{_renderAudioDetails()}</div>
-                  </div>
-                  <div className={styles.bottomControls}>
-                    {_renderSeekBar()}
-                    {_renderPlayerControls()}
-                  </div>
-                </Fragment>
+              return (
+                !overlayOpen && (
+                  <Fragment>
+                    <div className={styles.topControls}>
+                      <div className={styles.leftControls}>{_renderPoster()}</div>
+                      <div className={styles.rightControls}>{_renderAudioDetails()}</div>
+                    </div>
+                    <div className={styles.bottomControls}>
+                      {_renderSeekBar()}
+                      {_renderPlayerControls()}
+                    </div>
+                  </Fragment>
+                )
               );
             }
             return (

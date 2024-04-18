@@ -41,7 +41,6 @@ class AudioPlayer extends BasePlugin {
   }
 
   private prepareUI() {
-
     if (!this.colorVariablesSet) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

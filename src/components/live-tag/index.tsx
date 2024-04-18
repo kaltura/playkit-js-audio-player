@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import {h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore

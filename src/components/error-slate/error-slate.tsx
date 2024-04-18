@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import {h} from 'preact';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './error-slate.scss';
 

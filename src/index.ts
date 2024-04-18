@@ -20,8 +20,8 @@ window.__kalturaplayerdata = {
   ui: {
     customPreset: [
       {
-        template: () => miniAudioUI({player: {}, config: {}}),
-        condition: () => true
+        template: (): any => miniAudioUI({player: {}, config: {}}),
+        condition: (): boolean => true
       }
     ]
   }

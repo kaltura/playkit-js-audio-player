@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import {h} from 'preact';
 import {useState} from 'preact/hooks';
 import {ui, core} from '@playkit-js/kaltura-player-js';
 import {AudioIcon, ScrollingText, ScrollingTextModes, BufferingIcon} from '..';
@@ -59,7 +59,8 @@ export const AudioDetailsComponent = ({
           data-testid="audio-player-title-container"
           className={[styles.title, isPlaybackStarted ? styles.playbackStarted : ''].join(' ')}
           onMouseOver={() => setTitleHovered(true)}
-          onMouseLeave={() => setTitleHovered(false)}>
+          onMouseLeave={() => setTitleHovered(false)}
+        >
           <ScrollingText
             id={'title'}
             updateOnPlayerSizeChange
@@ -74,7 +75,8 @@ export const AudioDetailsComponent = ({
         data-testid="audio-player-description-container"
         className={styles.description}
         onMouseOver={() => setDescriptionHovered(true)}
-        onMouseLeave={() => setDescriptionHovered(false)}>
+        onMouseLeave={() => setDescriptionHovered(false)}
+      >
         <ScrollingText id={'description'} updateOnPlayerSizeChange content={getDescription()} inActive={!descriptionHovered} />
       </div>
     </div>

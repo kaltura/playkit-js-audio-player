@@ -1,9 +1,9 @@
-import { h, VNode } from "preact";
+import {h, VNode} from 'preact';
 import {useRef} from 'preact/hooks';
 import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './more-plugins-button.scss';
-import { Components } from "@playkit-js/playkit-js-ui";
+import {Components} from '@playkit-js/playkit-js-ui';
 
 const {Tooltip, Icon} = Components;
 const {withText, Text} = ui.preacti18n;

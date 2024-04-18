@@ -1,11 +1,11 @@
-import { h, VNode } from "preact";
+import {h, VNode} from 'preact';
 import {useRef, useEffect} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {LoopButton} from '../loop-button';
 import {LiveTagComponent} from '../live-tag';
 import {MorePluginsButtonWrapper} from '../plugins';
-import { AudioPlayerConfig } from "../../types";
+import {AudioPlayerConfig} from '../../types';
 const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Components;
 const {
   redux: {useSelector}
@@ -20,9 +20,6 @@ interface AudioPlayerControlsProps {
 const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
-
-
-
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
