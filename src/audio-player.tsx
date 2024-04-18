@@ -8,7 +8,9 @@ const CONTROLS_FILTER_COLOR_VARIABLE = '--playkit-audio-player-controls-filter';
 // @ts-ignore
 class AudioPlayer extends BasePlugin {
   private colorVariablesSet = false;
-  public static defaultConfig = {};
+  public static defaultConfig = {
+    showReplayButton: false
+  };
 
   constructor(name: string, player: KalturaPlayer, config: AudioPlayerConfig) {
     super(name, player, config);

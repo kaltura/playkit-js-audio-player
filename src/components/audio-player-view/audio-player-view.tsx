@@ -79,7 +79,6 @@ interface AudioPlayerViewProps {
   isPlaying?: boolean;
   isPlaybackStarted?: boolean;
   hasError?: boolean;
-  pluginConfig: AudioPlayerConfig;
   player: any;
   overlayOpen: boolean;
   eventManager: any;
@@ -103,7 +102,6 @@ const AudioPlayerView = Event.withEventManager(
           size,
           overlayOpen,
           isPlaying,
-          pluginConfig,
           hasError,
           mediaThumb,
           addPlayerClass,
@@ -117,6 +115,8 @@ const AudioPlayerView = Event.withEventManager(
           const {poster, title, description} = mediaMetadata || {};
           const [showPluginsMenuOverlay, seShowPluginsMenuOverlay] = useState(false);
           const [wasPlaying, setWasPlaying] = useState(false);
+
+          const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
 
           useEffect(() => {
             addPlayerClass!();
