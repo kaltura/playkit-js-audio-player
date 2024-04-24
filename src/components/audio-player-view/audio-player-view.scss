@@ -11,9 +11,9 @@ $ma-player-border-radius: var(--ma-player-border-radius);
   min-width: 228px;
   border-radius: $ma-player-border-radius;
   justify-content: space-evenly;
+  aspect-ratio: 10 / 3;
 
   &.small {
-    height: 132px;
     display: flex;
     flex-direction: column;
 
@@ -21,7 +21,7 @@ $ma-player-border-radius: var(--ma-player-border-radius);
       display: flex;
       justify-content: space-between;
       height: calc(100% - 58px);
-      padding: 8px;
+      padding: 8px 0;
 
       .right-controls {
         display: flex;
@@ -38,7 +38,6 @@ $ma-player-border-radius: var(--ma-player-border-radius);
   &.medium {
     display: flex;
     justify-content: space-between;
-    height: 132px;
     padding: 8px;
 
     .right-controls {
@@ -49,7 +48,7 @@ $ma-player-border-radius: var(--ma-player-border-radius);
 
       .top-controls {
         display: flex;
-        padding: 8px;
+        padding: 8px 0;
       }
     }
   }
@@ -101,7 +100,7 @@ $ma-player-border-radius: var(--ma-player-border-radius);
     border-radius: 4px;
     flex-shrink: 0;
     overflow: hidden;
-    margin: 0;
+    margin-right: 8px;
   }
 
   .bottom-controls {

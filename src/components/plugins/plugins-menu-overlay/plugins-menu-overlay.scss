@@ -33,21 +33,21 @@
 
 :global(.playkit-player.playkit-size-md),
 :global(.playkit-player.playkit-size-sm) {
-  :global(.playkit-overlay.playkit-mini-audio-player-overlay.playkit-active .playkit-close-overlay) {
+  :global(.playkit-overlay.playkit-active .playkit-close-overlay) {
     top: 14px;
     right: 14px;
   }
 }
 
 :global(.playkit-player.playkit-size-xs) {
-  :global(.playkit-overlay.playkit-mini-audio-player-overlay.playkit-active .playkit-close-overlay) {
+  :global(.playkit-overlay.playkit-active .playkit-close-overlay) {
     top: 10px;
     right: 10px;
   }
 }
 
 :global(.playkit-player.playkit-size-ty) {
-  :global(.playkit-overlay.playkit-mini-audio-player-overlay.playkit-active .playkit-close-overlay) {
+  :global(.playkit-overlay.playkit-active .playkit-close-overlay) {
     top: 8px;
     right: 8px;
   }
