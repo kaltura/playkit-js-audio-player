@@ -25,6 +25,9 @@
 :global(.playkit-player.playkit-size-xs),
 :global(.playkit-player.playkit-size-ty) {
   :global(.playkit-overlay .playkit-overlay-contents) {
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
     padding: 0;
     border-radius: $ma-player-border-radius;
     background-color: initial;
@@ -82,6 +85,10 @@
   :global(.download-overlay__file-info-list___riTfL) {
     margin-top: 13px;
 
+    :global(.download-item__file-info___hm56H .download-item__icon-container___ClrQi.download-item__file-icon___YNiVk) {
+      //background-color: #616161;
+    }
+
     :global(.expandable-container__expandable-label___wzDbd) {
       color: $tone-1-color;
     }
@@ -111,6 +118,7 @@
 :global(.playkit-player.playkit-size-ty) {
   :global(.playkit-overlay .playkit-title) {
     margin-bottom: -15px;
+    //margin-top: 15px;
     margin-top: 15px;
     color: $tone-1-color;
   }
