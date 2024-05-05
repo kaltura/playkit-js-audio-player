@@ -49,7 +49,7 @@
     "@babel/runtime": "^7.23.8",
     "@microsoft/api-extractor": "^7.39.1",
     "@playkit-js/browserslist-config": "1.0.8",
-    "@playkit-js/kaltura-player-js": "3.17.14-canary.0-39f029b",
+    "@playkit-js/kaltura-player-js": "3.17.15-canary.0-b412bfc",
     "@types/preact-i18n": "1.2.0",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
@@ -72,7 +72,7 @@
     "cypress": "^13.7.3"
   },
   "peerDependencies": {
-    "@playkit-js/kaltura-player-js": "canary",
+    "@playkit-js/kaltura-player-js": "3.17.15-canary.0-b412bfc",
     "@playkit-js/playkit-js": "canary",
     "@playkit-js/playkit-js-ui": "canary",
     "preact": "10.4.6",

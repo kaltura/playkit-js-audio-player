@@ -16,13 +16,26 @@ registerPlugin(pluginName, AudioPlayer);
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-window.__kalturaplayerdata = {
-  ui: {
-    customPreset: [
-      {
-        template: (): any => miniAudioUI({player: {}, config: {}}),
-        condition: (): boolean => true
-      }
-    ]
-  }
+
+const AudioPreset = {
+  template: (): any => miniAudioUI({player: {}, config: {}}),
+  condition: (): boolean => true
 };
+
+// Custom Preset has to be added in the bundle phase (before kalturaPlayer instance and as a result the UI is created and the )
+if (!window.__kalturaplayerdata) {
+  window.__kalturaplayerdata = {
+    ui: {
+      customPreset: [AudioPreset]
+    }
+  };
+} else {
+  if (!window.__kalturaplayerdata.ui) {
+    window.__kalturaplayerdata.ui = {};
+  }
+  if (!window.__kalturaplayerdata.ui.customPreset) {
+    window.__kalturaplayerdata.ui.customPreset = [AudioPreset];
+  } else {
+    window.__kalturaplayerdata.ui.customPreset.push(AudioPreset);
+  }
+}

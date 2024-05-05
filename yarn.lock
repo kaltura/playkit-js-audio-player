@@ -1281,16 +1281,16 @@
     classnames "^2.3.2"
     linkify-it "^4.0.1"
 
-"@playkit-js/kaltura-player-js@3.17.14-canary.0-39f029b":
-  version "3.17.14-canary.0-39f029b"
-  resolved "https://registry.yarnpkg.com/@playkit-js/kaltura-player-js/-/kaltura-player-js-3.17.14-canary.0-39f029b.tgz#aba9b474c47ff7ac11504da912e6ad4e21d88f8a"
-  integrity sha512-d3lQ/E8lSaFEUv0jt3klRY2LQLOq2lbspvGatO5T+k9hV/e8fpBzN6GLDKu48cT0Nv8vuU4zuoP42Nmr7XkQNQ==
+"@playkit-js/kaltura-player-js@3.17.15-canary.0-b412bfc":
+  version "3.17.15-canary.0-b412bfc"
+  resolved "https://registry.yarnpkg.com/@playkit-js/kaltura-player-js/-/kaltura-player-js-3.17.15-canary.0-b412bfc.tgz#7785fcaa89da71d81079e28d98fb3b4cbceba48d"
+  integrity sha512-iDXJD8+7YkB5S+8tYeRrJp/i5g/dhhbtXUF1b9dRjEeffFAB4ND1dwmeSTR8mPIhbCbrF4fJa0Yq/scHNV4EEA==
   dependencies:
     "@playkit-js/playkit-js" "0.84.8"
     "@playkit-js/playkit-js-dash" "1.37.0"
     "@playkit-js/playkit-js-hls" "1.32.11"
     "@playkit-js/playkit-js-providers" "2.40.5"
-    "@playkit-js/playkit-js-ui" "0.79.0-canary.0-da9bbc3"
+    "@playkit-js/playkit-js-ui" "0.79.0"
     hls.js "^1.5.8"
     shaka-player "4.7.0"
 
@@ -1309,10 +1309,10 @@
   resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-providers/-/playkit-js-providers-2.40.5.tgz#7a336856778a315539f9ecf0343f9269c4ba29ab"
   integrity sha512-7Wny9y9KajDkk4y2FHEf7729TCXCeAfuseJGrQ8vLvteAYQ3A6U50ukkzB0nw7aoH/ZGqOldM0llZ7drnkHr9g==
 
-"@playkit-js/playkit-js-ui@0.79.0-canary.0-da9bbc3":
-  version "0.79.0-canary.0-da9bbc3"
-  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-ui/-/playkit-js-ui-0.79.0-canary.0-da9bbc3.tgz#951dce702d2ea65d14839b82284475af7a732853"
-  integrity sha512-lXDNpCaTK9gc7poueGe7lBMKAKXAO6Jnu4N/zByH+wqN2yTGy5KNsfnGJkRg29GqH8YxaVUk0Zj0eCuYGVGstg==
+"@playkit-js/playkit-js-ui@0.79.0":
+  version "0.79.0"
+  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-ui/-/playkit-js-ui-0.79.0.tgz#83b4d697fce5b2c352ccb9d881e85153b0b6c24a"
+  integrity sha512-u3ilnSkTfsk1vvJNt+slNOUHHkSU6gOTw65YiS5NkmmHKBiIzeFkhr/G3StIzlqkguseDvVd/psJOK36qbZ0Jw==
   dependencies:
     preact "10.4.6"
     preact-i18n "2.0.0-preactx.2"
