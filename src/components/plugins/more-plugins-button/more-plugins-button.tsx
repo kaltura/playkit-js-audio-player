@@ -30,4 +30,4 @@ const MorePluginsButton = ({onClick, moreIconTxt}: MorePluginsButtonProps): VNod
   );
 };
 
-export const MorePluginsButtonWrapper = withText({moreIconTxt: <Text id="audioPlayer.pluginIcon">More</Text>})(MorePluginsButton);
+export const MorePluginsButtonWrapper = withText({moreIconTxt: <Text id="audioPlayer.plugins">More</Text>})(MorePluginsButton);
