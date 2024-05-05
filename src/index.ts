@@ -23,19 +23,7 @@ const AudioPreset = {
 };
 
 // Custom Preset has to be added in the bundle phase (before kalturaPlayer instance and as a result the UI is created and the )
-if (!window.__kalturaplayerdata) {
-  window.__kalturaplayerdata = {
-    ui: {
-      customPreset: [AudioPreset]
-    }
-  };
-} else {
-  if (!window.__kalturaplayerdata.ui) {
-    window.__kalturaplayerdata.ui = {};
-  }
-  if (!window.__kalturaplayerdata.ui.customPreset) {
-    window.__kalturaplayerdata.ui.customPreset = [AudioPreset];
-  } else {
-    window.__kalturaplayerdata.ui.customPreset.push(AudioPreset);
-  }
-}
+window.__kalturaplayerdata = window.__kalturaplayerdata || {};
+window.__kalturaplayerdata.ui = window.__kalturaplayerdata.ui || {};
+window.__kalturaplayerdata.ui.customPreset = window.__kalturaplayerdata.ui.customPreset || [];
+window.__kalturaplayerdata.ui.customPreset.push(AudioPreset);
