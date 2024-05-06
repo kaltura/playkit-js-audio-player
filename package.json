@@ -85,7 +85,7 @@
     "extends @playkit-js/browserslist-config"
   ],
   "dependencies": {
-    "@playkit-js/common": "^1.5.12",
+    "@playkit-js/common": "1.5.12",
     "hex-to-css-filter": "^5.4.0"
   }
 }
