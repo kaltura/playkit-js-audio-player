@@ -3,7 +3,8 @@
     "audioPlayer": {
       "enableLoop": "Enable loop",
       "disableLoop": "Disable loop",
-      "mediaThumb": "Media thumbnail"
+      "mediaThumb": "Media thumbnail",
+      "plugins": "Plugins"
     }
   }
 }

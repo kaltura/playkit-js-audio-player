@@ -1,12 +1,11 @@
+import {h, VNode} from 'preact';
 import {useRef, useEffect} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
-import {AudioPlayerConfig} from '../../types';
 import {LoopButton} from '../loop-button';
 import {LiveTagComponent} from '../live-tag';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
+import {MorePluginsButtonWrapper} from '../plugins';
+import {AudioPlayerConfig} from '../../types';
 const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Components;
 const {
   redux: {useSelector}
@@ -15,9 +14,10 @@ const {
 interface AudioPlayerControlsProps {
   pluginConfig: AudioPlayerConfig;
   player: any;
+  onPluginsControlClick: () => void;
 }
 
-const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) => {
+const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
 
@@ -36,7 +36,7 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
     }, []);
   };
 
-  const _renderLoopOrSpeedMenuButton = () => {
+  const _renderLoopOrSpeedMenuButton = (): VNode<any> | null => {
     if (player.isLive()) {
       return null;
     }
@@ -50,6 +50,7 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
     );
   };
 
+  const targetId: HTMLDivElement | Document = (document.getElementById(player.config.targetId) as HTMLDivElement) || document;
   return (
     <div className={styles.playbackControlsWrapper}>
       <LiveTagComponent />
@@ -86,6 +87,9 @@ const AudioPlayerControls = ({pluginConfig, player}: AudioPlayerControlsProps) =
         </div>
         <div className={styles.buttonContainer} data-testid="audio-player-volume-control">
           <Volume horizontal />
+        </div>
+        <div className={styles.buttonContainer}>
+          <MorePluginsButtonWrapper onClick={onPluginsControlClick} />
         </div>
       </div>
     </div>

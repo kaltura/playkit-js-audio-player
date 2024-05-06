@@ -1,17 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import {BasePlugin, KalturaPlayer, core} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
-import {AudioPlayerView, AudioPlayerUI} from './components';
-
 import {hexToCSSFilter} from 'hex-to-css-filter';
 
 const TONE_1_COLOR_VARIABLE = '--playkit-tone-1-color';
 const TONE_1_COLOR_RGB_VARIABLE = '--playkit-tone-1-color-rgb';
 const CONTROLS_FILTER_COLOR_VARIABLE = '--playkit-audio-player-controls-filter';
-
-class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
+// @ts-ignore
+class AudioPlayer extends BasePlugin {
   private colorVariablesSet = false;
+  public static defaultConfig = {
+    showReplayButton: false
+  };
 
   constructor(name: string, player: KalturaPlayer, config: AudioPlayerConfig) {
     super(name, player, config);
@@ -44,29 +43,6 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
   }
 
   private prepareUI() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.player.ui._uiManager.destroy();
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.player.ui._uiManager.buildCustomUI([
-      {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        template: () => (
-          <AudioPlayerUI>
-            {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              <AudioPlayerView pluginConfig={this.config} player={this.player} />
-            }
-          </AudioPlayerUI>
-        ),
-        condition: () => true
-      }
-    ]);
-
     if (!this.colorVariablesSet) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -76,6 +52,7 @@ class AudioPlayer extends BasePlugin<AudioPlayerConfig> {
         return;
       }
 
+      // @ts-ignore
       this.eventManager.listenOnce(this.player, core.EventType.CHANGE_SOURCE_ENDED, () => {
         const colorHexAsFilter = hexToCSSFilter(color, {acceptanceLossPercentage: 1}).filter;
         const colorHexAsRGB = this.getColorAsRGB(color);

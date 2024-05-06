@@ -1,10 +1,17 @@
-.audio-player-view {
+:root {
+  --ma-player-border-radius: 8px;
+}
+
+$ma-player-border-radius: var(--ma-player-border-radius);
+
+.mini-audio-player-view {
   position: relative;
   background-color: var(--playkit-paper-color);
   margin: 0;
   min-width: 228px;
-  border-radius: 8px;
+  border-radius: $ma-player-border-radius;
   justify-content: space-evenly;
+  //aspect-ratio: 10 / 3;
 
   &.small {
     height: 132px;
@@ -15,7 +22,7 @@
       display: flex;
       justify-content: space-between;
       height: calc(100% - 58px);
-      padding: 8px;
+      padding: 8px 0;
 
       .right-controls {
         display: flex;
@@ -43,7 +50,7 @@
 
       .top-controls {
         display: flex;
-        padding: 8px;
+        padding: 8px 0;
       }
     }
   }
@@ -95,7 +102,7 @@
     border-radius: 4px;
     flex-shrink: 0;
     overflow: hidden;
-    margin: 0;
+    margin-right: 8px;
   }
 
   .bottom-controls {

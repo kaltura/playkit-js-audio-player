@@ -1,0 +1,117 @@
+@import '~@playkit-js/playkit-js-ui';
+@import '../../audio-player-view/audio-player-view';
+
+:global(.playkit-mini-audio-player-overlay) {
+  border-radius: $ma-player-border-radius;
+
+  .plugins-menu-overlay {
+    width: 100%;
+    height: 100%;
+    color: $tone-1-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+
+    .menu {
+      margin: 10px;
+      width: 240px;
+    }
+  }
+}
+
+:global(.playkit-player.playkit-size-md),
+:global(.playkit-player.playkit-size-sm),
+:global(.playkit-player.playkit-size-xs),
+:global(.playkit-player.playkit-size-ty) {
+  :global(.playkit-overlay .playkit-overlay-contents) {
+    padding: 0;
+    border-radius: $ma-player-border-radius;
+    background-color: initial;
+  }
+}
+
+:global(.playkit-player.playkit-size-md),
+:global(.playkit-player.playkit-size-sm) {
+  :global(.playkit-overlay.playkit-active .playkit-close-overlay) {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+:global(.playkit-player.playkit-size-xs) {
+  :global(.playkit-overlay.playkit-active .playkit-close-overlay) {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+:global(.playkit-player.playkit-size-ty) {
+  :global(.playkit-overlay.playkit-active .playkit-close-overlay) {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+:global(.download-overlay__download-overlay___IThlq) {
+  :global(.download-overlay__header___Z6u7x) {
+    margin-top: 14px;
+    font-weight: initial;
+    font-size: 25px;
+    color: $tone-1-color;
+  }
+}
+
+:global(.download-overlay__download-overlay___IThlq) {
+  :global(.download-overlay__header___Z6u7x.download-overlay__small___GW05I) {
+    margin-top: 14px;
+    font-weight: initial;
+  }
+  :global(.download-overlay__close-button-container___nLul9) {
+    top: 13px;
+    right: 15px;
+
+    & {
+      :global(.download-overlay__small___GW05I) {
+        top: 10px;
+        right: 7px;
+      }
+    }
+  }
+
+  :global(.download-overlay__file-info-list___riTfL) {
+    margin-top: 13px;
+
+    :global(.expandable-container__expandable-label___wzDbd) {
+      color: $tone-1-color;
+    }
+  }
+}
+
+.large {
+  + :global(.playkit-gui-area) {
+    :global(.download-overlay__download-overlay___IThlq) {
+      background-color: initial;
+    }
+  }
+}
+
+.medium,
+.small {
+  + :global(.playkit-gui-area) {
+    :global(.download-overlay__download-overlay___IThlq) {
+      background-color: $paper-color;
+    }
+  }
+}
+
+:global(.playkit-player.playkit-size-md),
+:global(.playkit-player.playkit-size-sm),
+:global(.playkit-player.playkit-size-xs),
+:global(.playkit-player.playkit-size-ty) {
+  :global(.playkit-overlay .playkit-title) {
+    margin-bottom: -15px;
+    margin-top: 15px;
+    color: $tone-1-color;
+  }
+}

@@ -1,17 +1,17 @@
 @import '~@playkit-js/playkit-js-ui';
 
+:global(.playkit-player) {
+  i,
+  svg {
+    filter: invert(1) var(--playkit-audio-player-controls-filter);
+  }
+}
+
 .playback-controls-wrapper {
   display: flex;
   flex-direction: row;
   height: 36px;
   width: 100%;
-
-  button {
-    i,
-    svg {
-      filter: invert(1) var(--playkit-audio-player-controls-filter);
-    }
-  }
 
   :global(#speedActive) {
     color: $tone-1-color;
@@ -93,6 +93,7 @@
               flex-direction: row;
               margin: 0;
               padding: 4px;
+              background-color: $paper-color;
               :global(.playkit-dropdown-menu-item) {
                 min-height: 24px;
                 padding: 4px 8px;
