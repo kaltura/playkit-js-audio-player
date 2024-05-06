@@ -22,7 +22,7 @@ const AudioPreset = {
   condition: (): boolean => true
 };
 
-// Custom Preset has to be added in the bundle phase (before kalturaPlayer instance and as a result the UI is created and the )
+// the preset needs to be injected into the player config before the player ui is loaded
 window.__kalturaplayerdata = window.__kalturaplayerdata || {};
 window.__kalturaplayerdata.ui = window.__kalturaplayerdata.ui || {};
 window.__kalturaplayerdata.ui.customPreset = window.__kalturaplayerdata.ui.customPreset || [];
