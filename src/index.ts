@@ -14,16 +14,12 @@ export {VERSION, NAME};
 const pluginName = 'audioPlayer';
 registerPlugin(pluginName, AudioPlayer);
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-
 const AudioPreset = {
   template: (): any => miniAudioUI({player: {}, config: {}}),
   condition: (): boolean => true
 };
 
 // the preset needs to be injected into the player config before the player ui is loaded
-window.__kalturaplayerdata = window.__kalturaplayerdata || {};
-window.__kalturaplayerdata.ui = window.__kalturaplayerdata.ui || {};
-window.__kalturaplayerdata.ui.customPreset = window.__kalturaplayerdata.ui.customPreset || [];
-window.__kalturaplayerdata.ui.customPreset.push(AudioPreset);
+window.kalturaCustomPreset = [AudioPreset];
+
+
