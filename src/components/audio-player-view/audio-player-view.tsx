@@ -117,6 +117,7 @@ const AudioPlayerView = Event.withEventManager(
           const [wasPlaying, setWasPlaying] = useState(false);
 
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
+          const availablePlugins: AudioPlayerConfig = player.plugins['audioPlayer'].availablePlugins;
 
           useEffect(() => {
             addPlayerClass!();
@@ -243,6 +244,7 @@ const AudioPlayerView = Event.withEventManager(
               {showPluginsMenuOverlay && (
                 <PluginsMenuOverlay
                   poster={player.sources.poster}
+                  plugins={availablePlugins}
                   playerContainerId={player.config.targetId}
                   onClose={closeOverlay}
                   player={player}

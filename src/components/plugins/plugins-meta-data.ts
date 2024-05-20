@@ -1,6 +1,7 @@
 import {KalturaPlayer} from '@playkit-js/kaltura-player-js';
-export const PluginsMetaData = [
-  {
+import {PluginMetaData} from '../../types/plugin-metadata';
+export const PluginsMetaData: {[pluginName: string]: PluginMetaData} = {
+  download: {
     pluginName: 'Download',
     action: (player: KalturaPlayer): void => {
       // @ts-expect-error - Property 'showOverlay' does not exist on type 'BasePlugin'.
@@ -12,7 +13,7 @@ export const PluginsMetaData = [
       viewBox: '0 0 32 32'
     }
   },
-  {
+  share: {
     pluginName: 'Share',
     action: (player: KalturaPlayer): void => {
       // @ts-expect-error - Property 'showOverlay' does not exist on type 'BasePlugin'.
@@ -24,4 +25,4 @@ export const PluginsMetaData = [
       viewBox: '0 0 1024 1024'
     }
   }
-];
+};

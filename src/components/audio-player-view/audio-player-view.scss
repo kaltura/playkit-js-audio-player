@@ -68,11 +68,9 @@ $ma-player-border-radius: var(--ma-player-border-radius);
       left: 0;
       height: 100%;
       width: 100%;
-      filter: blur(48px) brightness(70%);
-      -webkit-filter: blur(48px) brightness(70%);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+      filter: blur(24px);
+      opacity: 0.5;
+      background: lightgray 50% / cover no-repeat;
     }
 
     .left-controls {
