@@ -15,6 +15,7 @@ import {AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {PluginsMenuOverlay} from '../plugins';
+import {PluginMetaData} from '../../types/plugin-metadata';
 
 // @ts-ignore
 const {withPlayer} = ui.Components;
@@ -117,7 +118,7 @@ const AudioPlayerView = Event.withEventManager(
           const [wasPlaying, setWasPlaying] = useState(false);
 
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
-          const availablePlugins: AudioPlayerConfig = player.plugins['audioPlayer'].availablePlugins;
+          const availablePlugins: PluginMetaData[] = player.plugins['audioPlayer'].availablePlugins;
 
           useEffect(() => {
             addPlayerClass!();
@@ -243,7 +244,6 @@ const AudioPlayerView = Event.withEventManager(
               {hasError ? <ErrorSlate /> : _renderView()}
               {showPluginsMenuOverlay && (
                 <PluginsMenuOverlay
-                  poster={player.sources.poster}
                   plugins={availablePlugins}
                   playerContainerId={player.config.targetId}
                   onClose={closeOverlay}
