@@ -1,6 +1,10 @@
 import {BasePlugin, KalturaPlayer, core} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
 import {hexToCSSFilter} from 'hex-to-css-filter';
+import {PluginsMetaData} from './components/plugins';
+import {PluginMetaData} from './types/plugin-metadata';
+
+export const pluginName = 'audioPlayer';
 
 const TONE_1_COLOR_VARIABLE = '--playkit-tone-1-color';
 const TONE_1_COLOR_RGB_VARIABLE = '--playkit-tone-1-color-rgb';
@@ -8,6 +12,7 @@ const CONTROLS_FILTER_COLOR_VARIABLE = '--playkit-audio-player-controls-filter';
 // @ts-ignore
 class AudioPlayer extends BasePlugin {
   private colorVariablesSet = false;
+  public availablePlugins: PluginMetaData[] = [];
   public static defaultConfig = {
     showReplayButton: false
   };
@@ -25,6 +30,12 @@ class AudioPlayer extends BasePlugin {
     // @ts-ignore
     playerContainerElement!.style.backgroundColor = 'transparent';
     this.prepareUI();
+  }
+
+  loadMedia(): void {
+    Object.keys(this.player.plugins).forEach((plgName: string) => {
+      if (plgName !== pluginName) this.availablePlugins.push(PluginsMetaData[plgName]);
+    });
   }
 
   /**
@@ -83,7 +94,7 @@ class AudioPlayer extends BasePlugin {
   }
 
   reset() {
-    /**/
+    this.availablePlugins = [];
   }
 }
 
