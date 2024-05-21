@@ -49,9 +49,6 @@
   :global(.download-overlay__header___Z6u7x.download-overlay__medium___GW05I),
   :global(.download-overlay__header___Z6u7x.download-overlay__large___GW05I) {
     margin-top: 14px;
-    font-weight: initial;
-    font-size: 18px;
-    color: $tone-1-color;
     position: absolute;
     align-self: center;
     display: flex;
@@ -95,17 +92,6 @@
     :global(.download-overlay__download-overlay___IThlq) {
       background-color: $paper-color;
     }
-  }
-}
-
-:global(.playkit-player.playkit-size-md),
-:global(.playkit-player.playkit-size-sm),
-:global(.playkit-player.playkit-size-xs),
-:global(.playkit-player.playkit-size-ty) {
-  :global(.playkit-overlay .playkit-title) {
-    margin-bottom: -15px;
-    margin-top: 15px;
-    color: $tone-1-color;
   }
 }
 

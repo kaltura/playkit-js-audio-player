@@ -94,7 +94,7 @@ class AudioPlayer extends BasePlugin {
   }
 
   reset() {
-    /**/
+    this.availablePlugins = [];
   }
 }
 
