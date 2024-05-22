@@ -15,9 +15,10 @@ interface AudioPlayerControlsProps {
   pluginConfig: AudioPlayerConfig;
   player: any;
   onPluginsControlClick: () => void;
+  showMorePluginsIcon: boolean;
 }
 
-const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: AudioPlayerControlsProps) => {
+const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
 
@@ -88,9 +89,9 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick}: Audi
         <div className={styles.buttonContainer} data-testid="audio-player-volume-control">
           <Volume horizontal />
         </div>
-        <div className={styles.buttonContainer}>
+        {showMorePluginsIcon && <div className={styles.buttonContainer}>
           <MorePluginsButtonWrapper onClick={onPluginsControlClick} />
-        </div>
+        </div>}
       </div>
     </div>
   );
