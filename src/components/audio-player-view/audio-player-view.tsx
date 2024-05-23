@@ -119,6 +119,7 @@ const AudioPlayerView = Event.withEventManager(
 
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
           const availablePlugins: PluginMetaData[] = player.plugins['audioPlayer'].availablePlugins;
+          const showMorePluginsIcon: boolean = availablePlugins.length > 0;
 
           useEffect(() => {
             addPlayerClass!();
@@ -197,7 +198,7 @@ const AudioPlayerView = Event.withEventManager(
             return isLoading ? (
               <ControlsPlaceholder />
             ) : (
-              <AudioPlayerControls pluginConfig={pluginConfig} player={player} onPluginsControlClick={openOverlay} />
+              <AudioPlayerControls pluginConfig={pluginConfig} player={player} onPluginsControlClick={openOverlay} showMorePluginsIcon={showMorePluginsIcon} />
             );
           };
 
