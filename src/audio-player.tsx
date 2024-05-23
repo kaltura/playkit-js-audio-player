@@ -51,7 +51,6 @@ class AudioPlayer extends BasePlugin {
       // @ts-ignore
       this.eventManager.listenOnce(this.player, core.EventType.CHANGE_SOURCE_ENDED, () => {
         const colorHexAsFilter = hexToCSSFilter(color, {acceptanceLossPercentage: 1}).filter;
-        // const colorHexAsRGB = this.getColorAsRGB(color);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
