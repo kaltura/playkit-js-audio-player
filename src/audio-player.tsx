@@ -33,8 +33,8 @@ class AudioPlayer extends BasePlugin {
   }
 
   loadMedia(): void {
-    Object.keys(this.player.plugins).forEach((plgName: string) => {
-      if (plgName !== pluginName) this.availablePlugins.push(PluginsMetaData[plgName]);
+    Object.keys(PluginsMetaData).forEach((pluginId: string) => {
+      if(pluginId in this.player.plugins) this.availablePlugins.push(PluginsMetaData[pluginId]);
     });
   }
 
