@@ -2,7 +2,6 @@ import {h} from 'preact';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './plugins-menu-overlay.scss';
 import {MenuItem} from '../menu-item';
-import {PluginsMetaData} from '../plugins-meta-data';
 import {AudioPlayerSizes} from '../../../types';
 import {PluginMetaData} from '../../../types/plugin-metadata';
 
@@ -25,16 +24,20 @@ const PluginsMenuOverlay = ({plugins, playerContainerId, onClose, player}: Plugi
     <Overlay open onClose={onClose} type="playkit-mini-audio-player">
       <div className={`${styles.pluginsMenuOverlay}`}>
         <div className={styles.menu}>
-          {plugins.map(({pluginName, action, icon}) => (
-            <MenuItem
-              pluginName={pluginName}
-              icon={icon}
-              onClick={() => {
-                onClose();
-                action(player);
-              }}
-            />
-          ))}
+          {plugins.map(({pluginName, isEntrySupported, action, icon}) => {
+            if (isEntrySupported(player)) {
+              return (
+                <MenuItem
+                  pluginName={pluginName}
+                  icon={icon}
+                  onClick={() => {
+                    onClose();
+                    action(player);
+                  }}
+                />
+              );
+            }
+          })}
         </div>
       </div>
     </Overlay>,
