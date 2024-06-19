@@ -7,4 +7,5 @@ export interface PluginMetaData {
     svgUrl: string;
     viewBox: string;
   };
+  isDisabled?: (player: KalturaPlayer) => boolean;
 }
