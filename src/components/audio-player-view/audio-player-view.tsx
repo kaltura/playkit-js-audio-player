@@ -1,6 +1,6 @@
 import {h, Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
-import {ui, core} from '@playkit-js/kaltura-player-js';
+import {ui, core, BasePlugin} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
   AudioSeekbar,
@@ -15,7 +15,6 @@ import {AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {PluginsMenuOverlay} from '../plugins';
-import {PluginMetaData} from '../../types/plugin-metadata';
 
 // @ts-ignore
 const {withPlayer} = ui.Components;
@@ -118,7 +117,7 @@ const AudioPlayerView = Event.withEventManager(
           const [wasPlaying, setWasPlaying] = useState(false);
 
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
-          const availablePlugins: PluginMetaData[] = player.plugins['audioPlayer'].availablePlugins;
+          const availablePlugins: BasePlugin[] = player.plugins['audioPlayer'].availablePlugins;
           const showMorePluginsIcon: boolean = availablePlugins.length > 0;
 
           useEffect(() => {
