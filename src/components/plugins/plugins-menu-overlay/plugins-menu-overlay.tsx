@@ -23,25 +23,26 @@ const PluginsMenuOverlay = ({plugins, onClose, player}: PluginsMenuOverlayProps)
           <div className={styles.menu}>
             {plugins.map(({pluginName, action, icon, isDisabled}) => {
               const disabled = isDisabled?.(player);
-              if (disabled) {
-                return null;
-              }
               return (
                 <MenuItem
+                  disabled={disabled}
                   pluginName={pluginName}
                   icon={icon}
                   onClick={() => {
+                    if (disabled) {
+                      return;
+                    }
                     onClose();
                     action(player);
                   }}
                 />
-              )
+              );
             })}
           </div>
         </div>
       </Overlay>
     </OverlayPortal>
-  )
+  );
 };
 
 export {PluginsMenuOverlay};

@@ -8,13 +8,13 @@ interface MenuItemProps {
   onClick: (player: any) => void;
   pluginName: string;
   icon: {svgUrl: string; viewBox: string};
+  disabled?: boolean;
 }
 
-const MenuItem = ({pluginName, icon, onClick}: MenuItemProps) => {
+const MenuItem = ({pluginName, icon, onClick, disabled}: MenuItemProps) => {
   return (
-    // @ts-ignore - error TS2786: 'A11yWrapper' cannot be used as a JSX component.
     <A11yWrapper onClick={onClick}>
-      <div className={styles.menuItem} tabIndex={0} aria-label={pluginName}>
+      <div className={[styles.menuItem, disabled ? styles.disabled : ''].join(' ')} tabIndex={0} aria-label={pluginName} aria-disabled={disabled}>
         <span className={styles.pluginIcon}>
           <Icon id={`min-audio-player-${pluginName}`} path={icon.svgUrl} viewBox={icon.viewBox} />
         </span>
