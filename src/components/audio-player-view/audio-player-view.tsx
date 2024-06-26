@@ -113,7 +113,7 @@ const AudioPlayerView = Event.withEventManager(
           const [imageHasError, setImageHasError] = useState(false);
           const isLoading = !mediaMetadata;
           const {poster, title, description} = mediaMetadata || {};
-          const [showPluginsMenuOverlay, seShowPluginsMenuOverlay] = useState(false);
+          const [showPluginsMenuOverlay, setShowPluginsMenuOverlay] = useState(false);
           const [wasPlaying, setWasPlaying] = useState(false);
 
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
@@ -176,10 +176,10 @@ const AudioPlayerView = Event.withEventManager(
           }, [isPlaying, overlayOpen]);
 
           const openOverlay = () => {
-            seShowPluginsMenuOverlay(true);
+            setShowPluginsMenuOverlay(true);
           };
           const closeOverlay = () => {
-            seShowPluginsMenuOverlay(false);
+            setShowPluginsMenuOverlay(false);
           };
 
           const _renderAudioDetails = () => {
@@ -245,7 +245,6 @@ const AudioPlayerView = Event.withEventManager(
               {showPluginsMenuOverlay && (
                 <PluginsMenuOverlay
                   plugins={availablePlugins}
-                  playerContainerId={player.config.targetId}
                   onClose={closeOverlay}
                   player={player}
                   size={size}

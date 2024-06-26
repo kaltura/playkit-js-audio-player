@@ -4,9 +4,16 @@ interface AudioPlayerProps {
 }
 
 import {ui} from '@playkit-js/kaltura-player-js';
+import * as uiStyles from './audio-player-ui.scss';
 
-const {PlayerArea, withPlayerPreset, withKeyboardEvent, OverlayPortal, VideoArea, GuiArea} = ui.Components;
-const {style} = ui;
+// @ts-expect-error - Property 'SidePanel' does not exist on type 'typeof Components'
+const {PlayerArea, withPlayerPreset, withKeyboardEvent, OverlayPortal, SidePanel, GuiArea} = ui.Components;
+const {
+  style,
+  reducers: {
+    shell: {SidePanelPositions}
+  }
+} = ui;
 
 import {h, Component, VNode} from 'preact';
 import {AudioPlayerView} from '../audio-player-view';
@@ -49,6 +56,12 @@ class MiniAudioUI extends Component<AudioPlayerProps, any> {
             <OverlayPortal />
             <AudioPlayerView />
             <GuiArea />
+            <div className={uiStyles.audioPlayerSidePanelsWrapper}>
+              <SidePanel position={SidePanelPositions.RIGHT} />
+              <SidePanel position={SidePanelPositions.LEFT} />
+              <SidePanel position={SidePanelPositions.TOP} />
+              <SidePanel position={SidePanelPositions.BOTTOM} />
+            </div>
           </div>
         </PlayerArea>
       </div>

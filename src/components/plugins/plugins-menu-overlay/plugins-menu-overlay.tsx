@@ -1,25 +1,19 @@
 import {h} from 'preact';
-import {BasePlugin, ui} from '@playkit-js/kaltura-player-js';
+import {ui} from '@playkit-js/kaltura-player-js';
+import {OverlayPortal} from '@playkit-js/common/dist/hoc/overlay-portal';
 import * as styles from './plugins-menu-overlay.scss';
 import {MenuItem} from '../menu-item';
-import {AudioPlayerSizes} from '../../../types';
 
 const {Overlay} = ui.Components;
-const {createPortal} = ui;
 
 interface PluginsMenuOverlayProps {
   plugins: BasePlugin[];
-  playerContainerId: string;
   onClose: () => void;
-  player: any;
-  size: AudioPlayerSizes;
 }
 
-const PluginsMenuOverlay = ({plugins, playerContainerId, onClose, player}: PluginsMenuOverlayProps) => {
-  const targetId: HTMLDivElement | Document = (document.getElementById(playerContainerId) as HTMLDivElement) || document;
-  const portalSelector = `.overlay-portal`;
-
-  return createPortal(
+const PluginsMenuOverlay = ({plugins, onClose}: PluginsMenuOverlayProps) => {
+  return (
+    <OverlayPortal>
     <Overlay open onClose={onClose} type="playkit-mini-audio-player">
       <div className={`${styles.pluginsMenuOverlay}`}>
         <div className={styles.menu}>
@@ -39,9 +33,9 @@ const PluginsMenuOverlay = ({plugins, playerContainerId, onClose, player}: Plugi
           })}
         </div>
       </div>
-    </Overlay>,
-    targetId.querySelector(portalSelector)!
-  );
+    </Overlay>
+    </OverlayPortal>
+  )
 };
 
 export {PluginsMenuOverlay};
