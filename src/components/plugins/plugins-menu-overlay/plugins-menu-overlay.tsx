@@ -1,5 +1,5 @@
 import {h} from 'preact';
-import {ui} from '@playkit-js/kaltura-player-js';
+import {BasePlugin, ui} from '@playkit-js/kaltura-player-js';
 import {OverlayPortal} from '@playkit-js/common/dist/hoc/overlay-portal';
 import * as styles from './plugins-menu-overlay.scss';
 import {MenuItem} from '../menu-item';
@@ -25,7 +25,7 @@ const PluginsMenuOverlay = ({plugins, onClose}: PluginsMenuOverlayProps) => {
                   icon={plugin.symbol}
                   onClick={() => {
                     onClose();
-                    plugin.showOverlay();
+                    plugin.open();
                   }}
                 />
               );
