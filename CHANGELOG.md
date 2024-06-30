@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.6 (2024-06-30)
+
+
+### Bug Fixes
+
+* **FEC-13729:** transcript menu fix ([#29](https://github.com/kaltura/playkit-js-audio-player/issues/29)) ([fd50310](https://github.com/kaltura/playkit-js-audio-player/commit/fd50310a4de7d29e2d61dc8f2ccaa340493a3da5))
+
 ### 1.0.5 (2024-06-02)
 
 
