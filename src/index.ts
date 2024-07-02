@@ -11,7 +11,6 @@ const NAME = __NAME__;
 export {AudioPlayer as Plugin};
 export {VERSION, NAME};
 
-
 registerPlugin(pluginName, AudioPlayer);
 
 const AudioPreset = {
@@ -21,5 +20,3 @@ const AudioPreset = {
 
 // the preset needs to be injected into the player config before the player ui is loaded
 window.kalturaCustomPreset = [AudioPreset];
-
-
