@@ -50,21 +50,18 @@ class AudioPlayer extends BasePlugin {
         return;
       }
 
-      // @ts-ignore
-      this.eventManager.listenOnce(this.player, core.EventType.CHANGE_SOURCE_ENDED, () => {
-        const colorHexAsFilter = hexToCSSFilter(color, {acceptanceLossPercentage: 1}).filter;
+      const colorHexAsFilter = hexToCSSFilter(color, {acceptanceLossPercentage: 1}).filter;
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error Property '_uiManager' is private and only accessible within class 'UIWrapper'
+      this.player.ui._uiManager.setCSSVariable(CONTROLS_FILTER_COLOR_VARIABLE, colorHexAsFilter.replace(';', ''));
+      if (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        this.player.ui._uiManager.setCSSVariable(CONTROLS_FILTER_COLOR_VARIABLE, colorHexAsFilter.replace(';', ''));
-        if (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.player.ui._uiManager.getCSSVariable(CONTROLS_FILTER_COLOR_VARIABLE)
-        ) {
-          this.colorVariablesSet = true;
-        }
-      });
+        // @ts-expect-error Property '_uiManager' is private and only accessible within class 'UIWrapper'
+        this.player.ui._uiManager.getCSSVariable(CONTROLS_FILTER_COLOR_VARIABLE)
+      ) {
+        this.colorVariablesSet = true;
+      }
     }
   }
 
