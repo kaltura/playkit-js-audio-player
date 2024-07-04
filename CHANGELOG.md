@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.7 (2024-07-04)
+
+
+### Bug Fixes
+
+* **FEC-13880:** remove `CHANGE_SOURCE_ENDED` listener ([#30](https://github.com/kaltura/playkit-js-audio-player/issues/30)) ([dd772ea](https://github.com/kaltura/playkit-js-audio-player/commit/dd772ea5c57977a728929d8bf4c808cd1de34942))
+
 ### 1.0.6 (2024-06-30)
 
 
