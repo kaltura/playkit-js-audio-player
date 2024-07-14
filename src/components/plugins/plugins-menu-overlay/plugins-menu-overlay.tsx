@@ -3,39 +3,38 @@ import {BasePlugin, ui} from '@playkit-js/kaltura-player-js';
 import {OverlayPortal} from '@playkit-js/common/dist/hoc/overlay-portal';
 import * as styles from './plugins-menu-overlay.scss';
 import {MenuItem} from '../menu-item';
+import {AudioPlugin} from '../../../types/audio-plugin';
 
 const {Overlay} = ui.Components;
 
 interface PluginsMenuOverlayProps {
-  plugins: BasePlugin[];
+  plugins: AudioPlugin[];
   onClose: () => void;
 }
 
 const PluginsMenuOverlay = ({plugins, onClose}: PluginsMenuOverlayProps) => {
   return (
     <OverlayPortal>
-    <Overlay open onClose={onClose} type="playkit-mini-audio-player">
-      <div className={`${styles.pluginsMenuOverlay}`}>
-        <div className={styles.menu}>
-          {plugins.map((plugin: BasePlugin) => {
-            if (plugin.isEntrySupported()) {
+      <Overlay open onClose={onClose} type="playkit-mini-audio-player">
+        <div className={`${styles.pluginsMenuOverlay}`}>
+          <div className={styles.menu}>
+            {plugins.map(({displayName, symbol, open}) => {
               return (
                 <MenuItem
-                  pluginName={plugin.displayName}
-                  icon={plugin.symbol}
+                  pluginName={displayName}
+                  icon={symbol}
                   onClick={() => {
                     onClose();
-                    plugin.open();
+                    open();
                   }}
                 />
               );
-            }
-          })}
+            })}
+          </div>
         </div>
-      </div>
-    </Overlay>
+      </Overlay>
     </OverlayPortal>
-  )
+  );
 };
 
 export {PluginsMenuOverlay};
