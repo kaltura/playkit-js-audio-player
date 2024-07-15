@@ -44,3 +44,6 @@ export class AudioPluginsManager extends FakeEventTarget {
     return typeof open === 'function' && typeof displayName === 'string' && typeof symbol?.svgUrl === 'string' && typeof symbol?.svgUrl === 'string';
   }
 }
+
+// remove - transcript and download on reset
+// uinify interfaces with upper-bar-manager
