@@ -1,5 +1,3 @@
-export interface AudioPlugin {
-  displayName: string;
-  symbol: {svgUrl: string; viewBox: string};
-  open: () => any
-}
+import {IconDto} from '@playkit-js/ui-managers';
+
+export type AudioPluginDto = Omit<IconDto, 'ariaLabel' | 'order' | 'component' | 'presets'>;

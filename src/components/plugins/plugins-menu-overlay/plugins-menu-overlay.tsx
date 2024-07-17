@@ -1,15 +1,15 @@
 import {h} from 'preact';
-import {BasePlugin, ui} from '@playkit-js/kaltura-player-js';
+import {ui} from '@playkit-js/kaltura-player-js';
 import {OverlayPortal} from '@playkit-js/common/dist/hoc/overlay-portal';
 import * as styles from './plugins-menu-overlay.scss';
 import {MenuItem} from '../menu-item';
-import {AudioPlugin} from '../../../types/audio-plugin';
+import {AudioPluginDto} from '../../../types/audio-plugin';
 
 const {Overlay} = ui.Components;
 
 interface PluginsMenuOverlayProps {
-  plugins: AudioPlugin[];
-  onClose: () => void;
+  plugins: AudioPluginDto[];
+  onClose: (e: MouseEvent) => void;
 }
 
 const PluginsMenuOverlay = ({plugins, onClose}: PluginsMenuOverlayProps) => {
@@ -18,14 +18,14 @@ const PluginsMenuOverlay = ({plugins, onClose}: PluginsMenuOverlayProps) => {
       <Overlay open onClose={onClose} type="playkit-mini-audio-player">
         <div className={`${styles.pluginsMenuOverlay}`}>
           <div className={styles.menu}>
-            {plugins.map(({displayName, symbol, open}) => {
+            {plugins.map(({displayName, svgIcon, onClick}) => {
               return (
                 <MenuItem
-                  pluginName={displayName}
-                  icon={symbol}
-                  onClick={() => {
-                    onClose();
-                    open();
+                  title={displayName}
+                  icon={svgIcon}
+                  onClick={(e) => {
+                    onClose(e);
+                    onClick(e);
                   }}
                 />
               );
