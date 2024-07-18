@@ -1,6 +1,6 @@
 import {h, Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
-import {ui, core, BasePlugin, KalturaPlayer} from '@playkit-js/kaltura-player-js';
+import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
   AudioSeekbar,
