@@ -7,12 +7,12 @@
     <meta name="description" content="Kaltura Player Demo Page" />
     <title>Mini Audio Player Plugin</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
-        <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>
-        <script src="https://unpkg.com/@playkit-js/playkit-js-downloads@canary/dist/playkit-downloads.js" type="text/javascript"></script>
-        <script src="https://unpkg.com/@playkit-js/share@canary/dist/playkit-share.js" type="text/javascript"></script>
-<!--    <script src="http://localhost:8086/kaltura-ovp-player.js"></script>-->
-<!--    <script src="http://localhost:8087/playkit-downloads.js"></script>-->
-<!--    <script src="http://localhost:8085/playkit-share.js" type="text/javascript"></script>-->
+    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>
+    <script src="https://unpkg.com/@playkit-js/playkit-js-downloads@canary/dist/playkit-downloads.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/@playkit-js/share@canary/dist/playkit-share.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/@playkit-js/ui-managers@canary/dist/playkit-ui-managers.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/@playkit-js/playkit-js-kaltura-cuepoints@canary/dist/playkit-kaltura-cuepoints.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/@playkit-js/transcript-plugin@canary/dist/playkit-js-transcript.js" type="text/javascript"></script>
     <script src="./playkit-audio-player.js"></script>
   </head>
   <body>
@@ -23,13 +23,10 @@
         targetId: 'player-placeholder',
         provider: {
           env: {
-            serviceUrl: 'https://cdnapisec.kaltura.com/api_v3',
-            cdnUrl: 'https://cfvod.kaltura.com',
-            statsServiceUrl: 'https://stats.kaltura.com',
-            liveStatsServiceUrl: 'https://livestats.kaltura.com',
-            analyticsServiceUrl: 'https://analytics.kaltura.com'
+            cdnUrl: 'https://cfvod.nvq2.ovp.kaltura.com',
+            serviceUrl: 'https://api.nvq2.ovp.kaltura.com/api_v3'
           },
-          partnerId: 3076893
+          partnerId: 242
         },
         playback: {
           // autoplay: true
@@ -75,7 +72,7 @@
                 'share-on-twitter': 'Share on X'
               }
             }
-          },
+          }
           // Light Theme
           // userTheme: {
           //   colors: {
@@ -107,12 +104,14 @@
           },
           uiManagers: {},
           download: {},
-          share: {}
+          share: {},
+          'playkit-js-transcript': {},
+          kalturaCuepoints: {}
         }
       };
 
       const player = KalturaPlayer.setup(config);
-      player.loadMedia({entryId: '1_rhur4p1n'});
+      player.loadMedia({entryId: '0_bfj8lg0f'});
     </script>
   </body>
 </html>

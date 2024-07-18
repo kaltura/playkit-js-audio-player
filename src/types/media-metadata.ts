@@ -1,5 +1,5 @@
 export interface MediaMetadata {
-  poster: string;
+  poster?: string;
   title: string;
   description?: string;
 }

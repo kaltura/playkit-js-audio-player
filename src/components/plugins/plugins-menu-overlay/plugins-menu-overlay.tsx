@@ -3,37 +3,29 @@ import {ui} from '@playkit-js/kaltura-player-js';
 import {OverlayPortal} from '@playkit-js/common/dist/hoc/overlay-portal';
 import * as styles from './plugins-menu-overlay.scss';
 import {MenuItem} from '../menu-item';
-import {AudioPlayerSizes} from '../../../types';
-import {PluginMetaData} from '../../../types/plugin-metadata';
+import {AudioPluginDto} from '../../../types/audio-plugin-dto';
 
 const {Overlay} = ui.Components;
 
 interface PluginsMenuOverlayProps {
-  plugins: PluginMetaData[];
-  onClose: () => void;
-  player: any;
-  size: AudioPlayerSizes;
+  plugins: AudioPluginDto[];
+  onClose: (e: MouseEvent) => void;
 }
 
-const PluginsMenuOverlay = ({plugins, onClose, player}: PluginsMenuOverlayProps) => {
+const PluginsMenuOverlay = ({plugins, onClose}: PluginsMenuOverlayProps) => {
   return (
     <OverlayPortal>
       <Overlay open onClose={onClose} type="playkit-mini-audio-player">
         <div className={`${styles.pluginsMenuOverlay}`}>
           <div className={styles.menu}>
-            {plugins.map(({pluginName, action, icon, isDisabled}) => {
-              const disabled = isDisabled?.(player);
+            {plugins.map(({displayName, svgIcon, onClick}) => {
               return (
                 <MenuItem
-                  disabled={disabled}
-                  pluginName={pluginName}
-                  icon={icon}
-                  onClick={() => {
-                    if (disabled) {
-                      return;
-                    }
-                    onClose();
-                    action(player);
+                  title={displayName}
+                  icon={svgIcon}
+                  onClick={(e) => {
+                    onClose(e);
+                    onClick(e);
                   }}
                 />
               );

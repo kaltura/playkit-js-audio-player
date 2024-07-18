@@ -1,6 +1,6 @@
 import {h, Fragment} from 'preact';
 import {useState, useEffect} from 'preact/hooks';
-import {ui, core} from '@playkit-js/kaltura-player-js';
+import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
   AudioSeekbar,
@@ -15,7 +15,7 @@ import {AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {PluginsMenuOverlay} from '../plugins';
-import {PluginMetaData} from '../../types/plugin-metadata';
+import {usePluginsManager} from '../plugins/audio-plugins-manager/use-plugins-manager';
 
 // @ts-ignore
 const {withPlayer} = ui.Components;
@@ -80,7 +80,7 @@ interface AudioPlayerViewProps {
   isPlaying?: boolean;
   isPlaybackStarted?: boolean;
   hasError?: boolean;
-  player: any;
+  player: KalturaPlayer;
   overlayOpen: boolean;
   eventManager: any;
   mediaThumb?: string;
@@ -117,8 +117,10 @@ const AudioPlayerView = Event.withEventManager(
           const [showPluginsMenuOverlay, setShowPluginsMenuOverlay] = useState(false);
           const [wasPlaying, setWasPlaying] = useState(false);
 
+
+          const availablePlugins = usePluginsManager(player.getService('AudioPluginsManager'))
+          // @ts-expect-error - TS2445: Property config is protected and only accessible within class BasePlugin and its subclasses.
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
-          const availablePlugins: PluginMetaData[] = player.plugins['audioPlayer'].availablePlugins;
           const showMorePluginsIcon: boolean = availablePlugins.length > 0;
 
           useEffect(() => {
@@ -247,8 +249,6 @@ const AudioPlayerView = Event.withEventManager(
                 <PluginsMenuOverlay
                   plugins={availablePlugins}
                   onClose={closeOverlay}
-                  player={player}
-                  size={size}
                 />
               )}
             </div>

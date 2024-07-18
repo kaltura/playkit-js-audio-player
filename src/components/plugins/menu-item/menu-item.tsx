@@ -5,20 +5,19 @@ import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 const {Icon, IconType} = ui.Components;
 
 interface MenuItemProps {
-  onClick: (player: any) => void;
-  pluginName: string;
-  icon: {svgUrl: string; viewBox: string};
-  disabled?: boolean;
+  onClick: (e: any) => void;
+  title: string;
+  icon: {path: string; viewBox?: string};
 }
 
-const MenuItem = ({pluginName, icon, onClick, disabled}: MenuItemProps) => {
+const MenuItem = ({title, icon, onClick}: MenuItemProps) => {
   return (
     <A11yWrapper onClick={onClick}>
-      <div className={[styles.menuItem, disabled ? styles.disabled : ''].join(' ')} tabIndex={0} aria-label={pluginName} aria-disabled={disabled}>
+      <div className={styles.menuItem} tabIndex={0} aria-label={title}>
         <span className={styles.pluginIcon}>
-          <Icon id={`min-audio-player-${pluginName}`} path={icon.svgUrl} viewBox={icon.viewBox} />
+          <Icon id={`min-audio-player-${title}`} path={icon.path} viewBox={icon.viewBox || '0 0 32 32'} />
         </span>
-        <div>{pluginName}</div>
+        <div>{title}</div>
         <span className={styles.arrowIcon}>
           <Icon type={IconType.ArrowDown} />
         </span>

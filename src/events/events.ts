@@ -1,0 +1,1 @@
+export const AUDIO_PLAYER_ACTIVE_PLUGINS_UPDATED = 'audio_player_active_plugins_updated';
