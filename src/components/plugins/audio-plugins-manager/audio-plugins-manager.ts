@@ -1,8 +1,7 @@
 import {AudioPluginDto} from '../../../types/audio-plugin-dto';
 import {FakeEventTarget} from '@playkit-js/playkit-js';
 import {FakeEvent} from '@playkit-js/playkit-js';
-
-export const AUDIO_PLAYER_ACTIVE_PLUGINS_UPDATED = 'audio_player_active_plugins_updated';
+import {AUDIO_PLAYER_ACTIVE_PLUGINS_UPDATED} from '../../../events/events';
 
 export class AudioPluginsManager extends FakeEventTarget {
   private readonly activePluginsRegistry: Map<number, AudioPluginDto>;
