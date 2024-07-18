@@ -1,4 +1,4 @@
-import {AudioPluginDto} from '../../../types/audio-plugin';
+import {AudioPluginDto} from '../../../types/audio-plugin-dto';
 import {FakeEventTarget} from '@playkit-js/playkit-js';
 import {FakeEvent} from '@playkit-js/playkit-js';
 
@@ -14,7 +14,7 @@ export class AudioPluginsManager extends FakeEventTarget {
   }
 
   public add(audioPlugin: AudioPluginDto): number | undefined {
-    if (AudioPluginsManager.validateItem(audioPlugin)) {
+    if (this.isValid(audioPlugin)) {
       const id = ++AudioPluginsManager.nextId;
       this.activePluginsRegistry.set(id, audioPlugin);
       this.logger.debug(`Plugin '${audioPlugin.displayName}' added to AudioPlayer Overlay, id: '${id}' `);
@@ -39,11 +39,8 @@ export class AudioPluginsManager extends FakeEventTarget {
     return Array.from(this.activePluginsRegistry.values());
   }
 
-  private static validateItem(audioPlugin: AudioPluginDto): boolean {
+  private isValid(audioPlugin: AudioPluginDto): boolean {
     const {displayName, onClick, svgIcon} = audioPlugin;
     return typeof onClick === 'function' && typeof displayName === 'string' && typeof svgIcon?.path === 'string';
   }
 }
-
-// remove - transcript and download on reset
-// uinify interfaces with upper-bar-manager

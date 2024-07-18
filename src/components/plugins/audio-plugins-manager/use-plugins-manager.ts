@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'preact/hooks';
-import {AUDIO_PLAYER_ACTIVE_PLUGINS_UPDATED, AudioPluginsManager} from './plugins-manager';
-import {AudioPluginDto} from '../../../types/audio-plugin';
+import {AUDIO_PLAYER_ACTIVE_PLUGINS_UPDATED, AudioPluginsManager} from './audio-plugins-manager';
+import {AudioPluginDto} from '../../../types/audio-plugin-dto';
 import {FakeEvent} from '@playkit-js/playkit-js';
 
 function usePluginsManager(audioPluginsManager: AudioPluginsManager): AudioPluginDto[] {

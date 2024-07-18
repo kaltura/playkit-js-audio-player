@@ -15,7 +15,7 @@ import {AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
 import {PluginsMenuOverlay} from '../plugins';
-import {usePluginsManager} from '../plugins/plugins-manager/use-plugins-manager';
+import {usePluginsManager} from '../plugins/audio-plugins-manager/use-plugins-manager';
 
 // @ts-ignore
 const {withPlayer} = ui.Components;

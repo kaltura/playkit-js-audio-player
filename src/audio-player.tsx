@@ -1,7 +1,7 @@
 import {BasePlugin, KalturaPlayer, core} from '@playkit-js/kaltura-player-js';
 import {AudioPlayerConfig} from './types';
 import {hexToCSSFilter} from 'hex-to-css-filter';
-import {AudioPluginsManager} from './components/plugins/plugins-manager/plugins-manager';
+import {AudioPluginsManager} from './components/plugins/audio-plugins-manager/audio-plugins-manager';
 
 export const pluginName = 'audioPlayer';
 
