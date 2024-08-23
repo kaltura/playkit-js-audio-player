@@ -1,8 +1,7 @@
 import {h} from 'preact';
 import * as styles from './audio-icon.scss';
 import { useState } from 'preact/hooks';
-import {Button, ButtonSize, ButtonType} from '@playkit-js/common/dist/components/button';
-import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
+import {ui} from '@playkit-js/kaltura-player-js';
 import {Components} from '@playkit-js/playkit-js-ui';
 
 interface AudioIconProps {
@@ -12,7 +11,7 @@ interface AudioIconProps {
   pauseAnimation: string;
 }
 
-const {Tooltip, Icon} = Components;
+const {Tooltip} = Components;
 
 const {withText, Text} = ui.preacti18n;
 const translates = {
