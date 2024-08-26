@@ -28,10 +28,16 @@ const AudioIcon = withText(translates)(({isLarge, isActive, resumeAnimation, pau
   
   return (
     <Tooltip label={isAnimation ? pauseAnimation : resumeAnimation} type="right">
-      <button onClick={handleClick} aria-label={isAnimation ? pauseAnimation : resumeAnimation} data-testid="audio-player-audio-icon" className={`${styles.audioIcon} ${isLarge ? styles.large : ''} ${(isAnimation && isActive) ? styles.active : ''}`}>
-        <div className={styles.box2} />
-        <div className={styles.box1} />
-        <div className={styles.box2} />
+      <button 
+          disabled={!isActive} 
+          onClick={handleClick} 
+          aria-label={isAnimation ? pauseAnimation : resumeAnimation} 
+          data-testid="audio-player-audio-icon" 
+          className={`${styles.audioIcon} ${isLarge ? styles.large : ''} ${(isAnimation && isActive) ? styles.active : ''}`}
+        >
+          <div className={styles.box2} />
+          <div className={styles.box1} />
+          <div className={styles.box2} />
       </button>
     </Tooltip>
   );
