@@ -6,6 +6,16 @@
   flex-direction: row;
   position: absolute;
   height: 2px;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  
+  &:disabled,
+  &:disabled:hover {
+    cursor: none;
+    pointer-events: none;
+  }
 
   &.large {
     .box1,
