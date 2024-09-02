@@ -19,4 +19,7 @@ const AudioPreset = {
 };
 
 // the preset needs to be injected into the player config before the player ui is loaded
-window.kalturaCustomPreset = [AudioPreset];
+if (!window.kalturaCustomPreset) {
+  window.kalturaCustomPreset = {};
+}
+window.kalturaCustomPreset['audioPlayer'] = [AudioPreset];
