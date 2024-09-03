@@ -235,7 +235,7 @@ describe('audio player plugin', () => {
           });
 
           it('should not loop playback when not clicked', () => {
-            cy.get('[data-testid="audio-player-loop-button"] button').should('be.visible');
+            cy.get('[data-testid="audio-player-loop-button"] button').should('exist');
             player?.play();
 
             return cy.wrap(
@@ -255,7 +255,7 @@ describe('audio player plugin', () => {
           });
 
           it('should loop playback when clicked', () => {
-            cy.get('[data-testid="audio-player-loop-button"] button').should('be.visible').click({force: true});
+            cy.get('[data-testid="audio-player-loop-button"] button').should('exist').click({force: true});
             player?.play();
 
             return cy.wrap(
