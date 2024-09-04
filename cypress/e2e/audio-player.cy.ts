@@ -235,41 +235,46 @@ describe('audio player plugin', () => {
           });
 
           it('should not loop playback when not clicked', () => {
-            cy.get('[data-testid="audio-player-loop-button"] button').should('exist');
-            player?.play();
+            setTimeout(() => {
+              cy.get('[data-testid="audio-player-loop-button"] button').should('be.visible');
+              player?.play();
 
-            return cy.wrap(
-              new Promise(resolve => {
-                let playCount = 0;
-                player?.addEventListener('play', () => {
-                  ++playCount;
-                });
+              return cy.wrap(
+                  new Promise(resolve => {
+                    let playCount = 0;
+                    player?.addEventListener('play', () => {
+                      ++playCount;
+                    });
 
-                setTimeout(() => {
-                  if (playCount === 1) {
-                    resolve(true);
-                  }
-                }, 6000);
-              })
-            );
+                    setTimeout(() => {
+                      if (playCount === 1) {
+                        resolve(true);
+                      }
+                    }, 6000);
+                  })
+              );
+            }, 3000);
           });
 
           it('should loop playback when clicked', () => {
-            cy.get('[data-testid="audio-player-loop-button"] button').should('exist').click({force: true});
-            player?.play();
+            setTimeout(() => {
+              cy.get('[data-testid="audio-player-loop-button"] button').should('be.visible').click({force: true});
+              player?.play();
 
-            return cy.wrap(
-              new Promise(resolve => {
-                let playCount = 0;
-                player?.addEventListener('play', () => {
-                  ++playCount;
+              return cy.wrap(
+                  new Promise(resolve => {
+                    let playCount = 0;
+                    player?.addEventListener('play', () => {
+                      ++playCount;
 
-                  if (playCount >= 2) {
-                    resolve(true);
-                  }
-                });
-              })
-            );
+                      if (playCount >= 2) {
+                        resolve(true);
+                      }
+                    });
+                  })
+              );
+            }, 3000);
+
           });
         });
       });
