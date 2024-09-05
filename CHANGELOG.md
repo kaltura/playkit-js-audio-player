@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.9 (2024-09-05)
+
+
+### Bug Fixes
+
+* **SUP-44085:** Two different players on the same page ([#32](https://github.com/kaltura/playkit-js-audio-player/issues/32)) ([d2e45b8](https://github.com/kaltura/playkit-js-audio-player/commit/d2e45b884f91d1b65af0ecfbb2095ecdf111de23)), closes [kaltura/kaltura-player-js#842](https://github.com/kaltura/kaltura-player-js/issues/842)
+
 ### 1.0.8 (2024-08-03)
 
 ### 1.0.7 (2024-07-04)
