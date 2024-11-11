@@ -130,7 +130,7 @@ const AudioPlayerView = Event.withEventManager(
             return () => {
               removePlayerClass!();
             };
-            }, []);
+          }, []);
 
           const _handleMediaMetadataReset = () => {
             setMediaMetadata(null);
