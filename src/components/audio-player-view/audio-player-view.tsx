@@ -1,5 +1,5 @@
 import {h, Fragment} from 'preact';
-import {useState, useEffect} from 'preact/hooks';
+import {useState, useEffect, useLayoutEffect} from 'preact/hooks';
 import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
@@ -123,7 +123,7 @@ const AudioPlayerView = Event.withEventManager(
           const pluginConfig: AudioPlayerConfig = player.plugins['audioPlayer'].config;
           const showMorePluginsIcon: boolean = availablePlugins.length > 0;
 
-          useEffect(() => {
+          useLayoutEffect(() => {
             addPlayerClass!();
             eventManager.listen(player, core.EventType.CHANGE_SOURCE_ENDED, _handleMediaMetadata);
             eventManager.listen(player, core.EventType.PLAYER_RESET, _handleMediaMetadataReset);
