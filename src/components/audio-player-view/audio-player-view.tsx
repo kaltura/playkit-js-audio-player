@@ -124,16 +124,13 @@ const AudioPlayerView = Event.withEventManager(
           const showMorePluginsIcon: boolean = availablePlugins.length > 0;
 
           useLayoutEffect(() => {
+            addPlayerClass!();
             eventManager.listen(player, core.EventType.CHANGE_SOURCE_ENDED, _handleMediaMetadata);
             eventManager.listen(player, core.EventType.PLAYER_RESET, _handleMediaMetadataReset);
-          }, []);
-
-          useEffect(() => {
-            addPlayerClass!();
             return () => {
               removePlayerClass!();
             };
-          }, []);
+            }, []);
 
           const _handleMediaMetadataReset = () => {
             setMediaMetadata(null);
