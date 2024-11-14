@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.10 (2024-11-14)
+
+
+### Bug Fixes
+
+* **SUP-44377:** Embeds impact on page load ([#33](https://github.com/kaltura/playkit-js-audio-player/issues/33)) ([72cdae0](https://github.com/kaltura/playkit-js-audio-player/commit/72cdae0a519a9f70a90a5d98da160815c6bc9696))
+
 ### 1.0.9 (2024-09-05)
 
 
