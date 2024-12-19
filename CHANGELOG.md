@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.11 (2024-12-19)
+
+
+### Bug Fixes
+
+* **SUP-45648:** [UvA] responsiveness of v7 audio player ([#35](https://github.com/kaltura/playkit-js-audio-player/issues/35)) ([74d06c7](https://github.com/kaltura/playkit-js-audio-player/commit/74d06c7275d546ea5e8487b4e21121472ce7964a))
+
 ### 1.0.10 (2024-11-14)
 
 
