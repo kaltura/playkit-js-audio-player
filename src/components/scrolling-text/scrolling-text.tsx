@@ -91,9 +91,6 @@ const ScrollingTextComponent = ({
     if (newTextSize && textSize !== newTextSize) {
       setTextSize(newTextSize);
     }
-    // if (maxHeight !== textContainerHeight){
-    //   setTextContainerHeight(maxHeight ?? 'auto');
-    // }
   };
 
   const handleMouseOver = () => {
