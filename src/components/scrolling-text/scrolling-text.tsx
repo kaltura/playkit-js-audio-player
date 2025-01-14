@@ -57,6 +57,12 @@ const ScrollingTextComponent = ({
   const isHorisontal = mode === ScrollingTextModes.Horizontal;
 
   useEffect(() => {
+    if (maxHeight !== textContainerHeight && !(maxHeight === undefined && textContainerHeight === 'auto')){
+      setTextContainerHeight(maxHeight ?? 'auto');
+    }
+  }, [maxHeight]);
+
+  useEffect(() => {
     handleResize();
   }, []);
 
