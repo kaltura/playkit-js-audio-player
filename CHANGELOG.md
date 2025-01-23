@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.1.0 (2025-01-23)
+
+
+### Features
+
+* **FEC-14239:** Rename Catalan locale from ca to ca_es ([#38](https://github.com/kaltura/playkit-js-audio-player/issues/38)) ([f1e1236](https://github.com/kaltura/playkit-js-audio-player/commit/f1e12361330fc91048d809f0fbf3797108a9f856))
+
 ### 1.0.11 (2024-12-19)
 
 
