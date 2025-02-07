@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.1.1 (2025-02-07)
+
+
+### Bug Fixes
+
+* **FEC-14251:** Change Plugins to More locale ([#39](https://github.com/kaltura/playkit-js-audio-player/issues/39)) ([aaa64c2](https://github.com/kaltura/playkit-js-audio-player/commit/aaa64c2e5c05838294fbcfc29460b8bc8260ab97))
+
 ## 1.1.0 (2025-01-23)
 
 
