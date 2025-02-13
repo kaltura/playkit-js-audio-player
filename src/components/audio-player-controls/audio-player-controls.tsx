@@ -1,5 +1,5 @@
 import {h, VNode} from 'preact';
-import {useRef, useEffect} from 'preact/hooks';
+import {useRef, useEffect, useState} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {LoopButton} from '../loop-button';
@@ -21,13 +21,42 @@ interface AudioPlayerControlsProps {
 const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
+  const [selectedSpeedIndex, setSelectedSpeedIndex] = useState(1);
+  const speedValuesArray: Array<number> = [];
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
-  }, []);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!speedValuesArray.length) return;
+
+      if (event.shiftKey && event.key === '>') {
+        event.preventDefault();
+        setSelectedSpeedIndex(prev => {
+          const newIndex = Math.min(prev + 1, speedValuesArray.length - 1);
+          player.playbackRate = speedValuesArray[newIndex];
+          return newIndex;
+        });
+      } else if (event.shiftKey && event.key === '<') {
+        event.preventDefault();
+        setSelectedSpeedIndex(prev => {
+          const newIndex = Math.max(prev - 1, 0);
+          player.playbackRate = speedValuesArray[newIndex];
+          return newIndex;
+        });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [speedValuesArray]);
 
   const _renderSpeedOptions = (playbackRates: Array<number>) => {
+    speedValuesArray.length = 0;
     return playbackRates.reduce((acc: Array<object>, speed) => {
+      speedValuesArray.push(speed);
       const speedOption = {
         value: speed,
         label: `${speed}x`,
