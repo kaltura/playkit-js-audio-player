@@ -25,7 +25,9 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
   const speedValuesArray: Array<number> = [];
 
   useEffect(() => {
-    ref.current?.setAttribute('tabindex', '0');
+    const element = ref.current;
+    if (!element) return;
+    element.setAttribute('tabindex', '0');
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!speedValuesArray.length) return;
@@ -47,9 +49,9 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    element.addEventListener('keydown', handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      element.removeEventListener('keydown', handleKeyDown);
     };
   }, [speedValuesArray]);
 
