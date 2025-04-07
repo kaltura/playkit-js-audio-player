@@ -21,8 +21,7 @@ interface AudioPlayerControlsProps {
 const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
-  const [selectedSpeedIndex, setSelectedSpeedIndex] = useState(1);
-  const speedValuesArray: Array<number> = [];
+  const [currentRate, setCurrentRate] = useState(player.playbackRate);
 
   useEffect(() => {
     const element = ref.current;
@@ -30,22 +29,20 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
     element.setAttribute('tabindex', '0');
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!speedValuesArray.length) return;
+      if (!Array.isArray(player.playbackRates) || !player.playbackRates.length) return;
+      const rates = player.playbackRates;
+      const currentIndex = rates.indexOf(player.playbackRate);
 
       if (event.shiftKey && event.key === '>') {
         event.preventDefault();
-        setSelectedSpeedIndex(prev => {
-          const newIndex = Math.min(prev + 1, speedValuesArray.length - 1);
-          player.playbackRate = speedValuesArray[newIndex];
-          return newIndex;
-        });
+        const newIndex = Math.min(currentIndex + 1, rates.length - 1);
+        player.playbackRate = rates[newIndex];
+        setCurrentRate(rates[newIndex]);
       } else if (event.shiftKey && event.key === '<') {
         event.preventDefault();
-        setSelectedSpeedIndex(prev => {
-          const newIndex = Math.max(prev - 1, 0);
-          player.playbackRate = speedValuesArray[newIndex];
-          return newIndex;
-        });
+        const newIndex = Math.max(currentIndex - 1, 0);
+        player.playbackRate = rates[newIndex];
+        setCurrentRate(rates[newIndex]);
       }
     };
 
@@ -53,19 +50,14 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
     return () => {
       element.removeEventListener('keydown', handleKeyDown);
     };
-  }, [speedValuesArray]);
+  }, [player]);
 
-  const _renderSpeedOptions = (playbackRates: Array<number>) => {
-    speedValuesArray.length = 0;
-    return playbackRates.reduce((acc: Array<object>, speed) => {
-      speedValuesArray.push(speed);
-      const speedOption = {
-        value: speed,
-        label: `${speed}x`,
-        active: speed === player.playbackRate
-      };
-      return [...acc, speedOption];
-    }, []);
+  const _renderSpeedOptions = (playbackRates: number[]) => {
+    return playbackRates.map((speed) => ({
+      value: speed,
+      label: `${speed}x`,
+      active: speed === currentRate
+    }));
   };
 
   const _renderLoopOrSpeedMenuButton = (): VNode<any> | null => {
