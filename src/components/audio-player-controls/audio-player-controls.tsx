@@ -1,5 +1,5 @@
 import {h, VNode} from 'preact';
-import {useRef, useEffect} from 'preact/hooks';
+import {useRef, useEffect, useState} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {LoopButton} from '../loop-button';
@@ -21,17 +21,56 @@ interface AudioPlayerControlsProps {
 const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
+  const [playbackRateState, setPlaybackRateState] = useState(player.playbackRate);
+  const currentPlayerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
   }, []);
+  
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (!currentPlayerRef.current) return;
+  
+      const isInsidePlayer = event.target instanceof Node && currentPlayerRef.current.contains(event.target);
+      if (!isInsidePlayer) return;
+  
+      const rates = player.playbackRates;
+      const index = rates.indexOf(player.playbackRate); 
+  
+      if (event.shiftKey) {
+        let newRate = player.playbackRate;
+        switch (event.code) {
+          case 'Period':
+            if (index < rates.length - 1) newRate = rates[index + 1];
+            break;
+          case 'Semicolon':
+            newRate = player.defaultPlaybackRate;
+            break;
+          case 'Comma':
+            if (index > 0) newRate = rates[index - 1];
+            break;
+          default:
+            return;
+        }
+  
+        player.playbackRate = newRate;
+        setPlaybackRateState(newRate);
+      }
+    };
+  
+    document.addEventListener('keydown', handleKeydown);
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  }, [player]);
 
   const _renderSpeedOptions = (playbackRates: Array<number>) => {
     return playbackRates.reduce((acc: Array<object>, speed) => {
       const speedOption = {
         value: speed,
         label: `${speed}x`,
-        active: speed === player.playbackRate
+        active: speed === playbackRateState
       };
       return [...acc, speedOption];
     }, []);
@@ -53,7 +92,7 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
 
   const targetId: HTMLDivElement | Document = (document.getElementById(player.config.targetId) as HTMLDivElement) || document;
   return (
-    <div className={styles.playbackControlsWrapper}>
+    <div className={styles.playbackControlsWrapper} ref={currentPlayerRef}>
       <LiveTagComponent />
       <div className={styles.playbackControls}>
         <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
