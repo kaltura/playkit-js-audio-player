@@ -10,31 +10,30 @@ const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Compo
 const {
   redux: {useSelector}
 } = ui;
+const {Event} = ui;
 
 interface AudioPlayerControlsProps {
   pluginConfig: AudioPlayerConfig;
   player: any;
   onPluginsControlClick: () => void;
   showMorePluginsIcon: boolean;
+  eventManager: any;
 }
 
-const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon}: AudioPlayerControlsProps) => {
+export const AudioPlayerControls = Event.withEventManager(({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon, eventManager}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
   const [playbackRateState, setPlaybackRateState] = useState(player.playbackRate);
-  const currentPlayerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
   }, []);
   
   useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (!currentPlayerRef.current) return;
+    const element = ref.current;
+    if (!element || !eventManager) return;
   
-      const isInsidePlayer = event.target instanceof Node && currentPlayerRef.current.contains(event.target);
-      if (!isInsidePlayer) return;
-  
+    const handleKeydown = (event: KeyboardEvent) => {  
       const rates = player.playbackRates;
       const index = rates.indexOf(player.playbackRate); 
   
@@ -59,11 +58,11 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
       }
     };
   
-    document.addEventListener('keydown', handleKeydown);
+    eventManager.listen(element, 'keydown', handleKeydown);
     return () => {
-      document.removeEventListener('keydown', handleKeydown);
+      eventManager.unlisten(element, 'keydown', handleKeydown);
     };
-  }, [player]);
+  }, [eventManager, player]);
 
   const _renderSpeedOptions = (playbackRates: Array<number>) => {
     return playbackRates.reduce((acc: Array<object>, speed) => {
@@ -92,7 +91,7 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
 
   const targetId: HTMLDivElement | Document = (document.getElementById(player.config.targetId) as HTMLDivElement) || document;
   return (
-    <div className={styles.playbackControlsWrapper} ref={currentPlayerRef}>
+    <div className={styles.playbackControlsWrapper}>
       <LiveTagComponent />
       <div className={styles.playbackControls}>
         <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
@@ -134,6 +133,5 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
       </div>
     </div>
   );
-};
+});
 
-export {AudioPlayerControls};
