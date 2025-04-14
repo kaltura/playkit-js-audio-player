@@ -59,9 +59,6 @@ export const AudioPlayerControls = Event.withEventManager(({pluginConfig, player
     };
   
     eventManager.listen(element, 'keydown', handleKeydown);
-    return () => {
-      eventManager.unlisten(element, 'keydown', handleKeydown);
-    };
   }, [eventManager, player]);
 
   const _renderSpeedOptions = (playbackRates: Array<number>) => {
