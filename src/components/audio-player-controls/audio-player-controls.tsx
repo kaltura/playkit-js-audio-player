@@ -1,5 +1,5 @@
 import {h, VNode} from 'preact';
-import {useRef, useEffect} from 'preact/hooks';
+import {useRef, useEffect, useState} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './audio-player-controls.scss';
 import {LoopButton} from '../loop-button';
@@ -10,28 +10,63 @@ const {Rewind, Forward, PlaylistButton, PlayPause, Volume, SpeedMenu} = ui.Compo
 const {
   redux: {useSelector}
 } = ui;
+const {Event} = ui;
 
 interface AudioPlayerControlsProps {
   pluginConfig: AudioPlayerConfig;
   player: any;
   onPluginsControlClick: () => void;
   showMorePluginsIcon: boolean;
+  eventManager: any;
 }
 
-const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon}: AudioPlayerControlsProps) => {
+export const AudioPlayerControls = Event.withEventManager(({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon, eventManager}: AudioPlayerControlsProps) => {
   const playlist = useSelector((state: any) => state.engine.playlist);
   const ref = useRef<HTMLDivElement>();
+  const [playbackRateState, setPlaybackRateState] = useState(player.playbackRate);
 
   useEffect(() => {
     ref.current?.setAttribute('tabindex', '0');
   }, []);
+  
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || !eventManager) return;
+  
+    const handleKeydown = (event: KeyboardEvent) => {  
+      const rates = player.playbackRates;
+      const index = rates.indexOf(player.playbackRate); 
+  
+      if (event.shiftKey) {
+        let newRate = player.playbackRate;
+        switch (event.code) {
+          case 'Period':
+            if (index < rates.length - 1) newRate = rates[index + 1];
+            break;
+          case 'Semicolon':
+            newRate = player.defaultPlaybackRate;
+            break;
+          case 'Comma':
+            if (index > 0) newRate = rates[index - 1];
+            break;
+          default:
+            return;
+        }
+  
+        player.playbackRate = newRate;
+        setPlaybackRateState(newRate);
+      }
+    };
+  
+    eventManager.listen(element, 'keydown', handleKeydown);
+  }, [eventManager, player]);
 
   const _renderSpeedOptions = (playbackRates: Array<number>) => {
     return playbackRates.reduce((acc: Array<object>, speed) => {
       const speedOption = {
         value: speed,
         label: `${speed}x`,
-        active: speed === player.playbackRate
+        active: speed === playbackRateState
       };
       return [...acc, speedOption];
     }, []);
@@ -95,6 +130,5 @@ const AudioPlayerControls = ({pluginConfig, player, onPluginsControlClick, showM
       </div>
     </div>
   );
-};
+});
 
-export {AudioPlayerControls};
