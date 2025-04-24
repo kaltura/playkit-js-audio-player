@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.1.2 (2025-04-24)
+
+
+### Bug Fixes
+
+* **ADA-2331:** Add keyboard shortcuts to speed button ([#41](https://github.com/kaltura/playkit-js-audio-player/issues/41)) ([c649503](https://github.com/kaltura/playkit-js-audio-player/commit/c6495037c23e40bca9ecea98aeb4a5a6f440c10b))
+
 ### 1.1.1 (2025-02-07)
 
 
