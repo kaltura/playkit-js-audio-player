@@ -1,0 +1,17 @@
+.volume-map-container {
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+
+  .volume-map-canvas {
+    display: block;
+    width: 100%;
+  }
+
+  .time-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+}

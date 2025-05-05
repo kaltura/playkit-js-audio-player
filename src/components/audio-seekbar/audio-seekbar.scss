@@ -8,15 +8,6 @@
   align-items: center;
   height: 10px;
   width: 100%;
-  .current-time,
-  .duration {
-    flex-shrink: 0;
-    color: $tone-1-color;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
   .current-time {
     margin-right: 8px;
   }
@@ -38,4 +29,14 @@
       }
     }
   }
+}
+
+.current-time,
+.duration {
+  flex-shrink: 0;
+  color: $tone-1-color;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

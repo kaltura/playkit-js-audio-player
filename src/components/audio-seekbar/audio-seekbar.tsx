@@ -8,7 +8,7 @@ import * as styles from './audio-seekbar.scss';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {SeekBar, withPlayer, withEventDispatcher} = ui.Components;
-const {redux, reducers, utils} = ui;
+const {redux, reducers, utils, Event} = ui;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -38,6 +38,7 @@ const mapStateToProps = (state: any) => ({
   isDraggingActive: state.seekbar.draggingActive
 });
 
+@Event.withEventManager
 @withPlayer
 @withEventDispatcher(COMPONENT_NAME)
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

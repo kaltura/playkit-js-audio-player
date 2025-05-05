@@ -1,7 +1,7 @@
 import {h} from 'preact';
 import {useState} from 'preact/hooks';
 import {ui, core} from '@playkit-js/kaltura-player-js';
-import {AudioIcon, ScrollingText, ScrollingTextModes, BufferingIcon} from '..';
+import {ScrollingText, ScrollingTextModes} from '..';
 import {AudioPlayerSizes} from '../../types';
 import * as styles from './audio-details.scss';
 const {
@@ -44,17 +44,9 @@ export const AudioDetailsComponent = ({
 
   const largeSize = size === AudioPlayerSizes.Large;
 
-  const renderIcon = () => {
-    if (isBuffering) {
-      return <BufferingIcon isLarge={largeSize} />;
-    }
-    return <AudioIcon isLarge={largeSize} isActive={isPlaying} />;
-  };
-
   return (
     <div className={`${styles.audioPlayerDetails} ${styles[size!]}`}>
       <div className={styles.header}>
-        {isPlaybackStarted && <div className={styles.audioIconContainer}>{renderIcon()}</div>}
         <div
           data-testid="audio-player-title-container"
           className={[styles.title, isPlaybackStarted ? styles.playbackStarted : ''].join(' ')}
@@ -67,7 +59,7 @@ export const AudioDetailsComponent = ({
             content={title}
             inActive={isBuffering || !(titleHovered || isPlaying) || descriptionHovered}
             mode={largeSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
-            maxHeight={largeSize ? 118 : undefined}
+            maxHeight={largeSize ? 58 : undefined}
           />
         </div>
       </div>
