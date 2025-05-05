@@ -26,15 +26,7 @@ interface VolumeMapSeekbarProps {
 const BASE_BAR_WIDTH = 2;
 const BASE_GAP = 1;
 const MIN_DB = -60; // dBFS value to map to 0 height
-const MAX_DB = 0; // dBFS value to map to full height
-
-// Normalize dBFS level to a 0-1 range for bar height
-// This function takes a dBFS level and maps it to a value between 0 and 1, where 0 corresponds to MIN_DB
-// and 1 corresponds to MAX_DB. It ensures that the value is clamped between 0 and 1.
-function normalizeDbLevel(dbLevel: number, minDb: number, maxDb: number): number {
-  const level = (dbLevel - minDb) / (maxDb - minDb);
-  return Math.max(0.01, Math.min(1, level)); // Clamp between 0 and 1
-}
+const MIN_DURATION = 15; // Minimum duration to show the volume map
 
 // Function to downsample volume map data
 // This function takes the original volume map and reduces it to fit within the maxBars limit
@@ -124,7 +116,7 @@ export const VolumeMapSeekbar = withPlayer(
       }
     }, [originalVolumeMap, containerWidth]);
 
-    // Drawing function - uses processedVolumeMap
+    // Drawing function - uses processedVolumeMap and scales height to actual max RMS
     const drawWaveform = useCallback(() => {
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext('2d');
@@ -136,6 +128,20 @@ export const VolumeMapSeekbar = withPlayer(
       const canvasHeight = canvas.height;
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+      const numBars = processedVolumeMap.length;
+      if (numBars === 0) return;
+
+      // Find the actual maximum RMS level in the processed data
+      let maxRmsLevelInData = MIN_DB; // Start with the minimum possible value
+      for (const entry of processedVolumeMap) {
+        if (entry.rms_level > maxRmsLevelInData) {
+          maxRmsLevelInData = entry.rms_level;
+        }
+      }
+      // Ensure the effective max DB for scaling is slightly above MIN_DB to avoid division by zero/issues
+      const effectiveMaxDb = Math.max(maxRmsLevelInData, MIN_DB + 1e-6);
+      const dbRange = effectiveMaxDb - MIN_DB;
+
       const currentTimeMs = currentTime * 1000;
 
       let currentBarIndex = -1;
@@ -146,9 +152,6 @@ export const VolumeMapSeekbar = withPlayer(
           break;
         }
       }
-
-      const numBars = processedVolumeMap.length;
-      if (numBars === 0) return; // Nothing to draw
 
       // --- Calculate dynamic bar width and gap to fill the space ---
       // Keep the ratio of base gap to base bar width
@@ -169,17 +172,28 @@ export const VolumeMapSeekbar = withPlayer(
       // --- End dynamic calculation ---
 
       for (let i = 0; i < numBars; i++) {
-        // Use dynamic barWidth and gap
         const x = i * (barWidth + gap);
-        const normalizedLevel = normalizeDbLevel(processedVolumeMap[i].rms_level, MIN_DB, MAX_DB);
-        const barHeight = normalizedLevel * canvasHeight;
+
+        // Normalize using the actual max level found in the data (effectiveMaxDb)
+        let normalizedLevel = 0;
+        if (dbRange > 0) {
+          // Avoid division by zero if all values are <= MIN_DB
+          normalizedLevel = (processedVolumeMap[i].rms_level - MIN_DB) / dbRange;
+        }
+        normalizedLevel = Math.max(0, Math.min(1, normalizedLevel)); // Clamp 0-1
+
+        let barHeight = normalizedLevel * canvasHeight;
+        // Ensure minimum bar height of 1px
+        barHeight = Math.max(1, barHeight);
+        // Ensure bar height does not exceed canvas height (important if min height is applied)
+        barHeight = Math.min(barHeight, canvasHeight);
+
         const y = (canvasHeight - barHeight) / 2;
 
         ctx.fillStyle = i <= currentBarIndex ? activeColor : inactiveColor;
-        // Draw with exact fractional width and position
         ctx.fillRect(x, y, barWidth, barHeight);
       }
-    }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]); // Added dependencies
+    }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]); // Dependencies updated
 
     // Redraw when processed map or other relevant state changes
     useEffect(() => {
@@ -221,7 +235,7 @@ export const VolumeMapSeekbar = withPlayer(
     };
 
     // Render fallback or the canvas
-    if (!originalVolumeMap.length) {
+    if (!originalVolumeMap.length || (duration as number) < MIN_DURATION) {
       return <AudioSeekbar />;
     }
 
