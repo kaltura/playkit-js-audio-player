@@ -29,12 +29,16 @@ const MIN_DB = -60; // dBFS value to map to 0 height
 const MAX_DB = 0; // dBFS value to map to full height
 
 // Normalize dBFS level to a 0-1 range for bar height
+// This function takes a dBFS level and maps it to a value between 0 and 1, where 0 corresponds to MIN_DB
+// and 1 corresponds to MAX_DB. It ensures that the value is clamped between 0 and 1.
 function normalizeDbLevel(dbLevel: number, minDb: number, maxDb: number): number {
   const level = (dbLevel - minDb) / (maxDb - minDb);
-  return Math.max(0, Math.min(1, level)); // Clamp between 0 and 1
+  return Math.max(0.01, Math.min(1, level)); // Clamp between 0 and 1
 }
 
 // Function to downsample volume map data
+// This function takes the original volume map and reduces it to fit within the maxBars limit
+// by averaging the RMS levels of groups of entries. It returns a new array of VolumeMapEntry objects.
 function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): VolumeMapEntry[] {
   if (!originalMap || originalMap.length === 0 || maxBars <= 0) {
     return [];
@@ -75,7 +79,7 @@ export const VolumeMapSeekbar = withPlayer(
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const duration = engineDuration || player.sources.duration;
-    // @ts-ignore
+    // @ts-expect-error Property '_uiManager' is private and only accessible within class 'UIWrapper'
     const activeColor = player.ui._uiManager.getCSSVariable('--playkit-tone-1-color') ?? '#FFFFFF';
     const inactiveColor = activeColor ? `${activeColor}80` : '#FFFFFF80';
 
@@ -157,8 +161,8 @@ export const VolumeMapSeekbar = withPlayer(
 
       // Ensure gap is at least 1 logical pixel if possible, adjust barWidth accordingly
       if (numBars > 1 && gap < 1) {
-          gap = 1;
-          barWidth = (canvasWidth - (numBars - 1) * gap) / numBars;
+        gap = 1;
+        barWidth = (canvasWidth - (numBars - 1) * gap) / numBars;
       }
       // Ensure barWidth is at least 1 logical pixel
       barWidth = Math.max(1, barWidth);
@@ -199,8 +203,8 @@ export const VolumeMapSeekbar = withPlayer(
       let barWidth = containerWidth / (numBars + Math.max(0, numBars - 1) * gapToBarRatio);
       let gap = barWidth * gapToBarRatio;
       if (numBars > 1 && gap < 1) {
-          gap = 1;
-          barWidth = (containerWidth - (numBars - 1) * gap) / numBars;
+        gap = 1;
+        barWidth = (containerWidth - (numBars - 1) * gap) / numBars;
       }
       barWidth = Math.max(1, barWidth);
       const unitWidth = barWidth + gap;
@@ -222,8 +226,14 @@ export const VolumeMapSeekbar = withPlayer(
     }
 
     return (
-      <div ref={containerRef} class={styles.volumeMapContainer} data-testid="volume-map-seekbar" onClick={handleCanvasClick}>
-        <canvas ref={canvasRef} class={styles.volumeMapCanvas} style={{height: size === AudioPlayerSizes.Large ? '56px' : '32px'}} />
+      // TODO: handle accessibility
+      <div ref={containerRef} class={styles.volumeMapContainer} data-testid="volume-map-seekbar">
+        <canvas
+          ref={canvasRef}
+          class={styles.volumeMapCanvas}
+          style={{height: size === AudioPlayerSizes.Large ? '56px' : '32px'}}
+          onClick={handleCanvasClick}
+        />
         <div className={styles.timeContainer}>
           <div className={audioSeekbarStyles.currentTime}>{toHHMMSS(currentTime)}</div>
           <div className={audioSeekbarStyles.duration}>{toHHMMSS(duration as number)}</div>
