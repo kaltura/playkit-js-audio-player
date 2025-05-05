@@ -26,7 +26,7 @@ interface VolumeMapSeekbarProps {
 const BASE_BAR_WIDTH = 2;
 const BASE_GAP = 1;
 const MIN_DB = -60; // dBFS value to map to 0 height
-const MIN_DURATION = 15; // Minimum duration to show the volume map
+const MIN_DURATION = 20; // Minimum duration to show the volume map
 
 // Function to downsample volume map data
 // This function takes the original volume map and reduces it to fit within the maxBars limit
@@ -85,8 +85,6 @@ export const VolumeMapSeekbar = withPlayer(
         for (let entry of entries) {
           const {width} = entry.contentRect;
           setContainerWidth(width);
-          canvas.width = width;
-          canvas.height = size === AudioPlayerSizes.Large ? 56 : 32;
         }
       });
       resizeObserver.observe(container);
@@ -124,8 +122,19 @@ export const VolumeMapSeekbar = withPlayer(
         return;
       }
 
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
+      // Handle high DPI displays for sharp rendering
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      
+      // Set the canvas size accounting for device pixel ratio
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      // Scale the context to match device pixel ratio
+      ctx.scale(dpr, dpr);
+      
+      const canvasWidth = rect.width;
+      const canvasHeight = rect.height;
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       const numBars = processedVolumeMap.length;
@@ -153,31 +162,22 @@ export const VolumeMapSeekbar = withPlayer(
         }
       }
 
-      // --- Calculate dynamic bar width and gap to fill the space ---
-      // Keep the ratio of base gap to base bar width
-      const gapToBarRatio = BASE_GAP / BASE_BAR_WIDTH;
-      // Total space = (numBars * barWidth) + ((numBars - 1) * gap)
-      // Total space = (numBars * barWidth) + ((numBars - 1) * barWidth * gapToBarRatio)
-      // Total space = barWidth * (numBars + (numBars - 1) * gapToBarRatio)
-      let barWidth = canvasWidth / (numBars + Math.max(0, numBars - 1) * gapToBarRatio);
-      let gap = barWidth * gapToBarRatio;
-
-      // Ensure gap is at least 1 logical pixel if possible, adjust barWidth accordingly
-      if (numBars > 1 && gap < 1) {
-        gap = 1;
-        barWidth = (canvasWidth - (numBars - 1) * gap) / numBars;
-      }
-      // Ensure barWidth is at least 1 logical pixel
-      barWidth = Math.max(1, barWidth);
-      // --- End dynamic calculation ---
-
+      // Calculate dimensions to use the entire canvas width
+      const minGap = 1; // 1px minimum gap for separation
+      const totalGaps = numBars - 1;
+      
+      // Calculate bar width by distributing the entire canvas width
+      // We want to stretch the bars to fill the entire width with minimal gaps
+      const barWidth = (canvasWidth - (totalGaps * minGap)) / numBars;
+      
+      // We want the first bar to start at x=0 and the last bar to end at x=canvasWidth
       for (let i = 0; i < numBars; i++) {
-        const x = i * (barWidth + gap);
+        // Calculate precise pixel position - first bar starts at x=0
+        const x = i * (barWidth + minGap);
 
-        // Normalize using the actual max level found in the data (effectiveMaxDb)
+        // Normalize using the actual max level found in the data
         let normalizedLevel = 0;
         if (dbRange > 0) {
-          // Avoid division by zero if all values are <= MIN_DB
           normalizedLevel = (processedVolumeMap[i].rms_level - MIN_DB) / dbRange;
         }
         normalizedLevel = Math.max(0, Math.min(1, normalizedLevel)); // Clamp 0-1
@@ -185,15 +185,23 @@ export const VolumeMapSeekbar = withPlayer(
         let barHeight = normalizedLevel * canvasHeight;
         // Ensure minimum bar height of 1px
         barHeight = Math.max(1, barHeight);
-        // Ensure bar height does not exceed canvas height (important if min height is applied)
+        // Ensure bar height does not exceed canvas height
         barHeight = Math.min(barHeight, canvasHeight);
 
-        const y = (canvasHeight - barHeight) / 2;
+        // Use integer values for pixel-aligned coordinates
+        const y = Math.floor((canvasHeight - barHeight) / 2);
 
         ctx.fillStyle = i <= currentBarIndex ? activeColor : inactiveColor;
-        ctx.fillRect(x, y, barWidth, barHeight);
+        
+        // For the last bar, ensure it extends all the way to the edge
+        const actualBarWidth = i === numBars - 1 
+          ? canvasWidth - x // Make the last bar extend to the edge
+          : barWidth;
+        
+        // Draw pixel-perfect rectangle
+        ctx.fillRect(x, y, actualBarWidth, barHeight);
       }
-    }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]); // Dependencies updated
+    }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]);
 
     // Redraw when processed map or other relevant state changes
     useEffect(() => {
@@ -211,24 +219,22 @@ export const VolumeMapSeekbar = withPlayer(
       const x = event.clientX - rect.left;
       const numBars = processedVolumeMap.length;
 
-      // --- Recalculate dynamic widths used for drawing ---
-      // This needs to match the calculation in drawWaveform
-      const gapToBarRatio = BASE_GAP / BASE_BAR_WIDTH;
-      let barWidth = containerWidth / (numBars + Math.max(0, numBars - 1) * gapToBarRatio);
-      let gap = barWidth * gapToBarRatio;
-      if (numBars > 1 && gap < 1) {
-        gap = 1;
-        barWidth = (containerWidth - (numBars - 1) * gap) / numBars;
-      }
-      barWidth = Math.max(1, barWidth);
-      const unitWidth = barWidth + gap;
-      // --- End recalculation ---
-
-      // Estimate clicked index based on dynamic unit width
-      const clickedBarIndex = Math.floor(x / unitWidth);
-      const validIndex = Math.max(0, Math.min(clickedBarIndex, numBars - 1));
-
-      const newTime = processedVolumeMap[validIndex].pts / 1000;
+      // Use same calculations as in drawWaveform to determine bar positions
+      const minGap = 1;
+      const totalGaps = numBars - 1;
+      
+      // Calculate bar width to match drawing function (use full width)
+      const barWidth = (rect.width - (totalGaps * minGap)) / numBars;
+      
+      // Since we now start at x=0 with no padding, we can directly determine which bar was clicked
+      // Each bar+gap unit takes (barWidth + minGap) pixels, except the last bar which may be wider
+      const unitWidth = barWidth + minGap;
+      let barIndex = Math.floor(x / unitWidth);
+      
+      // Ensure index is in valid range
+      barIndex = Math.max(0, Math.min(barIndex, numBars - 1));
+      
+      const newTime = processedVolumeMap[barIndex].pts / 1000;
       if (isFinite(newTime)) {
         player.currentTime = newTime;
       }
