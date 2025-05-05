@@ -2,7 +2,6 @@ import {h} from 'preact';
 import {useEffect, useState, useRef, useCallback} from 'preact/hooks';
 import {ui, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {VolumeMapEntry, AudioPlayerSizes} from '../../types';
-import {processVolumeMap, normalizeDbLevel} from '../../utils';
 import {AudioPlayer} from '../../audio-player';
 import {AudioSeekbar} from '..';
 
@@ -23,11 +22,45 @@ interface VolumeMapSeekbarProps {
   currentTime: number;
 }
 
-// Constants for drawing
-const BAR_WIDTH = 2;
-const GAP = 1;
+// Constants for drawing - BASE_BAR_WIDTH and BASE_GAP become reference/minimums
+const BASE_BAR_WIDTH = 2;
+const BASE_GAP = 1;
 const MIN_DB = -60; // dBFS value to map to 0 height
 const MAX_DB = 0; // dBFS value to map to full height
+
+// Normalize dBFS level to a 0-1 range for bar height
+function normalizeDbLevel(dbLevel: number, minDb: number, maxDb: number): number {
+  const level = (dbLevel - minDb) / (maxDb - minDb);
+  return Math.max(0, Math.min(1, level)); // Clamp between 0 and 1
+}
+
+// Function to downsample volume map data
+function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): VolumeMapEntry[] {
+  if (!originalMap || originalMap.length === 0 || maxBars <= 0) {
+    return [];
+  }
+
+  if (originalMap.length <= maxBars) {
+    return originalMap; // No processing needed
+  }
+
+  const processedMap: VolumeMapEntry[] = [];
+  const groupSize = Math.ceil(originalMap.length / maxBars);
+
+  for (let i = 0; i < originalMap.length; i += groupSize) {
+    const group = originalMap.slice(i, i + groupSize);
+    if (group.length > 0) {
+      const sumRms = group.reduce((acc, entry) => acc + entry.rms_level, 0);
+      const avgRms = sumRms / group.length;
+      processedMap.push({
+        pts: group[0].pts, // Use the timestamp of the first entry in the group
+        rms_level: avgRms
+      });
+    }
+  }
+  // Ensure we don't exceed maxBars due to rounding
+  return processedMap.slice(0, maxBars);
+}
 
 const mapStateToProps = (state: any) => ({
   currentTime: state.engine.currentTime,
@@ -55,8 +88,8 @@ export const VolumeMapSeekbar = withPlayer(
       const resizeObserver = new ResizeObserver(entries => {
         for (let entry of entries) {
           const {width} = entry.contentRect;
-          setContainerWidth(width); // Update container width state
-          canvas.width = width; // Set canvas width
+          setContainerWidth(width);
+          canvas.width = width;
           canvas.height = size === AudioPlayerSizes.Large ? 56 : 32;
         }
       });
@@ -79,9 +112,11 @@ export const VolumeMapSeekbar = withPlayer(
     // Process volume map when original data or container width changes
     useEffect(() => {
       if (containerWidth > 0 && originalVolumeMap.length > 0) {
-        const maxBars = Math.floor(containerWidth / (BAR_WIDTH + GAP));
+        const maxBars = Math.floor(containerWidth / (BASE_BAR_WIDTH + BASE_GAP));
         const newProcessedMap = processVolumeMap(originalVolumeMap, maxBars);
         setProcessedVolumeMap(newProcessedMap);
+      } else {
+        setProcessedVolumeMap([]);
       }
     }, [originalVolumeMap, containerWidth]);
 
@@ -89,7 +124,7 @@ export const VolumeMapSeekbar = withPlayer(
     const drawWaveform = useCallback(() => {
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext('2d');
-      if (!canvas || !ctx || !processedVolumeMap.length || !duration) {
+      if (!canvas || !ctx || !processedVolumeMap.length || !duration || !containerWidth) {
         return;
       }
 
@@ -100,7 +135,6 @@ export const VolumeMapSeekbar = withPlayer(
       const currentTimeMs = currentTime * 1000;
 
       let currentBarIndex = -1;
-      // Iterate over processedVolumeMap
       for (let i = 0; i < processedVolumeMap.length; i++) {
         if (processedVolumeMap[i].pts <= currentTimeMs) {
           currentBarIndex = i;
@@ -109,34 +143,72 @@ export const VolumeMapSeekbar = withPlayer(
         }
       }
 
-      // Iterate over processedVolumeMap
-      for (let i = 0; i < processedVolumeMap.length; i++) {
-        const x = i * (BAR_WIDTH + GAP);
+      const numBars = processedVolumeMap.length;
+      if (numBars === 0) return; // Nothing to draw
+
+      // --- Calculate dynamic bar width and gap to fill the space ---
+      // Keep the ratio of base gap to base bar width
+      const gapToBarRatio = BASE_GAP / BASE_BAR_WIDTH;
+      // Total space = (numBars * barWidth) + ((numBars - 1) * gap)
+      // Total space = (numBars * barWidth) + ((numBars - 1) * barWidth * gapToBarRatio)
+      // Total space = barWidth * (numBars + (numBars - 1) * gapToBarRatio)
+      let barWidth = canvasWidth / (numBars + Math.max(0, numBars - 1) * gapToBarRatio);
+      let gap = barWidth * gapToBarRatio;
+
+      // Ensure gap is at least 1 logical pixel if possible, adjust barWidth accordingly
+      if (numBars > 1 && gap < 1) {
+          gap = 1;
+          barWidth = (canvasWidth - (numBars - 1) * gap) / numBars;
+      }
+      // Ensure barWidth is at least 1 logical pixel
+      barWidth = Math.max(1, barWidth);
+      // --- End dynamic calculation ---
+
+      for (let i = 0; i < numBars; i++) {
+        // Use dynamic barWidth and gap
+        const x = i * (barWidth + gap);
         const normalizedLevel = normalizeDbLevel(processedVolumeMap[i].rms_level, MIN_DB, MAX_DB);
         const barHeight = normalizedLevel * canvasHeight;
         const y = (canvasHeight - barHeight) / 2;
 
         ctx.fillStyle = i <= currentBarIndex ? activeColor : inactiveColor;
-        ctx.fillRect(x, y, BAR_WIDTH, barHeight);
+        // Draw with exact fractional width and position
+        ctx.fillRect(x, y, barWidth, barHeight);
       }
-    }, [processedVolumeMap, duration, currentTime]);
+    }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]); // Added dependencies
 
-    // Redraw when processed map changes
+    // Redraw when processed map or other relevant state changes
     useEffect(() => {
       drawWaveform();
-    }, [processedVolumeMap, drawWaveform]);
+    }, [processedVolumeMap, currentTime, duration, containerWidth, drawWaveform]); // Added dependencies
 
-    // Handle seeking on click - uses processedVolumeMap
+    // Handle seeking on click - uses dynamic widths
     const handleCanvasClick = (event: MouseEvent) => {
       const canvas = canvasRef.current;
-      if (!canvas || !processedVolumeMap.length || !duration) {
+      if (!canvas || !processedVolumeMap.length || !duration || !containerWidth) {
         return;
       }
 
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
-      const clickedBarIndex = Math.floor(x / (BAR_WIDTH + GAP));
-      const validIndex = Math.max(0, Math.min(clickedBarIndex, processedVolumeMap.length - 1));
+      const numBars = processedVolumeMap.length;
+
+      // --- Recalculate dynamic widths used for drawing ---
+      // This needs to match the calculation in drawWaveform
+      const gapToBarRatio = BASE_GAP / BASE_BAR_WIDTH;
+      let barWidth = containerWidth / (numBars + Math.max(0, numBars - 1) * gapToBarRatio);
+      let gap = barWidth * gapToBarRatio;
+      if (numBars > 1 && gap < 1) {
+          gap = 1;
+          barWidth = (containerWidth - (numBars - 1) * gap) / numBars;
+      }
+      barWidth = Math.max(1, barWidth);
+      const unitWidth = barWidth + gap;
+      // --- End recalculation ---
+
+      // Estimate clicked index based on dynamic unit width
+      const clickedBarIndex = Math.floor(x / unitWidth);
+      const validIndex = Math.max(0, Math.min(clickedBarIndex, numBars - 1));
 
       const newTime = processedVolumeMap[validIndex].pts / 1000;
       if (isFinite(newTime)) {
