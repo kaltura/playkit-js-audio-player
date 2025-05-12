@@ -1,3 +1,4 @@
+export {AudioIcon} from './audio-icon';
 export {AudioPlayerControls} from './audio-player-controls';
 export {AudioSeekbar} from './audio-seekbar';
 export {VolumeMapSeekbar} from './volume-map-seekbar';

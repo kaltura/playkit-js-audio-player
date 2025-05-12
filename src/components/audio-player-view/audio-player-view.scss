@@ -1,13 +1,15 @@
+$audio-player-height-small: 215px;
+$audio-player-height-large: 280px;
+
 .mini-audio-player-view {
   position: relative;
   background-color: var(--playkit-paper-color);
   margin: 0;
   min-width: 228px;
   justify-content: space-evenly;
-  //aspect-ratio: 10 / 3;
 
   &.small {
-    height: 132px;
+    height: $audio-player-height-small;
     display: flex;
     flex-direction: column;
 
@@ -32,7 +34,7 @@
   &.medium {
     display: flex;
     justify-content: space-between;
-    height: 132px;
+    height: $audio-player-height-small;
     padding: 8px;
 
     .right-controls {
@@ -50,7 +52,7 @@
 
   &.large {
     display: flex;
-    height: 280px;
+    height: $audio-player-height-large;
     gap: 16px;
     padding: 16px;
 

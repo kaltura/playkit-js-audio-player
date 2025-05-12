@@ -246,7 +246,6 @@ export const VolumeMapSeekbar = withPlayer(
     }
 
     return (
-      // TODO: handle accessibility
       <div ref={containerRef} class={styles.volumeMapContainer} data-testid="volume-map-seekbar">
         <canvas
           ref={canvasRef}
