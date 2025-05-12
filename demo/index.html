@@ -16,7 +16,22 @@
     <script src="./playkit-audio-player.js"></script>
   </head>
   <body>
-    <div id="player-placeholder"></div>
+    <label for="width-selector" style="color: rgb(218, 197, 197)">Player size:</label>
+    <select id="width-selector">
+      <option value="" selected disabled>Select size</option>
+      <option value="320x215">SMALL</option>
+      <option value="600x215">MEDIUM</option>
+      <option value="769x280">LARGE</option>
+      <option value="1024x280">EXTRA LARGE</option>
+    </select>
+    <script type="text/javascript">
+      document.getElementById('width-selector').addEventListener('change', function() {
+        const [width, height] = this.value.split('x');
+        document.getElementById('player-placeholder').style.width = width + 'px';
+        document.getElementById('player-placeholder').style.height = height + 'px';
+      });
+    </script>
+    <div id="player-placeholder" style="height: 300px"></div>
     <script>
       const config = {
         logLevel: 'DEBUG',

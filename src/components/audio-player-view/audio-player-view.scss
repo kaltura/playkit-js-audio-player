@@ -5,6 +5,7 @@ $audio-player-height-large: 280px;
   position: relative;
   background-color: var(--playkit-paper-color);
   margin: 0;
+  padding: 16px;
   min-width: 228px;
   justify-content: space-evenly;
 
@@ -17,11 +18,15 @@ $audio-player-height-large: 280px;
       display: flex;
       justify-content: space-between;
       height: calc(100% - 58px);
-      padding: 8px 0;
+      padding: 0;
+
+      .left-controls {
+        width: 56px;
+        height: 56px;
+      }
 
       .right-controls {
         display: flex;
-        align-items: center;
         width: calc(100% - 64px);
       }
     }
@@ -35,7 +40,6 @@ $audio-player-height-large: 280px;
     display: flex;
     justify-content: space-between;
     height: $audio-player-height-small;
-    padding: 8px;
 
     .right-controls {
       display: flex;
@@ -54,7 +58,6 @@ $audio-player-height-large: 280px;
     display: flex;
     height: $audio-player-height-large;
     gap: 16px;
-    padding: 16px;
 
     .background-image {
       z-index: 0;
