@@ -208,7 +208,6 @@ export const VolumeMapSeekbar = withText(translates)(
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
             const numBars = processedVolumeMap.length;
-            if (numBars === 0) return;
 
             // Find the actual maximum RMS level in the processed data
             let maxRmsLevelInData = MIN_DB; // Start with the minimum possible value

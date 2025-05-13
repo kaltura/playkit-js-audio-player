@@ -18,17 +18,21 @@ export class DataManager {
     }
 
     try {
-      const ks = this.player.config?.session?.ks;
       const entryId = this.player.sources.id;
+      if (!entryId) {
+        this.logger.warn('No entry ID found, cannot fetch volume map.');
+        return [];
+      }
+      const ksQuery = this.player.config?.session?.ks ? `&ks=${this.player.config?.session?.ks}` : '';
       const baseUrl = `${this.player.provider.env.serviceUrl}/service/media/action/getVolumeMap`;
-      const urlWithParams = `${baseUrl}?ks=${ks}&entryId=${entryId}`;
+      const urlWithParams = `${baseUrl}?entryId=${entryId}${ksQuery}`;
       const response = await this.fetchWithRetries(urlWithParams, {method: 'POST'});
       const responseText = await response.text();
       const volumeMap = parseVolumeMapResponse(responseText);
-      
+
       // Cache the fetched data
       this.cachedVolumeMap = volumeMap;
-      
+
       return volumeMap;
     } catch (e) {
       this.logger.error('Failed to get volume map:', e);
@@ -84,7 +88,7 @@ export class DataManager {
       clearTimeout(this.delayHandler);
       this.delayHandler = null;
     }
-    
+
     // Clear the cached volume map
     this.cachedVolumeMap = null;
   }
