@@ -4,6 +4,7 @@ import {parseVolumeMapResponse} from './utils';
 
 export class DataManager {
   private delayHandler: ReturnType<typeof setTimeout> | null = null;
+  private cachedVolumeMap: VolumeMapEntry[] | null = null;
 
   constructor(
     private readonly player: KalturaPlayer,
@@ -11,6 +12,11 @@ export class DataManager {
   ) {}
 
   public async getVolumeMap(): Promise<VolumeMapEntry[]> {
+    // Return cached data if available
+    if (this.cachedVolumeMap) {
+      return this.cachedVolumeMap;
+    }
+
     try {
       const ks = this.player.config?.session?.ks;
       const entryId = this.player.sources.id;
@@ -19,6 +25,10 @@ export class DataManager {
       const response = await this.fetchWithRetries(urlWithParams, {method: 'POST'});
       const responseText = await response.text();
       const volumeMap = parseVolumeMapResponse(responseText);
+      
+      // Cache the fetched data
+      this.cachedVolumeMap = volumeMap;
+      
       return volumeMap;
     } catch (e) {
       this.logger.error('Failed to get volume map:', e);
@@ -74,5 +84,8 @@ export class DataManager {
       clearTimeout(this.delayHandler);
       this.delayHandler = null;
     }
+    
+    // Clear the cached volume map
+    this.cachedVolumeMap = null;
   }
 }
