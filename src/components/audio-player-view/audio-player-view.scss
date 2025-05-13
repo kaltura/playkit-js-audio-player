@@ -45,11 +45,11 @@ $audio-player-height-large: 280px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: calc(100% - 124px);
+      width: calc(100% - 194px);
 
       .top-controls {
         display: flex;
-        padding: 8px 0;
+        padding: 0 0 8px 0;
       }
     }
   }
@@ -81,7 +81,7 @@ $audio-player-height-large: 280px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: calc(100% - 264px);
+      width: calc(100% - 272px);
     }
   }
 

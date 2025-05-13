@@ -59,7 +59,7 @@ export const AudioDetailsComponent = ({
             content={title}
             inActive={isBuffering || !(titleHovered || isPlaying) || descriptionHovered}
             mode={largeSize ? ScrollingTextModes.Vertical : ScrollingTextModes.Horizontal}
-            maxHeight={largeSize ? 58 : undefined}
+            maxHeight={largeSize ? 58 : 22}
           />
         </div>
       </div>

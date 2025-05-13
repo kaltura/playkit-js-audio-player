@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import {h} from 'preact';
 import {useState, useEffect, useRef} from 'preact/hooks';
 import {ui} from '@playkit-js/kaltura-player-js';
 import * as styles from './scrolling-text.scss';
@@ -57,7 +57,7 @@ const ScrollingTextComponent = ({
   const isHorisontal = mode === ScrollingTextModes.Horizontal;
 
   useEffect(() => {
-    if (maxHeight !== textContainerHeight && !(maxHeight === undefined && textContainerHeight === 'auto')){
+    if (maxHeight !== textContainerHeight && !(maxHeight === undefined && textContainerHeight === 'auto')) {
       setTextContainerHeight(maxHeight ?? 'auto');
     }
   }, [maxHeight]);
@@ -67,10 +67,10 @@ const ScrollingTextComponent = ({
   }, []);
 
   useEffect(() => {
-    if (playerClientWidth > -1) {
+    if (playerClientWidth > -1 || !inActive) {
       handleResize();
     }
-  }, [playerClientWidth]);
+  }, [playerClientWidth, inActive]);
 
   useEffect(() => {
     const active = textSize > textContainerSize;
