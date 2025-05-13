@@ -1,0 +1,21 @@
+.volume-map-container {
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+
+  &.small {
+    margin-bottom: 8px
+  }
+
+  .volume-map-canvas {
+    display: block;
+    width: 100%;
+  }
+
+  .time-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+}

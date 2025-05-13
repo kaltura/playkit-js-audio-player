@@ -3,7 +3,7 @@ import {useState, useEffect, useLayoutEffect} from 'preact/hooks';
 import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {
   AudioPlayerControls,
-  AudioSeekbar,
+  VolumeMapSeekbar,
   ControlsPlaceholder,
   SeekbarPlaceholder,
   ThumbPlaceholder,
@@ -193,7 +193,7 @@ const AudioPlayerView = Event.withEventManager(
           };
 
           const _renderSeekBar = () => {
-            return isLoading ? <SeekbarPlaceholder /> : <AudioSeekbar eventManager={eventManager} />;
+            return isLoading ? <SeekbarPlaceholder /> : <VolumeMapSeekbar size={size} />;
           };
 
           const _renderPlayerControls = () => {

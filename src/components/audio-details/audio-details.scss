@@ -5,9 +5,6 @@
   width: 100%;
   &.small {
     .header {
-      .audio-icon-container {
-        margin: 13px 16px 0 0;
-      }
       .title {
         &.playback-started {
           width: calc(100% - 16px);
@@ -20,9 +17,6 @@
 
   &.medium {
     .header {
-      .audio-icon-container {
-        margin: 13px 16px 0 0;
-      }
       .title {
         &.playback-started {
           width: calc(100% - 16px);
@@ -37,9 +31,7 @@
     .header {
       flex-direction: column;
       .title {
-        font-size: 32px;
-        line-height: 38px;
-        margin-top: 16px;
+        font-size: 24px;
         margin-bottom: 16px;
       }
     }
@@ -50,12 +42,6 @@
 
   .header {
     display: flex;
-
-    .audio-icon-container {
-      margin: 16px 8px 0 0;
-      position: relative;
-      width: 20px;
-    }
   }
 
   .title {

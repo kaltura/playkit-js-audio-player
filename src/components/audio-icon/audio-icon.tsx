@@ -1,46 +1,40 @@
 import {h} from 'preact';
-import * as styles from './audio-icon.scss';
-import { useState } from 'preact/hooks';
-import {ui} from '@playkit-js/kaltura-player-js';
-import {Components} from '@playkit-js/playkit-js-ui';
 
-interface AudioIconProps {
-  isLarge: boolean;
-  isActive: boolean;
-  resumeAnimation: string;
-  pauseAnimation: string;
+import {core, ui} from '@playkit-js/kaltura-player-js';
+import {PlaybackIcon} from '../playback-icon';
+import {BufferingIcon} from '../buffering-icon';
+
+import * as styles from './audio-icon.scss';
+
+const {redux} = ui;
+
+interface ConnectProps {
+  isBuffering?: boolean;
+  isPlaying?: boolean;
+  isPlaybackStarted?: boolean;
 }
 
-const {Tooltip} = Components;
+const mapStateToProps = ({engine}: any) => {
+    const {isPlaying, isPlaybackStarted, playerState} = engine;
+    return {
+      isPlaying,
+      isPlaybackStarted,
+      isBuffering: playerState?.currentState === core.StateType.BUFFERING
+    };
+  };
 
-const {withText, Text} = ui.preacti18n;
-const translates = {
-  resumeAnimation: <Text id="audioPlayer.resumeAnimation">Resume Animation</Text>,
-  pauseAnimation: <Text id="audioPlayer.pauseANimation">Pause Animation</Text>
+const AudioIconComponent = ({isBuffering, isPlaying, isPlaybackStarted}: ConnectProps) => {
+    if (!isPlaybackStarted) {
+      return null;
+    }
+  const renderIcon = () => {
+    if (isBuffering) {
+      return <BufferingIcon />;
+    }
+    return <PlaybackIcon isActive={isPlaying} />;
+  };
+
+  return <div className={styles.audioIconContainer}>{renderIcon()}</div>;
 };
 
-const AudioIcon = withText(translates)(({isLarge, isActive, resumeAnimation, pauseAnimation}: AudioIconProps) => {
-  const [isAnimation, setIsAnimation] = useState(true);
-
-  const handleClick = () => {
-    setIsAnimation(prevState => !prevState);
-  };
-  
-  return (
-    <Tooltip label={isAnimation ? pauseAnimation : resumeAnimation} type="right">
-      <button 
-          disabled={!isActive} 
-          onClick={handleClick} 
-          aria-label={isAnimation ? pauseAnimation : resumeAnimation} 
-          data-testid="audio-player-audio-icon" 
-          className={`${styles.audioIcon} ${isLarge ? styles.large : ''} ${(isAnimation && isActive) ? styles.active : ''}`}
-        >
-          <div className={styles.box2} />
-          <div className={styles.box1} />
-          <div className={styles.box2} />
-      </button>
-    </Tooltip>
-  );
-});
-
-export {AudioIcon};
+export const AudioIcon = redux.connect<any, any>(mapStateToProps)(AudioIconComponent) as any;

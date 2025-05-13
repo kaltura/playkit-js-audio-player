@@ -86,7 +86,6 @@ export const AudioPlayerControls = Event.withEventManager(({pluginConfig, player
     );
   };
 
-  const targetId: HTMLDivElement | Document = (document.getElementById(player.config.targetId) as HTMLDivElement) || document;
   return (
     <div className={styles.playbackControlsWrapper}>
       <LiveTagComponent />

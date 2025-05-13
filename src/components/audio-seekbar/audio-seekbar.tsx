@@ -3,12 +3,13 @@ import {h, Component} from 'preact';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import {core, ui} from '@playkit-js/kaltura-player-js';
+import {AudioIcon} from '..';
 import * as styles from './audio-seekbar.scss';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const {SeekBar, withPlayer, withEventDispatcher} = ui.Components;
-const {redux, reducers, utils} = ui;
+const {redux, reducers, utils, Event} = ui;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -38,6 +39,7 @@ const mapStateToProps = (state: any) => ({
   isDraggingActive: state.seekbar.draggingActive
 });
 
+@Event.withEventManager
 @withPlayer
 @withEventDispatcher(COMPONENT_NAME)
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -68,25 +70,28 @@ class AudioSeekbar extends Component<ConnectProps | any> {
     }
     const showTime = !this.props.player.isLive();
     return (
-      <div className={styles.audioSeekbar}>
-        {showTime && <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>}
-        <div className={styles.seekbarWrapper}>
-          <SeekBar
-            changeCurrentTime={this._handleChangeCurrentTime}
-            updateSeekbarDraggingStatus={this.props.updateSeekbarDraggingStatus}
-            updateSeekbarHoverActive={this.props.updateSeekbarHoverActive}
-            updateSeekbarClientRect={this.props.updateSeekbarClientRect}
-            updateCurrentTime={this.props.updateCurrentTime}
-            updateVirtualTime={this.props.updateVirtualTime}
-            currentTime={this.props.currentTime}
-            virtualTime={this.props.virtualTime}
-            duration={this.props.duration}
-            isDraggingActive={this.props.isDraggingActive}
-            isMobile={true}
-            notifyChange={this.props.notifyChange}
-          />
+      <div className={styles.audioSeekbarContainer}>
+        <AudioIcon />
+        <div className={styles.audioSeekbar}>
+          {showTime && <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>}
+          <div className={styles.seekbarWrapper}>
+            <SeekBar
+              changeCurrentTime={this._handleChangeCurrentTime}
+              updateSeekbarDraggingStatus={this.props.updateSeekbarDraggingStatus}
+              updateSeekbarHoverActive={this.props.updateSeekbarHoverActive}
+              updateSeekbarClientRect={this.props.updateSeekbarClientRect}
+              updateCurrentTime={this.props.updateCurrentTime}
+              updateVirtualTime={this.props.updateVirtualTime}
+              currentTime={this.props.currentTime}
+              virtualTime={this.props.virtualTime}
+              duration={this.props.duration}
+              isDraggingActive={this.props.isDraggingActive}
+              isMobile={true}
+              notifyChange={this.props.notifyChange}
+            />
+          </div>
+          {showTime && <div className={styles.duration}>{toHHMMSS(this.props.duration)}</div>}
         </div>
-        {showTime && <div className={styles.duration}>{toHHMMSS(this.props.duration)}</div>}
       </div>
     );
   }

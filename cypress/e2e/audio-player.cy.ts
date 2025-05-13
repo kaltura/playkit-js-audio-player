@@ -326,5 +326,25 @@ describe('audio player plugin', () => {
         });
       });
     });
+
+    describe('volume map seekbar', () => {
+      it('should not show volume map seekbar if volume map data absent', () => {
+        loadPlayer().then(() => {
+          setMedia();
+          cy.get('[data-testid="audio-player-view"]').should('exist');
+          cy.get('[data-testid="audio-player-volume-map"]').should('not.exist');
+        });
+      });
+      it('should show volume map seekbar', () => {
+        cy.intercept('**/getVolumeMap*', req => {
+          req.reply({fixture: 'volumeMap.csv'});
+        });
+        return loadPlayer().then(() => {
+          setMedia();
+          cy.get('[data-testid="audio-player-view"]').should('exist');
+          cy.get('[data-testid="audio-player-volume-map"]').should('be.visible');
+        });
+      });
+    });
   });
 });

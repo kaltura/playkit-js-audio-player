@@ -1,22 +1,26 @@
-import {BasePlugin, KalturaPlayer, core} from '@playkit-js/kaltura-player-js';
-import {AudioPlayerConfig} from './types';
+import {BasePlugin, KalturaPlayer} from '@playkit-js/kaltura-player-js';
+import {AudioPlayerConfig, VolumeMapEntry} from './types';
 import {hexToCSSFilter} from 'hex-to-css-filter';
 import {AudioPluginsManager} from './components/plugins/audio-plugins-manager/audio-plugins-manager';
+import {DataManager} from './data-manager';
 
 export const pluginName = 'audioPlayer';
 
 const TONE_1_COLOR_VARIABLE = '--playkit-tone-1-color';
-const TONE_1_COLOR_RGB_VARIABLE = '--playkit-tone-1-color-rgb';
 const CONTROLS_FILTER_COLOR_VARIABLE = '--playkit-audio-player-controls-filter';
 // @ts-ignore
 class AudioPlayer extends BasePlugin {
-  private colorVariablesSet = false;
   public static defaultConfig = {
     showReplayButton: false
   };
 
+  private colorVariablesSet = false;
+  public dataManager: DataManager;
+
   constructor(name: string, player: KalturaPlayer, config: AudioPlayerConfig) {
     super(name, player, config);
+
+    this.dataManager = new DataManager(this.player, this.logger);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -54,6 +58,14 @@ class AudioPlayer extends BasePlugin {
         this.colorVariablesSet = true;
       }
     }
+  }
+
+  get getVolumeMap(): () => Promise<VolumeMapEntry[]> {
+    return this.dataManager.getVolumeMap.bind(this.dataManager);
+  }
+
+  reset(): void {
+    this.dataManager.reset();
   }
 
   static isValid(): boolean {
