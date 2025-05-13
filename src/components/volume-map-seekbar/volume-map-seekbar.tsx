@@ -9,7 +9,6 @@ import * as styles from './volume-map-seekbar.scss';
 import * as audioSeekbarStyles from '../audio-seekbar/audio-seekbar.scss';
 
 const {Components, utils, redux} = ui;
-// @ts-ignore
 const {withPlayer} = Components;
 const {toHHMMSS} = utils;
 const {connect} = redux;
@@ -22,14 +21,12 @@ interface VolumeMapSeekbarProps {
   currentTime: number;
 }
 
-// Constants for drawing - BASE_BAR_WIDTH and BASE_GAP become reference/minimums
 const BASE_BAR_WIDTH = 2;
 const BASE_GAP = 1;
 const MIN_DB = -60; // dBFS value to map to 0 height
 const MIN_DURATION = 20; // Minimum duration to show the volume map
 
-// Function to downsample volume map data
-// This function takes the original volume map and reduces it to fit within the maxBars limit
+// The function takes the original volume map and reduces it to fit within the maxBars limit
 // by averaging the RMS levels of groups of entries. It returns a new array of VolumeMapEntry objects.
 function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): VolumeMapEntry[] {
   if (!originalMap || originalMap.length === 0 || maxBars <= 0) {
@@ -95,7 +92,7 @@ export const VolumeMapSeekbar = withPlayer(
       };
     }, [originalVolumeMap, size]);
 
-    // Fetch original volume map data
+    // Fetch volume map data
     useEffect(() => {
       const audioPlayerPlugin = player.plugins['audioPlayer'] as AudioPlayer | undefined;
       audioPlayerPlugin?.getVolumeMap().then((mapData: VolumeMapEntry[]) => {
@@ -125,14 +122,14 @@ export const VolumeMapSeekbar = withPlayer(
       // Handle high DPI displays for sharp rendering
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      
+
       // Set the canvas size accounting for device pixel ratio
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-      
+
       // Scale the context to match device pixel ratio
       ctx.scale(dpr, dpr);
-      
+
       const canvasWidth = rect.width;
       const canvasHeight = rect.height;
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -165,11 +162,11 @@ export const VolumeMapSeekbar = withPlayer(
       // Calculate dimensions to use the entire canvas width
       const minGap = 1; // 1px minimum gap for separation
       const totalGaps = numBars - 1;
-      
+
       // Calculate bar width by distributing the entire canvas width
       // We want to stretch the bars to fill the entire width with minimal gaps
-      const barWidth = (canvasWidth - (totalGaps * minGap)) / numBars;
-      
+      const barWidth = (canvasWidth - totalGaps * minGap) / numBars;
+
       // We want the first bar to start at x=0 and the last bar to end at x=canvasWidth
       for (let i = 0; i < numBars; i++) {
         // Calculate precise pixel position - first bar starts at x=0
@@ -192,13 +189,14 @@ export const VolumeMapSeekbar = withPlayer(
         const y = Math.floor((canvasHeight - barHeight) / 2);
 
         ctx.fillStyle = i <= currentBarIndex ? activeColor : inactiveColor;
-        
+
         // For the last bar, ensure it extends all the way to the edge
-        const actualBarWidth = i === numBars - 1 
-          ? canvasWidth - x // Make the last bar extend to the edge
-          : barWidth;
-        
-        // Draw pixel-perfect rectangle
+        const actualBarWidth =
+          i === numBars - 1
+            ? canvasWidth - x // Make the last bar extend to the edge
+            : barWidth;
+
+        // Draw rectangle
         ctx.fillRect(x, y, actualBarWidth, barHeight);
       }
     }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]);
@@ -206,7 +204,7 @@ export const VolumeMapSeekbar = withPlayer(
     // Redraw when processed map or other relevant state changes
     useEffect(() => {
       drawWaveform();
-    }, [processedVolumeMap, currentTime, duration, containerWidth, drawWaveform]); // Added dependencies
+    }, [processedVolumeMap, currentTime, duration, containerWidth, drawWaveform]);
 
     // Handle seeking on click - uses dynamic widths
     const handleCanvasClick = (event: MouseEvent) => {
@@ -222,31 +220,31 @@ export const VolumeMapSeekbar = withPlayer(
       // Use same calculations as in drawWaveform to determine bar positions
       const minGap = 1;
       const totalGaps = numBars - 1;
-      
+
       // Calculate bar width to match drawing function (use full width)
-      const barWidth = (rect.width - (totalGaps * minGap)) / numBars;
-      
+      const barWidth = (rect.width - totalGaps * minGap) / numBars;
+
       // Since we now start at x=0 with no padding, we can directly determine which bar was clicked
       // Each bar+gap unit takes (barWidth + minGap) pixels, except the last bar which may be wider
       const unitWidth = barWidth + minGap;
       let barIndex = Math.floor(x / unitWidth);
-      
+
       // Ensure index is in valid range
       barIndex = Math.max(0, Math.min(barIndex, numBars - 1));
-      
+
       const newTime = processedVolumeMap[barIndex].pts / 1000;
       if (isFinite(newTime)) {
         player.currentTime = newTime;
       }
     };
 
-    // Render fallback or the canvas
+    // Render fallback when no data or duration is too short
     if (!originalVolumeMap.length || (duration as number) < MIN_DURATION) {
       return <AudioSeekbar />;
     }
 
     return (
-      <div ref={containerRef} class={styles.volumeMapContainer} data-testid="volume-map-seekbar">
+      <div ref={containerRef} class={[styles.volumeMapContainer, styles[size]].join(' ')} data-testid="volume-map-seekbar">
         <canvas
           ref={canvasRef}
           class={styles.volumeMapCanvas}
