@@ -76,7 +76,10 @@ Finally, add the bundle as a script tag in your page, and initialize the player
        audioPlayer: {
         // showReplayButton is set to false by default.
         // If set to true, the loop button will be shown instead of the speed menu button
-        showReplayButton: true
+        showReplayButton: true,
+        // useVolumeMapBar is set to false by default.
+        // If set to true, the volume maps bar will be shown instead of default progress bar
+        useVolumeMapBar: true
        }
      }
      ...
