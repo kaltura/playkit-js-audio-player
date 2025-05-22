@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.2.0 (2025-05-22)
+
+
+### Features
+
+* **FEC-14124:** player timeline sound visualisation ([#42](https://github.com/kaltura/playkit-js-audio-player/issues/42)) ([e3f242b](https://github.com/kaltura/playkit-js-audio-player/commit/e3f242b0a80877586ace65f30b5fa4a34d6951be))
+
 ### 1.1.2 (2025-04-24)
 
 
