@@ -240,18 +240,18 @@ describe('audio player plugin', () => {
               player?.play();
 
               return cy.wrap(
-                  new Promise(resolve => {
-                    let playCount = 0;
-                    player?.addEventListener('play', () => {
-                      ++playCount;
-                    });
+                new Promise(resolve => {
+                  let playCount = 0;
+                  player?.addEventListener('play', () => {
+                    ++playCount;
+                  });
 
-                    setTimeout(() => {
-                      if (playCount === 1) {
-                        resolve(true);
-                      }
-                    }, 6000);
-                  })
+                  setTimeout(() => {
+                    if (playCount === 1) {
+                      resolve(true);
+                    }
+                  }, 6000);
+                })
               );
             }, 3000);
           });
@@ -262,19 +262,18 @@ describe('audio player plugin', () => {
               player?.play();
 
               return cy.wrap(
-                  new Promise(resolve => {
-                    let playCount = 0;
-                    player?.addEventListener('play', () => {
-                      ++playCount;
+                new Promise(resolve => {
+                  let playCount = 0;
+                  player?.addEventListener('play', () => {
+                    ++playCount;
 
-                      if (playCount >= 2) {
-                        resolve(true);
-                      }
-                    });
-                  })
+                    if (playCount >= 2) {
+                      resolve(true);
+                    }
+                  });
+                })
               );
             }, 3000);
-
           });
         });
       });
@@ -329,7 +328,7 @@ describe('audio player plugin', () => {
 
     describe('volume map seekbar', () => {
       it('should not show volume map seekbar if volume map data absent', () => {
-        loadPlayer().then(() => {
+        return loadPlayer({plugins: {audioPlayer: {useVolumeMapBar: true}}}).then(() => {
           setMedia();
           cy.get('[data-testid="audio-player-view"]').should('exist');
           cy.get('[data-testid="audio-player-volume-map"]').should('not.exist');
@@ -339,10 +338,20 @@ describe('audio player plugin', () => {
         cy.intercept('**/getVolumeMap*', req => {
           req.reply({fixture: 'volumeMap.csv'});
         });
-        return loadPlayer().then(() => {
+        return loadPlayer({plugins: {audioPlayer: {useVolumeMapBar: true}}}).then(() => {
           setMedia();
           cy.get('[data-testid="audio-player-view"]').should('exist');
           cy.get('[data-testid="audio-player-volume-map"]').should('be.visible');
+        });
+      });
+      it("should not show volume map seekbar if configuration haven't set", () => {
+        cy.intercept('**/getVolumeMap*', req => {
+          req.reply({fixture: 'volumeMap.csv'});
+        });
+        return loadPlayer().then(() => {
+          setMedia();
+          cy.get('[data-testid="audio-player-view"]').should('exist');
+          cy.get('[data-testid="audio-player-volume-map"]').should('not.exist');
         });
       });
     });
