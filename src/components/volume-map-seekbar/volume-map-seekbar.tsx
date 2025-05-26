@@ -83,21 +83,32 @@ function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): Volum
   // Case 3: We need to increase the number of data points through interpolation
   const processedMap: VolumeMapEntry[] = [];
   
-  // Calculate time range of the audio
-  const startPts = originalMap[0].pts;
+  // Calculate time range of the audio, using 0 as the starting point if needed
+  const startPts = 0; // Always start from 0 seconds
   const endPts = originalMap[originalMap.length - 1].pts;
-  const totalDuration = endPts - startPts;
   
   // Generate evenly spaced timestamps
   for (let i = 0; i < maxBars; i++) {
     // Calculate the desired timestamp position
     const position = i / (maxBars - 1); // 0 to 1
-    const targetPts = startPts + position * totalDuration;
+    const targetPts = startPts + position * endPts;
     
     // Find the two closest points for interpolation
     let beforeIndex = 0;
     let afterIndex = 0;
     
+    // Handle case where targetPts is before first data point
+    if (targetPts < originalMap[0].pts) {
+      // For points before the first data point, we'll use the first available point's level
+      // but with the correct timestamp
+      processedMap.push({
+        pts: Math.round(targetPts),
+        rms_level: MIN_DB // Use minimum level (silence) for points before first data
+      });
+      continue;
+    }
+    
+    // Find points to interpolate between for timestamps that exist in our data range
     for (let j = 0; j < originalMap.length - 1; j++) {
       if (originalMap[j].pts <= targetPts && originalMap[j + 1].pts >= targetPts) {
         beforeIndex = j;
@@ -111,6 +122,15 @@ function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): Volum
       processedMap.push({
         pts: endPts,
         rms_level: originalMap[originalMap.length - 1].rms_level
+      });
+      continue;
+    }
+    
+    // Handle case where targetPts is beyond the last data point
+    if (targetPts > originalMap[originalMap.length - 1].pts) {
+      processedMap.push({
+        pts: Math.round(targetPts),
+        rms_level: MIN_DB // Use minimum level for points after last data point
       });
       continue;
     }
