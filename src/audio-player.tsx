@@ -10,8 +10,9 @@ const TONE_1_COLOR_VARIABLE = '--playkit-tone-1-color';
 const CONTROLS_FILTER_COLOR_VARIABLE = '--playkit-audio-player-controls-filter';
 // @ts-ignore
 class AudioPlayer extends BasePlugin {
-  public static defaultConfig = {
-    showReplayButton: false
+  public static readonly defaultConfig = {
+    showReplayButton: false,
+    useVolumeMapBar: false
   };
 
   private colorVariablesSet = false;
@@ -61,7 +62,10 @@ class AudioPlayer extends BasePlugin {
   }
 
   get getVolumeMap(): () => Promise<VolumeMapEntry[]> {
-    return this.dataManager.getVolumeMap.bind(this.dataManager);
+    if (this.config.useVolumeMapBar) {
+      return this.dataManager.getVolumeMap.bind(this.dataManager);
+    }
+    return () => Promise.resolve([]);
   }
 
   reset(): void {
