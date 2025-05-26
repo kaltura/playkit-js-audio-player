@@ -3,6 +3,7 @@ import {useEffect, useState, useRef, useCallback} from 'preact/hooks';
 import {ui, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {VolumeMapEntry, AudioPlayerSizes} from '../../types';
 import {AudioPlayer} from '../../audio-player';
+import {processVolumeMap} from '../../utils';
 import {AudioSeekbar} from '..';
 
 import * as styles from './volume-map-seekbar.scss';
@@ -47,36 +48,6 @@ const KEYBOARD_DEFAULT_SEEK_JUMP: number = 5;
 const BASE_BAR_WIDTH = 2;
 const BASE_GAP = 1;
 const MIN_DB = -60; // dBFS value to map to 0 height
-const MIN_DURATION = 20; // Minimum duration to show the volume map
-
-// The function takes the original volume map and reduces it to fit within the maxBars limit
-// by averaging the RMS levels of groups of entries. It returns a new array of VolumeMapEntry objects.
-function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): VolumeMapEntry[] {
-  if (!originalMap || originalMap.length === 0 || maxBars <= 0) {
-    return [];
-  }
-
-  if (originalMap.length <= maxBars) {
-    return originalMap; // No processing needed
-  }
-
-  const processedMap: VolumeMapEntry[] = [];
-  const groupSize = Math.ceil(originalMap.length / maxBars);
-
-  for (let i = 0; i < originalMap.length; i += groupSize) {
-    const group = originalMap.slice(i, i + groupSize);
-    if (group.length > 0) {
-      const sumRms = group.reduce((acc, entry) => acc + entry.rms_level, 0);
-      const avgRms = sumRms / group.length;
-      processedMap.push({
-        pts: group[0].pts, // Use the timestamp of the first entry in the group
-        rms_level: avgRms
-      });
-    }
-  }
-  // Ensure we don't exceed maxBars due to rounding
-  return processedMap.slice(0, maxBars);
-}
 
 const mapStateToProps = (state: any) => ({
   currentTime: state.engine.currentTime,
@@ -177,7 +148,7 @@ export const VolumeMapSeekbar = withText(translates)(
           useEffect(() => {
             if (containerWidth > 0 && originalVolumeMap.length > 0) {
               const maxBars = Math.floor(containerWidth / (BASE_BAR_WIDTH + BASE_GAP));
-              const newProcessedMap = processVolumeMap(originalVolumeMap, maxBars);
+              const newProcessedMap = processVolumeMap(originalVolumeMap, maxBars, MIN_DB);
               setProcessedVolumeMap(newProcessedMap);
             } else {
               setProcessedVolumeMap([]);
@@ -420,7 +391,7 @@ export const VolumeMapSeekbar = withText(translates)(
           };
 
           // Render fallback when no data or duration is too short
-          if (!originalVolumeMap.length || duration < MIN_DURATION) {
+          if (!originalVolumeMap.length) {
             return <AudioSeekbar />;
           }
 
