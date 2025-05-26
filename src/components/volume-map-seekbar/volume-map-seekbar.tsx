@@ -47,35 +47,100 @@ const KEYBOARD_DEFAULT_SEEK_JUMP: number = 5;
 const BASE_BAR_WIDTH = 2;
 const BASE_GAP = 1;
 const MIN_DB = -60; // dBFS value to map to 0 height
-const MIN_DURATION = 20; // Minimum duration to show the volume map
 
-// The function takes the original volume map and reduces it to fit within the maxBars limit
-// by averaging the RMS levels of groups of entries. It returns a new array of VolumeMapEntry objects.
+// This function processes the original volume map to match the requested number of bars (maxBars).
+// It can both reduce (through averaging) or increase (through interpolation) the number of data points.
 function processVolumeMap(originalMap: VolumeMapEntry[], maxBars: number): VolumeMapEntry[] {
   if (!originalMap || originalMap.length === 0 || maxBars <= 0) {
     return [];
   }
 
-  if (originalMap.length <= maxBars) {
+  // Case 1: Original map already matches the requested size
+  if (originalMap.length === maxBars) {
     return originalMap; // No processing needed
   }
 
-  const processedMap: VolumeMapEntry[] = [];
-  const groupSize = Math.ceil(originalMap.length / maxBars);
+  // Case 2: We need to reduce the number of data points
+  if (originalMap.length > maxBars) {
+    const processedMap: VolumeMapEntry[] = [];
+    const groupSize = Math.ceil(originalMap.length / maxBars);
 
-  for (let i = 0; i < originalMap.length; i += groupSize) {
-    const group = originalMap.slice(i, i + groupSize);
-    if (group.length > 0) {
-      const sumRms = group.reduce((acc, entry) => acc + entry.rms_level, 0);
-      const avgRms = sumRms / group.length;
-      processedMap.push({
-        pts: group[0].pts, // Use the timestamp of the first entry in the group
-        rms_level: avgRms
-      });
+    for (let i = 0; i < originalMap.length; i += groupSize) {
+      const group = originalMap.slice(i, i + groupSize);
+      if (group.length > 0) {
+        const sumRms = group.reduce((acc, entry) => acc + entry.rms_level, 0);
+        const avgRms = sumRms / group.length;
+        processedMap.push({
+          pts: group[0].pts, // Use the timestamp of the first entry in the group
+          rms_level: avgRms
+        });
+      }
     }
+    // Ensure we don't exceed maxBars due to rounding
+    return processedMap.slice(0, maxBars);
   }
-  // Ensure we don't exceed maxBars due to rounding
-  return processedMap.slice(0, maxBars);
+
+  // Case 3: We need to increase the number of data points through interpolation
+  const processedMap: VolumeMapEntry[] = [];
+  
+  // Calculate time range of the audio
+  const startPts = originalMap[0].pts;
+  const endPts = originalMap[originalMap.length - 1].pts;
+  const totalDuration = endPts - startPts;
+  
+  // Generate evenly spaced timestamps
+  for (let i = 0; i < maxBars; i++) {
+    // Calculate the desired timestamp position
+    const position = i / (maxBars - 1); // 0 to 1
+    const targetPts = startPts + position * totalDuration;
+    
+    // Find the two closest points for interpolation
+    let beforeIndex = 0;
+    let afterIndex = 0;
+    
+    for (let j = 0; j < originalMap.length - 1; j++) {
+      if (originalMap[j].pts <= targetPts && originalMap[j + 1].pts >= targetPts) {
+        beforeIndex = j;
+        afterIndex = j + 1;
+        break;
+      }
+    }
+    
+    // Handle edge case for the last point
+    if (i === maxBars - 1) {
+      processedMap.push({
+        pts: endPts,
+        rms_level: originalMap[originalMap.length - 1].rms_level
+      });
+      continue;
+    }
+    
+    // Linear interpolation between the two points
+    const beforePoint = originalMap[beforeIndex];
+    const afterPoint = originalMap[afterIndex];
+    
+    // Avoid division by zero
+    if (afterPoint.pts === beforePoint.pts) {
+      processedMap.push({
+        pts: Math.round(targetPts),
+        rms_level: beforePoint.rms_level
+      });
+      continue;
+    }
+    
+    // Calculate the weight for interpolation (0 to 1)
+    const weight = (targetPts - beforePoint.pts) / (afterPoint.pts - beforePoint.pts);
+    
+    // Linear interpolation formula: value = start + weight * (end - start)
+    const interpolatedRms = beforePoint.rms_level + weight * (afterPoint.rms_level - beforePoint.rms_level);
+    
+    processedMap.push({
+      pts: Math.round(targetPts),
+      rms_level: interpolatedRms
+    });
+  }
+  
+  return processedMap;
 }
 
 const mapStateToProps = (state: any) => ({
@@ -420,7 +485,7 @@ export const VolumeMapSeekbar = withText(translates)(
           };
 
           // Render fallback when no data or duration is too short
-          if (!originalVolumeMap.length || duration < MIN_DURATION) {
+          if (!originalVolumeMap.length) {
             return <AudioSeekbar />;
           }
 
