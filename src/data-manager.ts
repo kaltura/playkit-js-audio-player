@@ -2,6 +2,8 @@ import {KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {VolumeMapEntry} from './types';
 import {parseVolumeMapResponse} from './utils';
 
+const DESIRED_LINES = 150;
+
 export class DataManager {
   private delayHandler: ReturnType<typeof setTimeout> | null = null;
   private cachedVolumeMap: VolumeMapEntry[] | null = null;
@@ -25,7 +27,7 @@ export class DataManager {
       }
       const ksQuery = this.player.config?.session?.ks ? `&ks=${this.player.config?.session?.ks}` : '';
       const baseUrl = `${this.player.provider.env.serviceUrl}/service/media/action/getVolumeMap`;
-      const urlWithParams = `${baseUrl}?entryId=${entryId}${ksQuery}`;
+      const urlWithParams = `${baseUrl}?desiredLines=${DESIRED_LINES}&entryId=${entryId}${ksQuery}`;
       const response = await this.fetchWithRetries(urlWithParams, {method: 'POST'});
       const responseText = await response.text();
       const volumeMap = parseVolumeMapResponse(responseText);

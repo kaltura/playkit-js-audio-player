@@ -47,7 +47,7 @@ const KEYBOARD_DEFAULT_SEEK_JUMP: number = 5;
 
 const BASE_BAR_WIDTH = 2;
 const BASE_GAP = 1;
-const MIN_DB = -60; // dBFS value to map to 0 height
+const MIN_DB = -100; // dBFS value to map to 0 height
 
 const mapStateToProps = (state: any) => ({
   currentTime: state.engine.currentTime,
