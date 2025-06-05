@@ -1,11 +1,13 @@
 @import '~@playkit-js/playkit-js-ui';
 
 .audioSeekbarContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 40px;
+  &.withVolumeMapBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+  }
 
   .audio-seekbar {
     --seekbar-default-color-rgb: 255, 255, 255;
