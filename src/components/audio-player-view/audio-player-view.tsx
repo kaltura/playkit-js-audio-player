@@ -193,6 +193,7 @@ const AudioPlayerView = Event.withEventManager(
               player={player}
               onPluginsControlClick={openOverlay}
               showMorePluginsIcon={showMorePluginsIcon}
+              size={size}
             />
           );
         };

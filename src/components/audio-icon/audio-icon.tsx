@@ -8,6 +8,10 @@ import * as styles from './audio-icon.scss';
 
 const {redux} = ui;
 
+interface AudioIconComponentProps {
+  isLarge?: boolean;
+}
+
 interface ConnectProps {
   isBuffering?: boolean;
   isPlaying?: boolean;
@@ -15,23 +19,23 @@ interface ConnectProps {
 }
 
 const mapStateToProps = ({engine}: any) => {
-    const {isPlaying, isPlaybackStarted, playerState} = engine;
-    return {
-      isPlaying,
-      isPlaybackStarted,
-      isBuffering: playerState?.currentState === core.StateType.BUFFERING
-    };
+  const {isPlaying, isPlaybackStarted, playerState} = engine;
+  return {
+    isPlaying,
+    isPlaybackStarted,
+    isBuffering: playerState?.currentState === core.StateType.BUFFERING
   };
+};
 
-const AudioIconComponent = ({isBuffering, isPlaying, isPlaybackStarted}: ConnectProps) => {
-    if (!isPlaybackStarted) {
-      return null;
-    }
+const AudioIconComponent = ({isBuffering, isPlaying, isPlaybackStarted, isLarge}: ConnectProps & AudioIconComponentProps) => {
+  if (!isPlaybackStarted) {
+    return null;
+  }
   const renderIcon = () => {
     if (isBuffering) {
       return <BufferingIcon />;
     }
-    return <PlaybackIcon isActive={isPlaying} />;
+    return <PlaybackIcon isActive={isPlaying} isLarge={isLarge} />;
   };
 
   return <div className={styles.audioIconContainer}>{renderIcon()}</div>;
