@@ -46,7 +46,8 @@ const translates = {
 const COMPONENT_NAME = 'VolumeSeekBar';
 const KEYBOARD_DEFAULT_SEEK_JUMP: number = 5;
 
-const MIN_DB = -100; // dBFS value to map to 0 height
+const MIN_DB = -100; // dBFS value representing silence (1px height)
+const MAX_DB = 0; // dBFS value representing maximum volume (full canvas height)
 
 const mapStateToProps = (state: any) => ({
   currentTime: state.engine.currentTime,
@@ -172,16 +173,8 @@ export const VolumeMapSeekbar = withText(translates)(
 
             const numBars = originalVolumeMap.length;
 
-            // Find the actual maximum RMS level in the original data
-            let maxRmsLevelInData = MIN_DB; // Start with the minimum possible value
-            for (const entry of originalVolumeMap) {
-              if (entry.rms_level > maxRmsLevelInData) {
-                maxRmsLevelInData = entry.rms_level;
-              }
-            }
-            // Ensure the effective max DB for scaling is slightly above MIN_DB to avoid division by zero/issues
-            const effectiveMaxDb = Math.max(maxRmsLevelInData, MIN_DB + 1e-6);
-            const dbRange = effectiveMaxDb - MIN_DB;
+            // Use fixed dB range from MIN_DB (-100) to MAX_DB (0)
+            const dbRange = MAX_DB - MIN_DB; // This will be 100
 
             const currentTimeMs = currentTime * 1000;
 
@@ -207,20 +200,35 @@ export const VolumeMapSeekbar = withText(translates)(
               // Calculate precise pixel position - first bar starts at x=0
               const x = i * (barWidth + minGap);
 
-              // Normalize using the actual max level found in the data
+              // Normalize using the fixed dB range from MIN_DB (-100) to MAX_DB (0)
+              // Clamp the RMS level to the valid range first
+              const clampedRms = Math.max(MIN_DB, Math.min(MAX_DB, originalVolumeMap[i].rms_level));
+              
+              // Map from [MIN_DB, MAX_DB] to [1px, canvasHeight]
               let normalizedLevel = 0;
               if (dbRange > 0) {
-                normalizedLevel = (originalVolumeMap[i].rms_level - MIN_DB) / dbRange;
+                normalizedLevel = (clampedRms - MIN_DB) / dbRange;
               }
               normalizedLevel = Math.max(0, Math.min(1, normalizedLevel)); // Clamp 0-1
 
-              let barHeight = normalizedLevel * canvasHeight;
-              // Ensure minimum bar height of 1px
-              barHeight = Math.max(1, barHeight);
-              // Ensure bar height does not exceed canvas height
-              barHeight = Math.min(barHeight, canvasHeight);
+              // Scale to canvas height with minimum 1px for silence
+              const minBarHeight = 1; // Minimum height for silence (-100 dB)
+              const maxBarHeight = canvasHeight; // Maximum height for loudest sound (0 dB)
+              let barHeight = minBarHeight + normalizedLevel * (maxBarHeight - minBarHeight);
+              
+              // Ensure bar height is within bounds and round to integer pixels
+              barHeight = Math.round(Math.max(minBarHeight, Math.min(barHeight, maxBarHeight)));
+              
+              // Ensure bars maintain proper center alignment with minimum 2px difference
+              // This ensures bars stay centered by using only odd heights (1px, 3px, 5px, etc.)
+              if (barHeight > 1 && barHeight % 2 === 0) {
+                barHeight += 1; // Convert even heights to odd heights for perfect centering
+              }
+              
+              // Ensure we don't exceed canvas height after adjustment
+              barHeight = Math.min(barHeight, maxBarHeight);
 
-              // Use integer values for pixel-aligned coordinates
+              // Center the bar vertically on the canvas - use integer coordinates for pixel alignment
               const y = Math.floor((canvasHeight - barHeight) / 2);
 
               ctx.fillStyle = i <= currentBarIndex ? activeColor : inactiveColor;
@@ -231,8 +239,11 @@ export const VolumeMapSeekbar = withText(translates)(
                   ? canvasWidth - x // Make the last bar extend to the edge
                   : barWidth;
 
-              // Draw rectangle
-              ctx.fillRect(x, y, actualBarWidth, barHeight);
+              // Draw rounded rectangle with 8px border radius
+              const borderRadius = 8;
+              ctx.beginPath();
+              ctx.roundRect(x, y, actualBarWidth, barHeight, borderRadius);
+              ctx.fill();
             }
           }, [originalVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]);
 
@@ -384,7 +395,7 @@ export const VolumeMapSeekbar = withText(translates)(
 
           // Render fallback when no data or duration is too short
           if (!originalVolumeMap.length) {
-            return <AudioSeekbar withVolumeMapBar={withVolumeMapBar}/>;
+            return <AudioSeekbar withVolumeMapBar={withVolumeMapBar} size={size} />;
           }
 
           const canvasA11yProps = {
