@@ -3,6 +3,7 @@ import {h, Component} from 'preact';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import {core, ui} from '@playkit-js/kaltura-player-js';
+import {AudioPlayerSizes} from '../../types';
 import {AudioIcon} from '..';
 import * as styles from './audio-seekbar.scss';
 
@@ -31,6 +32,7 @@ interface ConnectProps {
   updateSeekbarHoverActive: (data: boolean) => void;
   updateSeekbarClientRect: (data: any) => void;
   withVolumeMapBar?: boolean;
+  size: AudioPlayerSizes;
 }
 
 const mapStateToProps = (state: any) => ({
@@ -73,7 +75,7 @@ class AudioSeekbar extends Component<ConnectProps | any> {
     const audioSeekbarClassNames = [styles.audioSeekbarContainer, this.props.withVolumeMapBar ? styles.withVolumeMapBar : ''];
     return (
       <div className={audioSeekbarClassNames.join(' ')}>
-        {this.props.withVolumeMapBar && <AudioIcon />}
+        {this.props.withVolumeMapBar && <AudioIcon isLarge={this.props.size === AudioPlayerSizes.Large} />}
         <div className={styles.audioSeekbar}>
           {showTime && <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>}
           <div className={styles.seekbarWrapper}>
