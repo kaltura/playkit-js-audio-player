@@ -143,11 +143,6 @@ export const VolumeMapSeekbar = withText(translates)(
             };
           }, [originalVolumeMap, size]);
 
-          // Process volume map when original data or container width changes
-          useEffect(() => {
-            // No processing needed anymore - we'll use original data directly
-          }, [originalVolumeMap, containerWidth]);
-
           // Drawing function - uses originalVolumeMap and scales bars based on canvas width
           const drawWaveform = useCallback(() => {
             const canvas = canvasRef.current;
