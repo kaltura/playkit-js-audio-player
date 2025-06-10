@@ -1,21 +1,20 @@
 .bufferingIcon {
-    position: absolute;
-    left: -2px;
-    bottom: -4px;
-    max-width: 16px;
-    animation: buffering linear 3000ms infinite;
-    &.large {
-      bottom: -7px;
-      max-width: 24px;
-    }
+  position: absolute;
+  left: -2px;
+  bottom: -4px;
+  max-width: 16px;
+  animation: buffering linear 3000ms infinite;
+  &.large {
+    bottom: -7px;
+    max-width: 24px;
   }
-  
-  @keyframes buffering {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+}
+
+@keyframes buffering {
+  from {
+    transform: rotate(0deg);
   }
-  
+  to {
+    transform: rotate(360deg);
+  }
+}

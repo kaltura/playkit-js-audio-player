@@ -5,6 +5,9 @@
   width: 100%;
   &.small {
     .header {
+      .audio-icon-container {
+        margin: 13px 16px 0 0;
+      }
       .title {
         &.playback-started {
           width: calc(100% - 16px);
@@ -17,6 +20,9 @@
 
   &.medium {
     .header {
+      .audio-icon-container {
+        margin: 13px 16px 0 0;
+      }
       .title {
         &.playback-started {
           width: calc(100% - 16px);
@@ -31,7 +37,9 @@
     .header {
       flex-direction: column;
       .title {
-        font-size: 24px;
+        font-size: 32px;
+        line-height: 38px;
+        margin-top: 16px;
         margin-bottom: 16px;
       }
     }
@@ -42,6 +50,12 @@
 
   .header {
     display: flex;
+
+    .audio-icon-container {
+      margin: 16px 8px 0 0;
+      position: relative;
+      width: 20px;
+    }
   }
 
   .title {
@@ -54,5 +68,17 @@
     width: 100%;
     color: $tone-1-color;
     opacity: 0.8;
+  }
+
+  &.with-volume-map-bar {
+    &.large {
+      .header {
+        .title {
+          font-size: 24px;
+          line-height: 28px;
+          margin-top: 0;
+        }
+      }
+    }
   }
 }

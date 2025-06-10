@@ -1,11 +1,14 @@
-$audio-player-height-small: 215px;
+$audio-player-height-small: 132px;
 $audio-player-height-large: 280px;
+
+$audio-player-with-volume-map-bar-height-small: 207px;
+$audio-player-with-volume-map-bar-height-medium: 215px;
+$audio-player-with-volume-map-bar-height-large: 280px;
 
 .mini-audio-player-view {
   position: relative;
   background-color: var(--playkit-paper-color);
   margin: 0;
-  padding: 16px;
   min-width: 228px;
   justify-content: space-evenly;
 
@@ -18,15 +21,11 @@ $audio-player-height-large: 280px;
       display: flex;
       justify-content: space-between;
       height: calc(100% - 58px);
-      padding: 0;
-
-      .left-controls {
-        width: 56px;
-        height: 56px;
-      }
+      padding: 8px;
 
       .right-controls {
         display: flex;
+        align-items: center;
         width: calc(100% - 64px);
       }
     }
@@ -40,16 +39,17 @@ $audio-player-height-large: 280px;
     display: flex;
     justify-content: space-between;
     height: $audio-player-height-small;
+    padding: 8px;
 
     .right-controls {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: calc(100% - 194px);
+      width: calc(100% - 124px);
 
       .top-controls {
         display: flex;
-        padding: 0 0 8px 0;
+        padding: 8px 0;
       }
     }
   }
@@ -58,6 +58,7 @@ $audio-player-height-large: 280px;
     display: flex;
     height: $audio-player-height-large;
     gap: 16px;
+    padding: 16px;
 
     .background-image {
       z-index: 0;
@@ -81,7 +82,7 @@ $audio-player-height-large: 280px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: calc(100% - 272px);
+      width: calc(100% - 264px);
     }
   }
 
@@ -110,6 +111,41 @@ $audio-player-height-large: 280px;
   .right-controls,
   .top-controls {
     margin: 0;
+  }
+
+  &.with-volume-map-bar {
+    padding: 16px;
+    &.small {
+      height: $audio-player-with-volume-map-bar-height-small;
+      .top-controls {
+        padding: 0;
+        .right-controls {
+          align-items: normal;
+        }
+        .left-controls {
+          width: 56px;
+          height: 56px;
+        }
+      }
+      .bottom-controls {
+        padding: 0;
+      }
+    }
+    &.medium {
+      height: $audio-player-with-volume-map-bar-height-medium;
+      .right-controls {
+        width: calc(100% - 194px);
+        .top-controls {
+          padding: 0 0 8px 0;
+        }
+      }
+    }
+    &.large {
+      height: $audio-player-with-volume-map-bar-height-large;
+      .right-controls {
+        width: calc(100% - 272px);
+      }
+    }
   }
 }
 :global(.audio-player .playkit-video-player) {

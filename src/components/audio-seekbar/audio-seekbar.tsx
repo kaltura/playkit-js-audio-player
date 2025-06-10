@@ -30,6 +30,7 @@ interface ConnectProps {
   updateSeekbarDraggingStatus: (data: boolean) => void;
   updateSeekbarHoverActive: (data: boolean) => void;
   updateSeekbarClientRect: (data: any) => void;
+  withVolumeMapBar?: boolean;
 }
 
 const mapStateToProps = (state: any) => ({
@@ -69,9 +70,10 @@ class AudioSeekbar extends Component<ConnectProps | any> {
       return null;
     }
     const showTime = !this.props.player.isLive();
+    const audioSeekbarClassNames = [styles.audioSeekbarContainer, this.props.withVolumeMapBar ? styles.withVolumeMapBar : ''];
     return (
-      <div className={styles.audioSeekbarContainer}>
-        <AudioIcon />
+      <div className={audioSeekbarClassNames.join(' ')}>
+        {this.props.withVolumeMapBar && <AudioIcon />}
         <div className={styles.audioSeekbar}>
           {showTime && <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>}
           <div className={styles.seekbarWrapper}>

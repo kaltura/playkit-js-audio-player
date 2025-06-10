@@ -30,6 +30,8 @@ interface VolumeMapSeekbarProps {
   isDraggingActive?: boolean;
   isMobile?: boolean;
 
+  withVolumeMapBar?: boolean;
+
   registerKeyboardEvents?: (events: Array<any>) => void;
   notifyChange?: (data: any) => void;
   updatePlayerHoverState?: (isHover: boolean) => void;
@@ -64,7 +66,7 @@ export const VolumeMapSeekbar = withText(translates)(
         connect(
           mapStateToProps,
           bindActions({...shell.actions, ...seekbar.actions, ...overlayAction.actions})
-        )(({player, size, engineDuration, currentTime, ...otherProps}: VolumeMapSeekbarProps) => {
+        )(({player, size, engineDuration, currentTime, withVolumeMapBar, ...otherProps}: VolumeMapSeekbarProps) => {
           const [originalVolumeMap, setOriginalVolumeMap] = useState<VolumeMapEntry[]>([]);
           const [processedVolumeMap, setProcessedVolumeMap] = useState<VolumeMapEntry[]>([]);
           const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -392,7 +394,7 @@ export const VolumeMapSeekbar = withText(translates)(
 
           // Render fallback when no data or duration is too short
           if (!originalVolumeMap.length) {
-            return <AudioSeekbar />;
+            return <AudioSeekbar withVolumeMapBar={withVolumeMapBar}/>;
           }
 
           const canvasA11yProps = {
