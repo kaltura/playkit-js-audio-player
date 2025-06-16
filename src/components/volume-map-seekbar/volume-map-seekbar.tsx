@@ -3,7 +3,6 @@ import {useEffect, useState, useRef, useCallback} from 'preact/hooks';
 import {ui, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {VolumeMapEntry, AudioPlayerSizes} from '../../types';
 import {AudioPlayer} from '../../audio-player';
-import {processVolumeMap} from '../../utils';
 import {AudioSeekbar} from '..';
 
 import * as styles from './volume-map-seekbar.scss';
@@ -47,9 +46,8 @@ const translates = {
 const COMPONENT_NAME = 'VolumeSeekBar';
 const KEYBOARD_DEFAULT_SEEK_JUMP: number = 5;
 
-const BASE_BAR_WIDTH = 2;
-const BASE_GAP = 1;
-const MIN_DB = -100; // dBFS value to map to 0 height
+const MIN_DB = -100; // dBFS value representing silence (1px height)
+const MAX_DB = 0; // dBFS value representing maximum volume (full canvas height)
 
 const mapStateToProps = (state: any) => ({
   currentTime: state.engine.currentTime,
@@ -68,7 +66,6 @@ export const VolumeMapSeekbar = withText(translates)(
           bindActions({...shell.actions, ...seekbar.actions, ...overlayAction.actions})
         )(({player, size, engineDuration, currentTime, withVolumeMapBar, ...otherProps}: VolumeMapSeekbarProps) => {
           const [originalVolumeMap, setOriginalVolumeMap] = useState<VolumeMapEntry[]>([]);
-          const [processedVolumeMap, setProcessedVolumeMap] = useState<VolumeMapEntry[]>([]);
           const canvasRef = useRef<HTMLCanvasElement>(null);
           const containerRef = useRef<HTMLDivElement>(null);
           const [containerWidth, setContainerWidth] = useState<number>(0);
@@ -146,22 +143,11 @@ export const VolumeMapSeekbar = withText(translates)(
             };
           }, [originalVolumeMap, size]);
 
-          // Process volume map when original data or container width changes
-          useEffect(() => {
-            if (containerWidth > 0 && originalVolumeMap.length > 0) {
-              const maxBars = Math.floor(containerWidth / (BASE_BAR_WIDTH + BASE_GAP));
-              const newProcessedMap = processVolumeMap(originalVolumeMap, maxBars, MIN_DB);
-              setProcessedVolumeMap(newProcessedMap);
-            } else {
-              setProcessedVolumeMap([]);
-            }
-          }, [originalVolumeMap, containerWidth]);
-
-          // Drawing function - uses processedVolumeMap and scales height to actual max RMS
+          // Drawing function - uses originalVolumeMap and scales bars based on canvas width
           const drawWaveform = useCallback(() => {
             const canvas = canvasRef.current;
             const ctx = canvas?.getContext('2d');
-            if (!canvas || !ctx || !processedVolumeMap.length || !duration || !containerWidth) {
+            if (!canvas || !ctx || !originalVolumeMap.length || !duration || !containerWidth) {
               return;
             }
 
@@ -180,24 +166,16 @@ export const VolumeMapSeekbar = withText(translates)(
             const canvasHeight = rect.height;
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-            const numBars = processedVolumeMap.length;
+            const numBars = originalVolumeMap.length;
 
-            // Find the actual maximum RMS level in the processed data
-            let maxRmsLevelInData = MIN_DB; // Start with the minimum possible value
-            for (const entry of processedVolumeMap) {
-              if (entry.rms_level > maxRmsLevelInData) {
-                maxRmsLevelInData = entry.rms_level;
-              }
-            }
-            // Ensure the effective max DB for scaling is slightly above MIN_DB to avoid division by zero/issues
-            const effectiveMaxDb = Math.max(maxRmsLevelInData, MIN_DB + 1e-6);
-            const dbRange = effectiveMaxDb - MIN_DB;
+            // Use fixed dB range from MIN_DB (-100) to MAX_DB (0)
+            const dbRange = MAX_DB - MIN_DB; // This will be 100
 
             const currentTimeMs = currentTime * 1000;
 
             let currentBarIndex = -1;
-            for (let i = 0; i < processedVolumeMap.length; i++) {
-              if (processedVolumeMap[i].pts <= currentTimeMs) {
+            for (let i = 0; i < originalVolumeMap.length; i++) {
+              if (originalVolumeMap[i].pts <= currentTimeMs) {
                 currentBarIndex = i;
               } else {
                 break;
@@ -217,20 +195,35 @@ export const VolumeMapSeekbar = withText(translates)(
               // Calculate precise pixel position - first bar starts at x=0
               const x = i * (barWidth + minGap);
 
-              // Normalize using the actual max level found in the data
+              // Normalize using the fixed dB range from MIN_DB (-100) to MAX_DB (0)
+              // Clamp the RMS level to the valid range first
+              const clampedRms = Math.max(MIN_DB, Math.min(MAX_DB, originalVolumeMap[i].rms_level));
+              
+              // Map from [MIN_DB, MAX_DB] to [1px, canvasHeight]
               let normalizedLevel = 0;
               if (dbRange > 0) {
-                normalizedLevel = (processedVolumeMap[i].rms_level - MIN_DB) / dbRange;
+                normalizedLevel = (clampedRms - MIN_DB) / dbRange;
               }
               normalizedLevel = Math.max(0, Math.min(1, normalizedLevel)); // Clamp 0-1
 
-              let barHeight = normalizedLevel * canvasHeight;
-              // Ensure minimum bar height of 1px
-              barHeight = Math.max(1, barHeight);
-              // Ensure bar height does not exceed canvas height
-              barHeight = Math.min(barHeight, canvasHeight);
+              // Scale to canvas height with minimum 1px for silence
+              const minBarHeight = 1; // Minimum height for silence (-100 dB)
+              const maxBarHeight = canvasHeight; // Maximum height for loudest sound (0 dB)
+              let barHeight = minBarHeight + normalizedLevel * (maxBarHeight - minBarHeight);
+              
+              // Ensure bar height is within bounds and round to integer pixels
+              barHeight = Math.round(Math.max(minBarHeight, Math.min(barHeight, maxBarHeight)));
+              
+              // Ensure bars maintain proper center alignment with minimum 2px difference
+              // This ensures bars stay centered by using only odd heights (1px, 3px, 5px, etc.)
+              if (barHeight > 1 && barHeight % 2 === 0) {
+                barHeight += 1; // Convert even heights to odd heights for perfect centering
+              }
+              
+              // Ensure we don't exceed canvas height after adjustment
+              barHeight = Math.min(barHeight, maxBarHeight);
 
-              // Use integer values for pixel-aligned coordinates
+              // Center the bar vertically on the canvas - use integer coordinates for pixel alignment
               const y = Math.floor((canvasHeight - barHeight) / 2);
 
               ctx.fillStyle = i <= currentBarIndex ? activeColor : inactiveColor;
@@ -241,15 +234,18 @@ export const VolumeMapSeekbar = withText(translates)(
                   ? canvasWidth - x // Make the last bar extend to the edge
                   : barWidth;
 
-              // Draw rectangle
-              ctx.fillRect(x, y, actualBarWidth, barHeight);
+              // Draw rounded rectangle with 8px border radius
+              const borderRadius = 8;
+              ctx.beginPath();
+              ctx.roundRect(x, y, actualBarWidth, barHeight, borderRadius);
+              ctx.fill();
             }
-          }, [processedVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]);
+          }, [originalVolumeMap, duration, currentTime, containerWidth, activeColor, inactiveColor]);
 
-          // Redraw when processed map or other relevant state changes
+          // Redraw when original map or other relevant state changes
           useEffect(() => {
             drawWaveform();
-          }, [processedVolumeMap, currentTime, duration, containerWidth, drawWaveform]);
+          }, [originalVolumeMap, currentTime, duration, containerWidth, drawWaveform]);
 
           // Player control functions
           const changeCurrentTime = (time: number) => {
@@ -262,7 +258,7 @@ export const VolumeMapSeekbar = withText(translates)(
           // Get the time from the mouse/touch event
           const getTime = (event: MouseEvent | TouchEvent): number => {
             const canvas = canvasRef.current;
-            if (!canvas || !processedVolumeMap.length || !duration || !containerWidth) {
+            if (!canvas || !originalVolumeMap.length || !duration || !containerWidth) {
               return 0;
             }
 
@@ -271,7 +267,7 @@ export const VolumeMapSeekbar = withText(translates)(
 
             const rect = canvas.getBoundingClientRect();
             const x = xMousePosition - rect.left;
-            const numBars = processedVolumeMap.length;
+            const numBars = originalVolumeMap.length;
 
             // Use same calculations as in drawWaveform to determine bar positions
             const minGap = 1;
@@ -288,7 +284,7 @@ export const VolumeMapSeekbar = withText(translates)(
             // Ensure index is in valid range
             barIndex = Math.max(0, Math.min(barIndex, numBars - 1));
 
-            const newTime = processedVolumeMap[barIndex].pts / 1000;
+            const newTime = originalVolumeMap[barIndex].pts / 1000;
             if (isFinite(newTime)) {
               return newTime;
             }
@@ -394,7 +390,7 @@ export const VolumeMapSeekbar = withText(translates)(
 
           // Render fallback when no data or duration is too short
           if (!originalVolumeMap.length) {
-            return <AudioSeekbar withVolumeMapBar={withVolumeMapBar}/>;
+            return <AudioSeekbar withVolumeMapBar={withVolumeMapBar} size={size} />;
           }
 
           const canvasA11yProps = {
