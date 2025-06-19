@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.2.1 (2025-06-19)
+
+
+### Bug Fixes
+
+* **FEC-14511:** Responsiveness issue affect visualisation map (FEC-14514) ([#50](https://github.com/kaltura/playkit-js-audio-player/issues/50)) ([d0874ce](https://github.com/kaltura/playkit-js-audio-player/commit/d0874ce0ffc7aa050a9c67a58b65d7d3e5125258))
+
 ## 1.2.0 (2025-05-22)
 
 
