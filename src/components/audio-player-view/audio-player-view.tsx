@@ -1,6 +1,8 @@
 import {h, Fragment} from 'preact';
 import {useState, useEffect, useLayoutEffect} from 'preact/hooks';
 import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
+import {FakeEvent} from '@playkit-js/playkit-js';
+import {AUDIO_PLAYER_VISUALIZATION_STATE} from '../../events/events';
 import {
   AudioPlayerControls,
   VolumeMapSeekbar,
@@ -199,6 +201,13 @@ const AudioPlayerView = Event.withEventManager(
         };
 
         const _renderView = () => {
+          // event to notify about visualization state
+          player.dispatchEvent(
+            new FakeEvent(AUDIO_PLAYER_VISUALIZATION_STATE, {
+              state: pluginConfig.useVolumeMapBar ? 'enabled' : 'disabled',
+              size: size
+            })
+          );
           if (size === AudioPlayerSizes.Small) {
             return (
               !overlayOpen && (
