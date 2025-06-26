@@ -205,7 +205,7 @@ const AudioPlayerView = Event.withEventManager(
           player.dispatchEvent(
             new FakeEvent(AUDIO_PLAYER_VISUALIZATION_STATE, {
               state: pluginConfig.useVolumeMapBar ? 'enabled' : 'disabled',
-              size: size
+              size
             })
           );
           if (size === AudioPlayerSizes.Small) {
