@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.1 (2025-10-23)
+
+
+### Bug Fixes
+
+* **FEC-14673:** Adjust speed button margin ([#52](https://github.com/kaltura/playkit-js-audio-player/issues/52)) ([2855558](https://github.com/kaltura/playkit-js-audio-player/commit/28555580b4a93f96b181c9418ff5ca3516be8bc6))
+
 ## 1.3.0 (2025-07-03)
 
 
