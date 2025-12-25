@@ -83,7 +83,7 @@ export const AudioPlayerControls = Event.withEventManager(
       }
       return (
         <div data-testid="audio-player-speed-menu" className={styles.speedMenuWrapper}>
-          <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} />
+          <SpeedMenu pushRef={(node: any) => (ref.current = node)} optionsRenderer={_renderSpeedOptions} asDropdown={true} />
         </div>
       );
     };
