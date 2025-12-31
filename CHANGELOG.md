@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.2 (2025-12-31)
+
+
+### Bug Fixes
+
+* **FEC-14839:** Add control for playback speed in video player controls | No speed button for audio player. ([#54](https://github.com/kaltura/playkit-js-audio-player/issues/54)) ([d42ae5a](https://github.com/kaltura/playkit-js-audio-player/commit/d42ae5a428f47df6af81b9488552c0b0614e0993)), closes [/github.com/kaltura/playkit-js-ui/pull/1132/files#diff-6f6a5054228b05004cf601ee14c7991eaf188454a0533406f4d36d2d8c8e690eR69](https://github.com/kaltura//github.com/kaltura/playkit-js-ui/pull/1132/files/issues/diff-6f6a5054228b05004cf601ee14c7991eaf188454a0533406f4d36d2d8c8e690eR69)
+
 ### 1.3.1 (2025-10-23)
 
 
