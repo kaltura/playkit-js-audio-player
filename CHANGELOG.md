@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.4.0 (2026-01-29)
+
+
+### Features
+
+* **FEC-14869:** Adding nonce support in player plugins style tags ([#55](https://github.com/kaltura/playkit-js-audio-player/issues/55)) ([4d3cf96](https://github.com/kaltura/playkit-js-audio-player/commit/4d3cf96fa24922be2d282e660d01e7108afb7dc0))
+
 ### 1.3.2 (2025-12-31)
 
 
