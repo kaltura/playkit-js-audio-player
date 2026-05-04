@@ -1,0 +1,89 @@
+{
+  "repository": {
+    "name": "playkit-js-audio-player",
+    "package": "@playkit-js/audio-player"
+  },
+  "coreResponsibility": {
+    "why": "A Kaltura Player UI plugin that provides a minimal, specialized audio player interface for playing audio and video entries with a compact, audio-centric visualization.",
+    "type": "UI Plugin"
+  },
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "Minimal audio player UI preset (MiniAudioUI)",
+      "Audio waveform visualization via volume map bar",
+      "Audio entry metadata display (title, description, poster)",
+      "Audio-specific playback controls (play/pause, rewind, forward, volume)",
+      "Loop/replay button functionality",
+      "Playback speed control menu",
+      "Responsive sizing (small, medium, large)",
+      "Audio plugins overlay and plugin management system",
+      "Live audio stream support with live tag indicator",
+      "Scrolling text for long titles/descriptions",
+      "Error slate display for playback errors",
+      "Loading states with skeleton placeholders"
+    ],
+    "dataHandling": [
+      "MediaMetadata: poster, title, description from player sources",
+      "VolumeMapEntry: audio waveform data (pts timestamps, rms_level dB values)",
+      "AudioPlayerConfig: plugin configuration (showReplayButton, useVolumeMapBar)",
+      "AudioPluginDto: external plugin registrations for the overlay menu",
+      "Player state: playback status, current time, duration, error states"
+    ]
+  },
+  "integrationPoints": {
+    "upstream": [
+      "@playkit-js/kaltura-player-js - Core player framework and BasePlugin class",
+      "@playkit-js/common - Shared UI components (Button)",
+      "@playkit-js/ui-managers - Icon/UI management utilities",
+      "Kaltura Media Service API - Volume map data via /service/media/action/getVolumeMap"
+    ],
+    "downstream": [
+      "Kaltura Player embed applications consuming audio playback",
+      "Any UI requiring minimal audio player visualization",
+      "External plugins registering via AudioPluginsManager service"
+    ],
+    "externalAPIs": [
+      "Kaltura Media API (/service/media/action/getVolumeMap) - fetches audio waveform visualization data",
+      "hex-to-css-filter - color theming for player controls"
+    ]
+  },
+  "technicalStack": {
+    "languages": ["TypeScript", "TSX/JSX", "SCSS"],
+    "frameworks": ["Preact", "Webpack", "Babel"],
+    "entryPoints": [
+      "src/index.ts - Plugin registration and preset initialization",
+      "src/audio-player.tsx - Main AudioPlayer BasePlugin class",
+      "src/components/audio-player-ui/audio-player-ui.tsx - MiniAudioUI preset component",
+      "src/components/audio-player-view/audio-player-view.tsx - Main view component with state management",
+      "src/data-manager.ts - Volume map data fetching and caching"
+    ],
+    "buildOutput": "dist/playkit-audio-player.js"
+  },
+  "triageKeywords": [
+    "audio player",
+    "audioPlayer",
+    "MiniAudioUI",
+    "audio-player-view",
+    "volume map",
+    "waveform",
+    "volume bar",
+    "audio seekbar",
+    "loop button",
+    "audio controls",
+    "playkit-audio-player",
+    "audio thumbnail",
+    "audio poster",
+    "audio metadata",
+    "playback speed menu",
+    "audio plugin overlay",
+    "getVolumeMap"
+  ],
+  "errorPatterns": [
+    "Failed to get volume map",
+    "audio-player-error-slate",
+    "Plugin cannot be added due to invalid parameters",
+    "No entry ID found, cannot fetch volume map",
+    "AUDIO_PLAYER_VISUALIZATION_STATE",
+    "AUDIO_PLAYER_ACTIVE_PLUGINS_UPDATED"
+  ]
+}
