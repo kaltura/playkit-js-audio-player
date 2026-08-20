@@ -183,7 +183,7 @@ const AudioPlayerView = Event.withEventManager(
         };
 
         const _renderPlayerControls = () => {
-          const seekbar = isLoading ? null : <VolumeMapSeekbar size={size} withVolumeMapBar={pluginConfig.useVolumeMapBar}/>;
+          const seekbar = isLoading ? undefined : <VolumeMapSeekbar size={size} withVolumeMapBar={pluginConfig.useVolumeMapBar}/>;
           return isLoading ? (
             <>
               <SeekbarPlaceholder />
