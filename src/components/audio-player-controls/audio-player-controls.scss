@@ -50,15 +50,15 @@
     height: 100%;
     margin: 0 auto;
     
-    .seekbarContainer {
+    .seekbar-container {
       position: absolute;
       bottom: 100%;
       left: 0;
       right: 0;
       margin-bottom: 4px;
     }
-    
-    .buttonContainer {
+
+    .button-container {
       display: flex;
       align-items: center;
       justify-content: center;
