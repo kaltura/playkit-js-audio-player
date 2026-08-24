@@ -182,13 +182,13 @@ const AudioPlayerView = Event.withEventManager(
           return <AudioDetails title={title} description={description} size={size!} withVolumeMapBar={pluginConfig.useVolumeMapBar}/>;
         };
 
-        const _renderSeekBar = () => {
-          return isLoading ? <SeekbarPlaceholder /> : <VolumeMapSeekbar size={size} withVolumeMapBar={pluginConfig.useVolumeMapBar}/>;
-        };
-
         const _renderPlayerControls = () => {
+          const seekbar = isLoading ? undefined : <VolumeMapSeekbar size={size} withVolumeMapBar={pluginConfig.useVolumeMapBar}/>;
           return isLoading ? (
-            <ControlsPlaceholder />
+            <>
+              <SeekbarPlaceholder />
+              <ControlsPlaceholder />
+            </>
           ) : (
             <AudioPlayerControls
               pluginConfig={pluginConfig}
@@ -196,6 +196,7 @@ const AudioPlayerView = Event.withEventManager(
               onPluginsControlClick={openOverlay}
               showMorePluginsIcon={showMorePluginsIcon}
               size={size}
+              seekbarComponent={seekbar}
             />
           );
         };
@@ -217,7 +218,6 @@ const AudioPlayerView = Event.withEventManager(
                     <div className={styles.rightControls}>{_renderAudioDetails()}</div>
                   </div>
                   <div className={styles.bottomControls}>
-                    {_renderSeekBar()}
                     {_renderPlayerControls()}
                   </div>
                 </Fragment>
@@ -235,7 +235,6 @@ const AudioPlayerView = Event.withEventManager(
                   <div className={styles.rightControls}>
                     <div className={styles.topControls}>{_renderAudioDetails()}</div>
                     <div className={styles.bottomControls}>
-                      {_renderSeekBar()}
                       {_renderPlayerControls()}
                     </div>
                   </div>
