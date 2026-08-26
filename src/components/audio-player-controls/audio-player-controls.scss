@@ -13,7 +13,6 @@
   height: 36px;
   width: 100%;
   margin-top: 4px;
-  position: relative;
   &.large {
     margin-top: 8px;
   }
@@ -49,16 +48,7 @@
     width: 212px;
     height: 100%;
     margin: 0 auto;
-    
-    .seekbar-container {
-      position: absolute;
-      bottom: 100%;
-      left: 0;
-      right: 0;
-      margin-bottom: 4px;
-    }
-
-    .button-container {
+    .buttonContainer {
       display: flex;
       align-items: center;
       justify-content: center;
