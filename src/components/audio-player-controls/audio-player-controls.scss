@@ -56,6 +56,7 @@
       left: 0;
       right: 0;
       margin-bottom: 4px;
+      z-index: 0;
     }
 
     .button-container {
@@ -64,6 +65,7 @@
       justify-content: center;
       height: 100%;
       flex: 0 0 36px;
+      z-index: 1;
       &:not(:last-of-type) {
         margin-right: 8px;
       }
