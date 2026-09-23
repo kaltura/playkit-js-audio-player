@@ -19,10 +19,11 @@ interface AudioPlayerControlsProps {
   showMorePluginsIcon: boolean;
   eventManager: any;
   size: AudioPlayerSizes;
+  seekbarComponent?: VNode<any>;
 }
 
 export const AudioPlayerControls = Event.withEventManager(
-  ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon, eventManager, size}: AudioPlayerControlsProps) => {
+  ({pluginConfig, player, onPluginsControlClick, showMorePluginsIcon, eventManager, size, seekbarComponent}: AudioPlayerControlsProps) => {
     const playlist = useSelector((state: any) => state.engine.playlist);
     const ref = useRef<HTMLDivElement>();
     const [playbackRateState, setPlaybackRateState] = useState(player.playbackRate);
@@ -92,6 +93,9 @@ export const AudioPlayerControls = Event.withEventManager(
       <div className={[styles.playbackControlsWrapper, styles[size]].join(' ')}>
         <LiveTagComponent />
         <div className={styles.playbackControls}>
+          <div className={styles.buttonContainer} data-testid="audio-player-play-button">
+            <PlayPause />
+          </div>
           <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
           <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-prev-button' : 'audio-player-rewind-button'}>
             {playlist ? (
@@ -107,9 +111,6 @@ export const AudioPlayerControls = Event.withEventManager(
               />
             )}
           </div>
-          <div className={styles.buttonContainer} data-testid="audio-player-play-button">
-            <PlayPause />
-          </div>
           <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-next-button' : 'audio-player-forward-button'}>
             {playlist ? (
               <PlaylistButton type="next" showPreview={false} />
@@ -122,6 +123,7 @@ export const AudioPlayerControls = Event.withEventManager(
               />
             )}
           </div>
+          {seekbarComponent && <div className={styles.seekbarContainer}>{seekbarComponent}</div>}
           <div className={styles.buttonContainer} data-testid="audio-player-volume-control">
             <Volume horizontal />
           </div>
