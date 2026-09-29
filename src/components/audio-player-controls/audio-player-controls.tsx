@@ -92,6 +92,9 @@ export const AudioPlayerControls = Event.withEventManager(
       <div className={[styles.playbackControlsWrapper, styles[size]].join(' ')}>
         <LiveTagComponent />
         <div className={styles.playbackControls}>
+          <div className={styles.buttonContainer} data-testid="audio-player-play-button">
+            <PlayPause />
+          </div>
           <div className={styles.buttonContainer}>{_renderLoopOrSpeedMenuButton()}</div>
           <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-prev-button' : 'audio-player-rewind-button'}>
             {playlist ? (
@@ -106,9 +109,6 @@ export const AudioPlayerControls = Event.withEventManager(
                 }}
               />
             )}
-          </div>
-          <div className={styles.buttonContainer} data-testid="audio-player-play-button">
-            <PlayPause />
           </div>
           <div className={styles.buttonContainer} data-testid={playlist ? 'audio-player-next-button' : 'audio-player-forward-button'}>
             {playlist ? (
