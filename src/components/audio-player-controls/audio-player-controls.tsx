@@ -90,7 +90,6 @@ export const AudioPlayerControls = Event.withEventManager(
 
     return (
       <div className={[styles.playbackControlsWrapper, styles[size]].join(' ')}>
-        <LiveTagComponent />
         <div className={styles.playbackControls}>
           <div className={styles.buttonContainer} data-testid="audio-player-play-button">
             <PlayPause />
@@ -131,6 +130,7 @@ export const AudioPlayerControls = Event.withEventManager(
             </div>
           )}
         </div>
+        <LiveTagComponent />
       </div>
     );
   }
