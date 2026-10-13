@@ -4,9 +4,7 @@
       "enableLoop": "Enable loop",
       "disableLoop": "Disable loop",
       "mediaThumb": "Media thumbnail",
-      "plugins": "More",
-      "resumeAnimation": "Resume Animation",
-      "pauseAnimation": "Pause Animation"
+      "plugins": "More"
     }
   }
 }
