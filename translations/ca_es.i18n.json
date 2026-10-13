@@ -4,9 +4,7 @@
       "enableLoop": "Habilitar repetició",
       "disableLoop": "Deshabilitar repetició",
       "mediaThumb": "Miniatura del mitjà",
-      "plugins": "Plugins",
-      "resumeAnimation": "Reprendre animació",
-      "pauseAnimation": "Pausar animació"
+      "plugins": "Plugins"
     }
   }
 }
