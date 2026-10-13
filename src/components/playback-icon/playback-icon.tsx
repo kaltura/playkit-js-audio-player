@@ -2,11 +2,11 @@ import {h} from 'preact';
 import * as styles from './playback-icon.scss';
 
 interface PlaybackIconProps {
-  isLarge: boolean;
-  isActive: boolean;
+  isLarge?: boolean;
+  isActive?: boolean;
 }
 
-const PlaybackIcon = ({isLarge, isActive}: PlaybackIconProps) => {
+const PlaybackIcon = ({isLarge = false, isActive = false}: PlaybackIconProps) => {
   return (
     <div
       aria-hidden="true"
