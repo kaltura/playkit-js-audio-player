@@ -74,7 +74,7 @@ class AudioSeekbar extends Component<ConnectProps | any> {
     const showTime = !this.props.player.isLive();
     const audioSeekbarClassNames = [styles.audioSeekbarContainer, this.props.withVolumeMapBar ? styles.withVolumeMapBar : ''];
     return (
-      <div className={audioSeekbarClassNames.join(' ')}>
+      <div className={audioSeekbarClassNames.join(' ')} data-testid="audio-player-seekbar">
         {this.props.withVolumeMapBar && <AudioIcon isLarge={this.props.size === AudioPlayerSizes.Large} />}
         <div className={styles.audioSeekbar}>
           {showTime && <div className={styles.currentTime}>{toHHMMSS(this.props.currentTime)}</div>}

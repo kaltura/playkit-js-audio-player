@@ -1,5 +1,5 @@
 import {h, Fragment} from 'preact';
-import {useState, useEffect, useLayoutEffect} from 'preact/hooks';
+import {useState, useEffect, useLayoutEffect, useRef} from 'preact/hooks';
 import {ui, core, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {FakeEvent} from '@playkit-js/playkit-js';
 import {AUDIO_PLAYER_VISUALIZATION_STATE} from '../../events/events';
@@ -16,6 +16,7 @@ import {
 import {AudioPlayerSizes, MediaMetadata, AudioPlayerConfig} from '../../types';
 import * as styles from './audio-player-view.scss';
 import {ErrorSlate} from '../error-slate';
+import {attachFocusOrder} from '../../focus-order';
 import {PluginsMenuOverlay} from '../plugins';
 import {usePluginsManager} from '../plugins/audio-plugins-manager/use-plugins-manager';
 
@@ -107,6 +108,7 @@ const AudioPlayerView = Event.withEventManager(
         const {poster, title, description} = mediaMetadata || {};
         const [showPluginsMenuOverlay, setShowPluginsMenuOverlay] = useState(false);
         const [wasPlaying, setWasPlaying] = useState(false);
+        const viewRef = useRef<HTMLDivElement>(null);
 
         const availablePlugins = usePluginsManager(player.getService('AudioPluginsManager'));
         // @ts-expect-error - TS2445: Property config is protected and only accessible within class BasePlugin and its subclasses.
@@ -117,8 +119,10 @@ const AudioPlayerView = Event.withEventManager(
           addPlayerClass!();
           eventManager.listen(player, core.EventType.CHANGE_SOURCE_ENDED, _handleMediaMetadata);
           eventManager.listen(player, core.EventType.PLAYER_RESET, _handleMediaMetadataReset);
+          const detachFocusOrder = viewRef.current ? attachFocusOrder(viewRef.current) : undefined;
           return () => {
             removePlayerClass!();
+            detachFocusOrder?.();
           };
         }, []);
 
@@ -248,7 +252,7 @@ const AudioPlayerView = Event.withEventManager(
         const pluginClassNames = [styles.miniAudioPlayerView, styles[size!], pluginConfig.useVolumeMapBar ? styles.withVolumeMapBar : ''];
 
         return (
-          <div data-testid="audio-player-view" className={pluginClassNames.join(' ')}>
+          <div ref={viewRef} data-testid="audio-player-view" className={pluginClassNames.join(' ')}>
             {hasError ? <ErrorSlate /> : _renderView()}
             {showPluginsMenuOverlay && <PluginsMenuOverlay plugins={availablePlugins} onClose={closeOverlay} />}
           </div>
